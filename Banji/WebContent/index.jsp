@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>BAN JI</title>
   <meta charset="UTF-8">
   <title>07.시맨틱태그</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
@@ -60,5 +60,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
   </script>
+  
+  <%@ include file="WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

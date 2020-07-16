@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-4">
           <a href="#">
-            <img src="<%=request.getContextPath()%>/resources/img/Logo.png" width="200px" class="mx-auto d-block" id="main-logo">
+            <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" width="200px" class="mx-auto d-block" id="main-logo">
           </a>
         </div>
         <div class="col-md-4">
