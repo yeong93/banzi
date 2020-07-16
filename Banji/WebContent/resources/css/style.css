@@ -62,7 +62,7 @@ height: 100%;
 /* -------------- header -------------- */
 header{
 position: fixed;
-height: 147.23px;
+height : 157px;
 width: 100%;
 z-index : 100;
 background-color : white;
@@ -81,6 +81,8 @@ font-size: 0.7em;
 color: lightgray;
 background-color: transparent;
 }
+
+
 
 /* -------------- nav -------------- */
 .dropdown:hover .dropdown-menu { 
@@ -139,3 +141,37 @@ background-color: #ffce54;
 color: white;
 }
 
+<!--   footer -->
+        .footer {
+            background: #ffffff;
+            font-family: "yg-jalnan";
+            color: #3a3847;
+        }
+
+        .footer .col-xs-12{
+            margin-top: 1em;
+        }
+
+        .footer .contact i {
+            font-size: 18px;
+            font-family: "InfinitySans-RegularA1";
+        }
+
+        .footer .copyright p {
+            border-top: 1px solid lightgray;
+        }
+
+
+        .footer img{
+            width: 10em;
+        }
+
+        .footer p{
+            font-family: "InfinitySans-RegularA1";
+            color: #3a3847;
+        }
+
+        .footer h4{
+            margin-bottom: 0.5em;
+        }
+       
