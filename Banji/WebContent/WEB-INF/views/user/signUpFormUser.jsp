@@ -34,7 +34,7 @@
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
             <!-- 헤더 들어가는 부분 -->
-            <div><img class="mx-auto d-block" src="<%=request.getContextPath()%>/resources/images/logo.png" width="150px"></div>
+            <div><img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px"></div>
             <!--// 헤더 들어가는 부분 -->
             <!-- 모달창 -->
             <div class="modal fade" id="defaultModal">
