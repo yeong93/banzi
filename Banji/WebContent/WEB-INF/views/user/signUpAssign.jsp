@@ -92,7 +92,14 @@ textarea:focus, input:focus{
     font-weight:bold;
 }
 </style>
-  <script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+	// 체크박스 동의하지 않을 시 페이지 넘어가지 않도록
+	if($("input:checkbox[name=agree]").is(":checked") == true) {
+		alert("약관에 동의해주세요.");
+	}else{
+		swal("Hello world!");
+	}
   </script>
 <body>
 <body>
@@ -101,7 +108,7 @@ textarea:focus, input:focus{
 
             <!--header 시작-->       
             <div class="header">       
-                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200p` x">
             </div>
             <hr class="nt_line" />
             <!--header 끝-->
@@ -510,7 +517,7 @@ textarea:focus, input:focus{
                             <p>본 약관은 2016년 10월 7일부터 적용됩니다. 단, 본 약관의 공지 시점으로부터 적용일 전일까지 기간 동안에 가입한 신규회원에 대해서는 회원 가입시부터 본 약관이 적용됩니다.</p>
              </div>
               <div class="checkbox">      
-                  <input type="checkbox">반지 이용약관 및 개인정보취급방침에 동의합니다.               
+                  <input type="checkbox" id="agree">반지 이용약관 및 개인정보취급방침에 동의합니다.               
               </div>
                      <hr class="j_hr" />
                    <div class="join_button">
