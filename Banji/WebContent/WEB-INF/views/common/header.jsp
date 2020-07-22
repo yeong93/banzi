@@ -54,11 +54,11 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
+            <a class="nav-link" href="community" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">자유 게시판</a>
-              <a class="dropdown-item" href="#">Q&A</a>
-              <a class="dropdown-item" href="#">사용 후기</a>
+              <a class="dropdown-item" href="community">자유 게시판</a>
+              <a class="dropdown-item" href="question">Q&A</a>
+              <a class="dropdown-item" href="review">사용 후기</a>
             </div>
           </li>
           <li class="nav-item dropdown">
