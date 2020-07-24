@@ -42,7 +42,7 @@
       <div class="col-md-12">
         <ul class="nav nav-tabs justify-content-center" id="nav-wrapper">
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">구성원 소개</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">구성원 소개</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
@@ -58,7 +58,7 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" href="community">자유 게시판</a>
               <a class="dropdown-item" href="question">Q&A</a>
-              <a class="dropdown-item" href="review">사용 후기</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/user/review.do">사용 후기</a>
             </div>
           </li>
           <li class="nav-item dropdown">
