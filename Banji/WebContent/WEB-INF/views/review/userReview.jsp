@@ -270,6 +270,7 @@
 
         label:hover, label:hover ~ label {
             color: red !important;
+            
         }
 </style>
 </head>
