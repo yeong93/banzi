@@ -46,7 +46,7 @@ ul {background:white;}
     .terms li {
    background-color:white;}
 #terms{ width:720px; margin:0 auto; }
-#terms_txt { height: 100px;width: 680px;overflow: auto;border: 1px solid black;padding: 60px 20px 60px 20px;margin: auto auto; margin-top:35px; margin-left:20px; background-color: white;}
+#terms_txt { height: 300px;width: 680px;overflow: auto;border: 1px solid black;padding: 60px 20px 60px 20px;margin: auto auto; margin-top:35px; margin-left:20px; background-color: white;}
 #terms_txt p {background-color:white;}
 .txt_num {background-color:white;}
 .txt {background-color:white;}
@@ -92,14 +92,9 @@ textarea:focus, input:focus{
     font-weight:bold;
 }
 </style>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 	// 체크박스 동의하지 않을 시 페이지 넘어가지 않도록
-	if($("input:checkbox[name=agree]").is(":checked") == true) {
-		alert("약관에 동의해주세요.");
-	}else{
-		swal("Hello world!");
-	}
+
   </script>
 <body>
 <body>
@@ -108,17 +103,16 @@ textarea:focus, input:focus{
 
             <!--header 시작-->       
             <div class="header">       
-                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200p` x">
+                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
             </div>
             <hr class="nt_line" />
             <!--header 끝-->
         <br />
         <br />
         <div class="title">
-             <h3 class="tit_join"><h1>1. 약관 동의</h1>
+             <h1 class="tit_join">1. 약관 동의</h1>
              <div class="tit_txt"><h3>약관을 읽고 동의하시면 동의해주세요. 동의하셔야 가입이 가능합니다. </h3></div>
             <div class="tit_hr">
-                <hr>
             </div>
             </div>
         <hr class="j_hr" />
@@ -521,11 +515,13 @@ textarea:focus, input:focus{
               </div>
                      <hr class="j_hr" />
                    <div class="join_button">
-                        <button type="button" id="nextb" onclick="location.href='<%=request.getContextPath()%>/user/signUpFormUser.do'">다음</button>
+                        <button type="button" id="nextb" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign2.do'">다음</button>
                    </div>
-    </div><!--article 끝-->
+		    </div>
+		    <!--article 끝-->
             <!--footer 시작-->
-            </div><!--footer 끝-->
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %></div>
+            <!--footer 끝-->
         </div> <!--전체div 끝-->    
     </form>
 </body>

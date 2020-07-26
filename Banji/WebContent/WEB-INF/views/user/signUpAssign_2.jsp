@@ -332,7 +332,8 @@
         </script>
             <hr/>
             <!-- 푸터 들어가는 부분 -->
-            <!--// 푸터 들어가는 부분 -->
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <!--// 푸터 끝나는 부분 -->
         </div>
     </body>
 </html>

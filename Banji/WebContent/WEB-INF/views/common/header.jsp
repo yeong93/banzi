@@ -127,7 +127,7 @@ color: white;
           </a>
         </div>
         <div class="col-md-4">
-          <button type="button" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign.do'">회원가입</button>
+          <button type="button" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign1.do'">회원가입</button>
           <button type="button">로그인</button>
         </div>
       </div>
