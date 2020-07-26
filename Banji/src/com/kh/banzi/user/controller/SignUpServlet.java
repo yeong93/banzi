@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.banzi.user.model.service.UserSerivce;
+import com.kh.banzi.user.model.vo.User;
+
 
 @WebServlet("/user/*")
-public class signUpServlet extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	
@@ -40,11 +43,47 @@ public class signUpServlet extends HttpServlet {
 				path = "/WEB-INF/views/user/signUpAssign_1.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+				
+				
 			}
 			else if(command.equals("/signUpAssign2.do")) {
 				path = "/WEB-INF/views/user/signUpAssign_2.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+			}
+			else if(command.equals("/signUp.do")) {
+				// 1. POST 방식으로 전달받은 데이터 문자 인코딩 변경
+				request.setCharacterEncoding("UTF-8");
+				
+				// 전송값(파라미터)를 모두 변수에 저장
+				String userId = request.getParameter("id");
+				String userPwd = request.getParameter("pwd");
+				String userName = request.getParameter("name");
+				String userEmail = request.getParameter("email");
+				String userGrade = request.getParameter("grade");
+				String userQuestion = request.getParameter("question");
+				String userAnswer = request.getParameter("answer");
+				
+				// 생성자를 이용해 값을 세팅
+				User user = new User(userId, userPwd, userName, userEmail, userGrade, userQuestion, userAnswer);
+				user.setUserPwd(userPwd);
+				
+				try {
+					int result = new UserSerivce().signUp(user);
+					if(result > 0) {
+						// 회원가입 성공
+						if(user.getUserGrade().equals("user")) {
+							System.out.println(user);
+						}else {
+							
+						}
+					}else {
+						// 회원가입 실패
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+
 			}
 			
 		}catch(Exception e) {

@@ -4,7 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<style>
+    
+</style>
+<title>회원 가입 완료 - 전문가</title>
 </head>
 <body>
 
