@@ -58,7 +58,7 @@
             <!-- 본문 들어가는 부분 -->
             <h2>2. 회원가입</h2>
             <br>
-            <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/member/signUpFormSuccess.do">
+            <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/user/signUp.do">
                 <div class="form-group" id="divId">
                     <label for="inputId" class="col-lg-2 control-label">아이디</label>
                     <div class="col-lg-10">
@@ -93,10 +93,10 @@
                 <div class="form-group" id="divGrade">
                     <label for="inputEmail" class="col-lg-2 control-label">회원등급</label>
                     <div class="col-lg-10">
-                        <input type="radio" id="user" name="garde" value="사용자">사용자
-                        <input type="radio" id="user" name="garde" value="수의사">수의사
-                        <input type="radio" id="user" name="garde" value="훈련사">훈련사
-                        <input type="radio" id="user" name="garde" value="에디터">에디터
+                        <input type="radio" id="user" name="grade" value="user">사용자
+                        <input type="radio" id="user" name="grade" value="veterinarian">수의사
+                        <input type="radio" id="user" name="grade" value="animaltrainer">훈련사
+                        <input type="radio" id="user" name="grade" value="editor">에디터
                     </div>
                 </div>
                 <div class="form-group">
