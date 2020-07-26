@@ -70,10 +70,13 @@ public class SignUpServlet extends HttpServlet {
 				
 				try {
 					int result = new UserSerivce().signUp(user);
-			
 					if(result > 0) {
 						// 회원가입 성공
-						response.sendRedirect(request.getContextPath());
+						if(user.getUserGrade().equals("user")) {
+							System.out.println(user);
+						}else {
+							
+						}
 					}else {
 						// 회원가입 실패
 					}
