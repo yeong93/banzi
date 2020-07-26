@@ -17,7 +17,103 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
   <title>head&nav</title>
+  <style>
   
+/* -------------- body -------------- */
+
+* {
+/* border: 1px solid black; */
+margin: 0;
+padding: 0;
+}
+
+.row>div {
+width: 100%;
+height: 100%;
+}
+
+/* -------------- header -------------- */
+header{
+position: fixed;
+height : 157px;
+width: 100%;
+z-index : 100;
+background-color : white;
+}
+#main-logo{
+padding: 11px;
+}
+#header button {
+float: right;
+margin: 1em;
+width: 6em;
+height: 2em;
+border: 1px solid lightgray;
+font-family: "InfinitySans-RegularA1";
+font-size: 0.7em;
+color: lightgray;
+background-color: transparent;
+}
+
+
+
+/* -------------- nav -------------- */
+.dropdown:hover .dropdown-menu { 
+display: block;
+margin-top: 0;
+}
+
+#nav{
+border-top: 1px solid lightgray;
+border-bottom: 1px solid lightgray;
+}
+
+#nav * {
+font-family: "InfinitySans-RegularA1";
+text-align: center;
+vertical-align: middle;
+border: none;
+}
+
+#nav a {
+width: 10rem;
+}
+
+#nav li {
+width: 10%;
+}
+
+.nav-link {
+color: #3a3847;
+width: 100%;
+}
+
+.nav-link:hover {
+color: #ffce54;
+border: none;
+border-bottom: 3px solid !important;
+}
+
+.dropdown-menu {
+border-top: 5px solid transparent !important;
+width: 10rem;
+background-color: rgb(250, 250, 250);
+box-shadow: 0 10px 10px lightgrey;
+padding-bottom: 20px;
+}
+
+.dropdown-item {
+font-size: small;
+margin-top: 10px;
+background-color: transparent;
+opacity: 0.7;
+}
+
+.dropdown-item:hover {
+background-color: #ffce54;
+color: white;
+}
+  </style>
 <body>
   <header>
     <div class="container-fluid">
@@ -58,7 +154,7 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" href="community">자유 게시판</a>
               <a class="dropdown-item" href="question">Q&A</a>
-              <a class="dropdown-item" href="<%=request.getContextPath()%>/user/review.do">사용 후기</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/review/review.do">사용 후기</a>
             </div>
           </li>
           <li class="nav-item dropdown">

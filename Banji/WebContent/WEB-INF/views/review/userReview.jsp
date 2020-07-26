@@ -198,7 +198,7 @@
 
         /* button */
         .button-area {
-            height: 0px;
+            height: 100px;
             width: 80%;
             margin: auto;
         }
@@ -304,17 +304,12 @@
                     <div class="review-title-name">홍길동님</div>
                     <div class="review-title-heart">
 
-                        <div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/>
-                           <label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/>
-                           <label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/>
-                           <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/>
-                           <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/>
-                           <label for="rating-5" class="fa fa-heart">♥</label>
+                       <div class="ratingbox clearfix">
+                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
                         </div>
                         
                     </div>
@@ -345,21 +340,12 @@
                     <div class="review-title-name">홍길동님</div>
                     <div class="review-title-heart">
                         <div class="ratingbox clearfix">
-                            <input type="radio" name="rating" id="rating-1" value="1"/>
-                            <label for="rating-1" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-2" value="2"/>
-                            <label for="rating-2" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-3" value="3"/>
-                            <label for="rating-3" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-4" value="4"/>
-                            <label for="rating-4" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-5" value="5"/>
-                            <label for="rating-5" class="fa fa-heart">♥</label>
-                         </div>
+                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -392,22 +378,13 @@
                     <div class="review-title-name">홍길동님</div>
                     <div class="review-title-heart">
 
-                        <div class="ratingbox clearfix">
-                            <input type="radio" name="rating" id="rating-1" value="1"/>
-                            <label for="rating-1" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-2" value="2"/>
-                            <label for="rating-2" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-3" value="3"/>
-                            <label for="rating-3" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-4" value="4"/>
-                            <label for="rating-4" class="fa fa-heart">♥</label>
-                           
-                            <input type="radio" name="rating" id="rating-5" value="5"/>
-                            <label for="rating-5" class="fa fa-heart">♥</label>
-                         </div>
+                       <div class="ratingbox clearfix">
+                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -442,7 +419,15 @@
                 </div>
                 <div class="review-title">
                     <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">♥♥♥♡</div>
+                    <div class="review-title-heart">
+                    	<div class="ratingbox clearfix">
+                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -466,7 +451,15 @@
                 </div>
                 <div class="review-title">
                     <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">♥♥♥♡</div>
+                    <div class="review-title-heart">
+                    	 <div class="ratingbox clearfix">
+                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -507,7 +500,7 @@
 
     <div class="button-area">
         <button type="button" class="btn btn-info btn-lg" id="btn"
-            onclick="location.href = 'writeReviewForm.do';">글쓰기</button>
+            onclick="location.href = '/review/writeReviewForm.do';">글쓰기</button>
     </div>
 
 
@@ -578,6 +571,7 @@
         </div>
     </div>
 
+	<%@ include file="../common/footer.jsp"%>
 </body>
 
 </html>

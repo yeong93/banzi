@@ -1,4 +1,4 @@
-package com.kh.project.member;
+package com.kh.banzi.review.controller;
 
 import java.io.IOException;
 
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/user/writeReviewForm.do")
-public class writeReview extends HttpServlet {
+@WebServlet("/user/introduce.do")
+public class introduceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path = "/WEB-INF/views/user/userReviewForm.jsp";
+		String path = "/WEB-INF/views/review/introduce.jsp";
 		RequestDispatcher view = request.getRequestDispatcher(path);
 		view.forward(request, response);
 	}

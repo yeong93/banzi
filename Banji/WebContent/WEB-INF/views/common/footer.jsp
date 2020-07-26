@@ -18,6 +18,39 @@
     <!-- CSS -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
     <style>
+           .footer {
+            background: #ffffff;
+            font-family: "yg-jalnan";
+            color: #3a3847;
+        }
+
+        .footer .col-xs-12{
+            margin-top: 1em;
+        }
+
+        .footer .contact i {
+            font-size: 18px;
+            font-family: "InfinitySans-RegularA1";
+        }
+
+        .footer .copyright p {
+            border-top: 1px solid lightgray;
+        }
+
+
+        .footer img{
+            width: 10em;
+        }
+
+        .footer p{
+            font-family: "InfinitySans-RegularA1";
+            color: #3a3847;
+        }
+
+        .footer h4{
+            margin-bottom: 0.5em;
+        }
+       
     </style>
 </head>
 

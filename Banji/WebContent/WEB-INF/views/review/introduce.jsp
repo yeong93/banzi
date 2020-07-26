@@ -388,5 +388,6 @@ body {
 	<!--훈련사 끝 -->
 	<p class="divide"></p>
 
+<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
