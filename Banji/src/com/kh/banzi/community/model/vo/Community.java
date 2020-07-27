@@ -11,7 +11,6 @@ public class Community {
     private int views;
     
     public Community() {
-        // TODO Auto-generated constructor stub
     }
 
     public Community(int boardNo, String regName, Timestamp regDate, String title, String content, int views) {

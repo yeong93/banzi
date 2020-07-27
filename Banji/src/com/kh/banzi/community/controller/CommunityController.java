@@ -32,7 +32,9 @@ public class CommunityController extends HttpServlet {
 	      String msg = null;
 	      String text = null;
 	      String errorMsg = null;
+	      
 	      try {
+	          
 	          
 	      }finally {
 	          
