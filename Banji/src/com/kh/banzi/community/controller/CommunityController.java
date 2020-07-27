@@ -1,6 +1,7 @@
 package com.kh.banzi.community.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.banzi.community.model.service.CommunityService;
+import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
 
 @WebServlet("/community/*")
@@ -46,10 +48,13 @@ public class CommunityController extends HttpServlet {
 	          if(command.equals("/list.do")) {
 	              PageInfo pInfo = service.getPageInfo(currentPage);
 	              
+	              List<Community> cList = service.selectList(pInfo);
+	              
 	              
 	              path = "/WEB-INF/views/community/communityList.jsp";
 	              view = request.getRequestDispatcher(path);
 	              view.forward(request, response);
+	              
 	          }
 	          
 	      }catch(Exception e) {

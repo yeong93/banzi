@@ -3,8 +3,10 @@ package com.kh.banzi.community.model.service;
 import static com.kh.banzi.common.DBCP.getConnection;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.kh.banzi.community.model.dao.CommnityDAO;
+import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
 
 public class CommunityService {
@@ -33,6 +35,11 @@ public class CommunityService {
        conn.close();
 
        return new PageInfo(cp, listCount);
+    }
+
+    public List<Community> selectList(PageInfo pInfo) {
+        
+        return null;
     }
 
 }
