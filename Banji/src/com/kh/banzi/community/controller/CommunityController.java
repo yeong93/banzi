@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.banzi.community.model.service.CommunityService;
+import com.kh.banzi.community.model.vo.PageInfo;
+
 @WebServlet("/community/*")
 public class CommunityController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,11 +36,24 @@ public class CommunityController extends HttpServlet {
 	      String text = null;
 	      String errorMsg = null;
 	      
+	      
 	      try {
+	          CommunityService service = new CommunityService();
 	          
+	          String currentPage = request.getParameter("cp");
+
 	          
-	      }finally {
+	          if(command.equals("/list.do")) {
+	              PageInfo pInfo = service.getPageInfo(currentPage);
+	              
+	              
+	              path = "/WEB-INF/views/community/communityList.jsp";
+	              view = request.getRequestDispatcher(path);
+	              view.forward(request, response);
+	          }
 	          
+	      }catch(Exception e) {
+	          e.printStackTrace();
 	      }
 	}
 	

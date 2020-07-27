@@ -26,7 +26,7 @@
 	
 </head>
 <body>
-	<div class="container">
+	<div class="boardTitle">
 		<%@ include file="../common/header.jsp"%>
 
 		<div class="container">
@@ -43,6 +43,9 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
+	                 <tr>
+	                 <td>안녕</td>
+	                 </tr>
 	                </tbody>
 	            </table>
 	        </div>
