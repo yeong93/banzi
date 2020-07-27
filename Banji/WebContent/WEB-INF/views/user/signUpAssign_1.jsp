@@ -27,7 +27,7 @@
 .f_hr {width: 800px; border: 1px solid #ececec; }
 
 /*상단css*/
-* {padding:0; background-color:#ececec;margin-left: 0;margin-right: 0;margin-bottom: 0px;}
+* {padding:0; background-color:white;margin-left: 0;margin-right: 0;margin-bottom: 0px;}
 a {text-decoration:none; color:black;background:white;}
 ul {background:white;}
 .wrap {width:800px;height:100%; margin:0 auto; padding:0; background-color:white;}
