@@ -178,8 +178,6 @@ color: white;
     </div>
   </header>
 
-
-
   <script>
     $(function () {
       $(".nav-link").on("mouseenter", function () {
