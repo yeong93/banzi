@@ -46,6 +46,36 @@ public class User {
 		this.userQuestion = userQuestion;
 		this.userAnswer = userAnswer;
 	}
+	
+	 /** 로그인 입력
+	    * @param userId
+	    * @param userPwd
+	    */
+	   public User(String userId, String userPwd) {
+		   super();
+		   this.userId = userId;
+		   this.userPwd = userPwd;
+	   }
+
+
+	   /** 로그인 결과
+	 * @param userName
+	 * @param userEmail
+	 * @param userGrade
+	 * @param userQuestion
+	 * @param userAnswer
+	 * @param userAuth
+	 */
+	public User(String userName, String userEmail, String userGrade, String userQuestion, String userAnswer,
+			String userAuth) {
+		super();
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userGrade = userGrade;
+		this.userQuestion = userQuestion;
+		this.userAnswer = userAnswer;
+		this.userAuth = userAuth;
+	}
 
 	// (3) getter와 setter 작성
 	public int getUserNo() {

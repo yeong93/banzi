@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.kh.banzi.user.model.vo.User"%>
+<%	
+	User loginUser = (User)session.getAttribute("loginUser");
+
+	boolean isRemember = false;
+	String rememberId = "";
+	Cookie[] cookies = request.getCookies();
+	
+	if(cookies != null){
+		for(Cookie c : cookies){
+			if("remeberId".equals(c.getName())){
+				rememberId = c.getValue();
+				isRemember = true;
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +33,8 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
-  <title>head&nav</title>
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/style.css">
+  <title>BAN JI</title>
   <style>
   
 /* -------------- body -------------- */
@@ -114,7 +131,38 @@ opacity: 0.7;
 background-color: #ffce54;
 color: white;
 }
+
+#userNameArea{
+	border: none !important;
+	color: #3a3847 !important;
+}
   </style>
+  
+  <!--------------------------------- sweet alert ---------------------------------------- -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <script>
+  <%
+ 	 String status = (String)(request.getSession().getAttribute("status"));
+ 	 String msg = (String)(request.getSession().getAttribute("msg"));
+ 	 String text = (String)(request.getSession().getAttribute("text"));
+  %>
+  
+  <% if(msg != null){%>
+		 	 swal({
+		 		 icon : "<%=status%>", 
+		 		 title : "<%=msg%>",
+		 		 text : "<%=text != null ? text : "" %>" 
+		 	 });
+ 	 <%
+ 	 		session.removeAttribute("msg");
+ 	 		session.removeAttribute("status");
+ 	 		session.removeAttribute("text");
+  	}
+ 	 %>
+  
+  </script>
+  
 <body>
   <header>
     <div class="container-fluid">
@@ -129,7 +177,14 @@ color: white;
         </div>
         <div class="col-md-4">
           <button type="button" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign1.do'">회원가입</button>
-          <button type="button">로그인</button>
+          
+          <% if(loginUser == null) {%>
+          	 <button type="button" onclick="location.href='<%=request.getContextPath()%>/userLogin/loginForm.do'">로그인</button>
+          <% } else{ %>
+          	 <button type="button" onclick="location.href='<%=request.getContextPath()%>/userLogin/logout.do'">로그아웃</button>
+          	 <button type="button" id="userNameArea" onclick="location.href='<%=request.getContextPath()%>/myPage/changeUserForm.do'"><%=loginUser.getUserName() %> 님</button>
+          	 
+          <% } %>
         </div>
       </div>
     </div>
@@ -166,11 +221,11 @@ color: white;
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/myPage/changeUserForm.do" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">회원정보 수정</a>
-              <a class="dropdown-item" href="#">비밀번호 수정</a>
-              <a class="dropdown-item" href="#">회원 탈퇴</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a>
             </div>
           </li>
         </ul>
