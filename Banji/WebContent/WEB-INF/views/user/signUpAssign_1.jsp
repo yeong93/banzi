@@ -8,6 +8,7 @@
 </head>
 <style>
         /*header,footer*/
+.body{background-color:white;}
 .header {width:800px; height:150px; margin:0 auto;background:white; }
 .logo {width:308px; height:80px; margin:0 auto; padding:40px 0; background:white; background:url('../Images/mainlogo2.png') no-repeat center;  }
 .logo a {text-decoration:none; color:white;}
@@ -92,18 +93,16 @@ textarea:focus, input:focus{
     font-weight:bold;
 }
 </style>
-<script>
-	// 체크박스 동의하지 않을 시 페이지 넘어가지 않도록
-
-  </script>
 <body>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" onsubmit="return validate();">
             <div class="wrap"><!--전체div 시작-->
 
             <!--header 시작-->       
-            <div class="header">       
+            <div class="header">
+            <a href="<%=request.getContextPath()%>">       
                 <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+            </a>
             </div>
             <hr class="nt_line" />
             <!--header 끝-->
@@ -520,10 +519,17 @@ textarea:focus, input:focus{
 		    </div>
 		    <!--article 끝-->
             <!--footer 시작-->
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %></div>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <!--footer 끝-->
-        </div> <!--전체div 끝-->    
+	 <!--전체div 끝-->    
     </form>
-</body>
+    <script>
+    	function validate(){
+    		$(!("#agree")).on("click", function(){
+    			alert("약관에 동의해주세요.");
+    			return false;
+    		});
+    	}
+    </script>
 </body>
 </html>

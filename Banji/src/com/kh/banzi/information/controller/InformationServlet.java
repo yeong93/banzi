@@ -19,10 +19,9 @@ public class InformationServlet extends HttpServlet {
 		// - 요청에 따른 Servlet을 각각 생성하지 않고 하나의 Servlet에 여러 요청을 처리함.
 		
 		String uri = request.getRequestURI();
-		// http://localhost:8080/wsp/notice/list.do;
 		
 		String contextPath = request.getContextPath();
-		// http://localhost:8080/wsp
+		// http://localhost:8080/banzi
 		
 		// substring : 문자열을 자르는 메소드
 		String command = uri.substring((contextPath + "/information").length());
