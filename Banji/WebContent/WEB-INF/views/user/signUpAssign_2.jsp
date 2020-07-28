@@ -15,26 +15,53 @@
         <!-- Respond.js 으로 IE8 에서 반응형 기능을 활성화하세요 (https://github.com/scottjehl/Respond) -->
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <style>
-        /* 인피니티산스 Regular */
-        @font-face {
+    /* 인피니티산스 Regular */
+    @font-face {
+        font-family: "InfinitySans-RegularA1";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+        }
+        *{
             font-family: "InfinitySans-RegularA1";
-            src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff") format("woff");
-            font-weight: normal;
-            font-style: normal;
-            }
-            body{
-                font-family: "InfinitySans-RegularA1";
-            }
-            #btn, #btn2{
-                background-color:  #ffce54; 
-                border: none;
-            }
+        }
+        #btn, #btn2{
+            background-color:  #ffce54; 
+            border: none;
+        }
     </style>
     </head>
+    <!-- sweetAlert창 추가 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+		<%
+  		String msg = (String)(request.getSession().getAttribute("msg"));
+  		String status = (String)(request.getSession().getAttribute("status"));
+  		String text = (String)(request.getSession().getAttribute("text"));
+  		%>
+  		
+  		<% if (msg != null){ %>
+	  		swal({
+	  			icon : "<%=status%>",
+	  			title : "<%=msg%>",
+	  			text : "<%=text != null ? text : ""%>"
+	  		});
+  		<%
+  			// Session에 존재하는 특정 키값의 속성 제거
+  			session.removeAttribute("msg");
+  			session.removeAttribute("status");
+  			session.removeAttribute("text");
+  		}
+  		%>
+    </script>
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
             <!-- 헤더 들어가는 부분 -->
-            <div><img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px"></div>
+            <div>
+            <a href="<%=request.getContextPath()%>">
+            <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+            </a>
+            </div>
             <!--// 헤더 들어가는 부분 -->
             <!-- 모달창 -->
             <div class="modal fade" id="defaultModal">
@@ -61,8 +88,9 @@
             <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/user/signUp.do">
                 <div class="form-group" id="divId">
                     <label for="inputId" class="col-lg-2 control-label">아이디</label>
+                    <span id="checkId">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control onlyAlphabetAndNumber" id="id" name="id" data-rule-required="true" placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
+                        <input type="text" class="form-control onlyAlphabetAndNumber" id="id" name="id" data-rule-required="true" placeholder="아이디는 첫글자 영어 소문자,이후 영어 대/소문자, 숫자로 12자 이내입니다." maxlength="30">
                     </div>
                 </div>
                 <div class="form-group" id="divPassword">
@@ -73,6 +101,7 @@
                 </div>
                 <div class="form-group" id="divPasswordCheck">
                     <label for="inputPasswordCheck" class="col-lg-2 control-label">비밀번호 확인</label>
+                    <span id="checkPwd">&nbsp;</span>
                     <div class="col-lg-10">
                         <input type="password" class="form-control" id="passwordCheck" name="password2" data-rule-required="true" placeholder="비밀번호 확인" maxlength="30">
                     </div>
@@ -329,6 +358,43 @@
                 });
 
             });
+            // 비밀번호 일치 여부 검사
+    		$("#passwordCheck").on("input",function() {
+    			if($("#password").val().trim()!= $("#passwordCheck").val().trim()){
+    				$("#checkPwd").text("비밀번호가 일치하지 않습니다.").css("color","red");
+    			}else{
+    				$("#checkPwd").text("비밀번호가 일치합니다.").css("color","green");
+    			}
+    	  		});
+            
+
+            // id를 입력하는 경우 발생하는 이벤트
+            var $id = $("#id");
+            
+         	$("#id").on("input", function(){
+             // ajax를 이용한 아이디 유효성 검사
+             var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
+             if(!regExp.test($id.val())){
+                 $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
+             }else{ // 유효한 아이디 형식일 때
+                 $.ajax({
+                     url : "idDupCheck.do",
+                     data: {"id" : $id.val()},
+                     type: "get",
+
+                     success : function(result){
+                         if(result ==0) {
+                             $("#checkId").text("사용 가능한 아이디입니다.").css("color", "green");
+                         }else{
+                             $("#checkId").text("이미 사용중인 아이디입니다.").css("color", "red");
+                         }
+                     }
+                     ,error : function() {
+                         console.log("ajax 통신 실패");
+                     }
+                 });
+             }
+         });
         </script>
             <hr/>
             <!-- 푸터 들어가는 부분 -->
