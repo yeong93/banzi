@@ -76,6 +76,24 @@ public class User {
 		this.userAnswer = userAnswer;
 		this.userAuth = userAuth;
 	}
+	
+	
+
+	/** 마이페이지-회원정보 수정
+	 * @param userId
+	 * @param userEmail
+	 * @param userGrade
+	 * @param userQuestion
+	 * @param userAnswer
+	 */
+	public User(String userId, String userEmail, String userGrade, String userQuestion, String userAnswer) {
+		super();
+		this.userId = userId;
+		this.userEmail = userEmail;
+		this.userGrade = userGrade;
+		this.userQuestion = userQuestion;
+		this.userAnswer = userAnswer;
+	}
 
 	// (3) getter와 setter 작성
 	public int getUserNo() {

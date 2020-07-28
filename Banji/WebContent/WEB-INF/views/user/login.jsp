@@ -21,8 +21,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <!-- CSS -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/SHstyle.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/SHstyle.css">
 
 <style>
 #search-id {
@@ -124,17 +123,17 @@
     	
         function loginValidate() {
 			
-			if($("#userId").val().trim() == ""){
-				alert("아이디를 입력해 주세요.");
-				$("#userId").focus();
-				return false;
-			}
-			if($("#userPwd").val().trim() == ""){
-				alert("비밀번호를 입력해 주세요.");
-				$("#userPwd").focus();
-				return false; 
-			}
-			return true;	
+					if($("#userId").val().trim() == ""){
+						alert("아이디를 입력해 주세요.");
+						$("#userId").focus();
+						return false;
+					}
+					if($("#userPwd").val().trim() == ""){
+						alert("비밀번호를 입력해 주세요.");
+						$("#userPwd").focus();
+						return false; 
+					}
+					return true;	
 			
 		}
         
