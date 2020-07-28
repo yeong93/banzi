@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +35,8 @@
       </h1>
       <!-- Project One -->
       <div class="btn">
-	  <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
+      																														<!-- 보드 -->
+	  <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=%>';">글쓰기</button>
       </div>
       <div class="row">
         <div class="col-md-7">

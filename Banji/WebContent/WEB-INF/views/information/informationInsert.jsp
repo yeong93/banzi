@@ -62,7 +62,7 @@
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label">작성자</label>
 					<!-- h5 : input 태그 아니라서 form으로 넘어가지 않음, 세션으로 넘겨줄 것 -->
-					<h5 class="my-0" id="writer"><%= loginMember.getMemberId() %></h5>
+					<h5 class="my-0" id="writer"><%= loginUser.getUserId() %></h5>
 				</div>
 
 

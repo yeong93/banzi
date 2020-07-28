@@ -197,7 +197,7 @@ color: white;
             <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">구성원 소개</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#">음식</a>
               <a class="dropdown-item" href="#">견종백과</a>

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/information/*")
 public class InformationServlet extends HttpServlet {
        
+	private static final long serialVersionUID = 1L;
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Front Controller 패턴
 		// - 클라이언트의 요청을 한 곳으로 집중시켜 개발하여 코드 길이 감소와 유지보수성을 증가시킨 패턴
