@@ -84,4 +84,46 @@ public class UserDAO {
 		return result;
 	}
 	
+	
+	
+	/** 로그인 DAO
+	 * @param conn
+	 * @param user
+	 * @return loginUser 
+	 * @throws Exception
+	 */
+	public User login(Connection conn, User user) throws Exception{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User loginUser = null;
+
+		String query = prop.getProperty("loginUser");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserPwd());
+
+			rset = pstmt.executeQuery();
+
+			if(rset.next()) {
+				loginUser = new User(
+						rset.getString("USER_NAME"), 
+						rset.getString("USER_EMAIL"), 
+						rset.getString("USER_GRADE"), 
+						rset.getString("USER_QUESTION"),
+						rset.getString("USER_ANSWER"),
+						rset.getString("USER_AUTH")+"");
+				loginUser.setUserId(user.getUserId());
+			}
+		} finally {
+			rset.close();
+			pstmt.close();
+		}
+
+		return loginUser;
+
+
+	}
+	
 }

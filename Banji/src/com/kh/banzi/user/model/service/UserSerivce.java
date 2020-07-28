@@ -47,5 +47,20 @@ public class UserSerivce {
 		return result;
 	}
 	
+	/** 로그인 Service
+	 * @param user
+	 * @return loginUser
+	 * @throws Exception
+	 */
+	public User login(User user) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		User loginUser = dao.login(conn, user);
+		
+		conn.close();
+		return loginUser;
+	}
+	
 	
 }
