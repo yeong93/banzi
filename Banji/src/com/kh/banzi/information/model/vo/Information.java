@@ -10,15 +10,16 @@ public class Information {
 	private Timestamp infoCreateDate;
 	private Timestamp infoModifyDate;
 	private String infoStatus;
-	private int boardType;
+	private int infoBoardType;
 	
 	// (1) 기본 생성자
 	public Information() {
 		
 	}
+	
 	// (2) 매개변수 있는 생성자
 	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, int readCount,
-			Timestamp infoCreateDate, Timestamp infoModifyDate, String infoStatus, int boardType) {
+			Timestamp infoCreateDate, Timestamp infoModifyDate, String infoStatus, int infoBoardType) {
 		super();
 		this.infoBoardNo = infoBoardNo;
 		this.infoBoardTitle = infoBoardTitle;
@@ -27,10 +28,10 @@ public class Information {
 		this.infoCreateDate = infoCreateDate;
 		this.infoModifyDate = infoModifyDate;
 		this.infoStatus = infoStatus;
-		this.boardType = boardType;
+		this.infoBoardType = infoBoardType;
 	}
-	
 	// (3) getter와 setter 작성
+	
 	public int getInfoBoardNo() {
 		return infoBoardNo;
 	}
@@ -73,19 +74,19 @@ public class Information {
 	public void setInfoStatus(String infoStatus) {
 		this.infoStatus = infoStatus;
 	}
-	public int getBoardType() {
-		return boardType;
+	public int getInfoBoardType() {
+		return infoBoardType;
 	}
-	public void setBoardType(int boardType) {
-		this.boardType = boardType;
+	public void setInfoBoardType(int infoBoardType) {
+		this.infoBoardType = infoBoardType;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Information [infoBoardNo=" + infoBoardNo + ", infoBoardTitle=" + infoBoardTitle + ", infoBoardContent="
 				+ infoBoardContent + ", readCount=" + readCount + ", infoCreateDate=" + infoCreateDate
-				+ ", infoModifyDate=" + infoModifyDate + ", infoStatus=" + infoStatus + ", boardType=" + boardType
-				+ "]";
+				+ ", infoModifyDate=" + infoModifyDate + ", infoStatus=" + infoStatus + ", infoBoardType="
+				+ infoBoardType + "]";
 	}
 	
 	
