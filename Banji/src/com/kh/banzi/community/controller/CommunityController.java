@@ -52,6 +52,7 @@ public class CommunityController extends HttpServlet {
 	              
 	              
 	              path = "/WEB-INF/views/community/communityList.jsp";
+	              request.setAttribute("cList", cList);
 	              view = request.getRequestDispatcher(path);
 	              view.forward(request, response);
 	              
@@ -65,6 +66,7 @@ public class CommunityController extends HttpServlet {
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	      doGet(request, response);
 	}
 
 }

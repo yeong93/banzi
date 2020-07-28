@@ -37,9 +37,14 @@ public class CommunityService {
        return new PageInfo(cp, listCount);
     }
 
-    public List<Community> selectList(PageInfo pInfo) {
+    public List<Community> selectList(PageInfo pInfo) throws Exception {
+        Connection conn = getConnection();
         
-        return null;
+        List<Community> cList = dao.selectList(conn, pInfo);
+
+        conn.close();
+
+        return cList;
     }
 
 }

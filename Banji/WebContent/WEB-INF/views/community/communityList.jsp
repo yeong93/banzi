@@ -1,4 +1,11 @@
+<%@page import="com.kh.banzi.community.model.vo.Community"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.banzi.community.model.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+  PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
+  List<Community> cList = (List<Community>)request.getAttribute("cList");
+%>
 	
 <!DOCTYPE html>
 <html>
@@ -22,11 +29,14 @@
         	height: 50px;
         }
         
+        .container{
+          padding-top:145px;
+        }
 	</style>
 	
 </head>
 <body>
-	<div class="boardTitle">
+	<div class="boardTitle ">
 		<%@ include file="../common/header.jsp"%>
 
 		<div class="container">
@@ -34,8 +44,6 @@
 	            <table class="table table-hover table-striped" id="list-table">
 	                <thead>
 	                    <tr>
-	                        <th>글번호 </th>
-	                        <th>카테고리 </th>
 	                        <th>제목</th>
 	                        <th>작성자</th>
 	                        <th>조회수</th>
@@ -43,10 +51,26 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                 <tr>
-	                 <td>안녕</td>
-	                 </tr>
-	                </tbody>
+	                
+	                 <% if(cList.isEmpty()) {%>
+	                   <tr><td colspan="6">존재하는 게시글이 없습니다.</td></tr>
+                
+                   <%}  else{%> 
+                               <% for(Community c : cList) {%>
+                                  <tr>
+                                     <td class="boardTitle">
+                                      <%=c.getTitle() %>
+                                      
+                                     </td>
+                                     
+                                     <td><%=c.getRegName() %></td>
+                                     <td><%=c.getViews() %></td>
+                                     <td><%=c.getRegDate() %></td>
+                                    </tr>
+                               <%} %>
+                   <%} %>	          
+                   
+                  </tbody>
 	            </table>
 	        </div>
 	

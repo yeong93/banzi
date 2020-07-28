@@ -12,6 +12,18 @@ public class Community {
     
     public Community() {
     }
+    
+    
+
+    public Community(String regName, Timestamp regDate, String title, String content, int views) {
+        super();
+        this.regName = regName;
+        this.regDate = regDate;
+        this.title = title;
+        this.content = content;
+        this.views = views;
+    }
+
 
     public Community(int boardNo, String regName, Timestamp regDate, String title, String content, int views) {
         super();

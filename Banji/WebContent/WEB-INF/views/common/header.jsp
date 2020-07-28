@@ -33,7 +33,6 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/style.css">
   <title>BAN JI</title>
   <style>
   
@@ -171,7 +170,7 @@ color: white;
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-          <a href="#">
+          <a href="<%=request.getContextPath()%>">
             <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" width="200px" class="mx-auto d-block" id="main-logo">
           </a>
         </div>
