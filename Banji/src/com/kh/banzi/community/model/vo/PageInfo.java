@@ -12,13 +12,16 @@ public class PageInfo {
     private int endPage;            // 페이징바 마지막 페이지 번호
     
     private int boardType;          // 게시글 타입
-
     
+    
+
     
     public PageInfo(int currentPage, int listCount) {
         super();
         this.currentPage = currentPage;
         this.listCount = listCount;
+        makePageInfo();
+
     }
 
     public PageInfo(int currentPage, int listCount, int boardType) {

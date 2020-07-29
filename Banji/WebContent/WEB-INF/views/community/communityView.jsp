@@ -67,9 +67,6 @@
 	#replyListArea{
 		list-style-type: none;
 	}
-	#board-area{
-	 padding-top : 157px;
-	}
 </style>
 </head>
 <body>

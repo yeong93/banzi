@@ -33,14 +33,9 @@
         #searchForm>*{
             top : 0;
         }
-        
         .boardTitle > img{
         	width: 50px;
         	height: 50px;
-        }
-        
-        .container{
-          padding-top:145px;
         }
         table *{
           text-align : center;
@@ -98,13 +93,13 @@
                <% if(currentPage > 10) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?&cp=1">&lt;&lt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?&cp=1">&lt;&lt;</a>
                     </li>
                  
                     <!--  이전 순번의 페이징 바로 이동[<] -->
                     <li>
                        <a class = "page-link"
-                       href = "<%=request.getContextPath()%>/board/list.do?cp=<%=prev%>">&lt;</a>
+                       href = "<%=request.getContextPath()%>/community/list.do?cp=<%=prev%>">&lt;</a>
                     </li>
                     <%}%>
                     <!--  10개의 페이지 목록 -->
@@ -112,12 +107,12 @@
                        
                        <%if (p== currentPage) {%>
                        
-                    <li><a class="page-link"><%=p %></a></li>
+                    <li><a class="page-link"><%=p%></a></li>
                     
                     <%} else{%>
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=p%>"><%=p %></a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=p%>"><%=p %></a>
                     
                     <%} %>
                     
@@ -128,13 +123,13 @@
                        <!-- 다음 페이지[>] -->
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=next%>">&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=next%>">&gt;</a>
                     </li>
                     
                     <!--  마지막 페이지로 이동[>>] -->
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
                     </li>
                     
                     

@@ -29,6 +29,7 @@ public class CommunityService {
 
        // currentPage가 null인 경우 1, 아닌 경우 정수형으로 파싱
        int cp = (currentPage == null) ? 1 : Integer.parseInt(currentPage);
+       System.out.println(cp);
 
        // DB에서 전체 게시글 수 조회
        int listCount = dao.getListCount(conn);
