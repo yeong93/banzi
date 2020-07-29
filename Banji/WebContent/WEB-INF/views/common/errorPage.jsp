@@ -15,8 +15,8 @@
 				
 	<h1 align="center"><%=errorMsg%></h1>
 	<div align="center">
-		<button onclick="history.back();">이전 페이지로 이동</button>
-		<button onclick="location.href='<%= request.getContextPath()%>' ">메인 페이지로 이동</button>
+		<button onclick="history.back();">이전 페이지로 돌아가기</button>
+		<button onclick="location.href='<%= request.getContextPath()%>'">메인 페이지로 이동하기</button>
 	</div>
 </body>
 </html>

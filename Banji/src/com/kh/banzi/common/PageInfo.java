@@ -1,11 +1,11 @@
-package com.kh.banzi.information.model.vo;
+package com.kh.banzi.common;
 
 public class PageInfo {
 	
 	private int currentPage;	// 현재 페이지 번호
 	private int listCount; 		// 전체 게시글의 수
-	private int limit = 4; // 한 페이지에 보여질 게시글의 수 
-	private int pagingBarSize = 3; // 화면에 표시될 페이징바의 페이지 개수
+	private int limit = 10; // 한 페이지에 보여질 게시글의 수 
+	private int pagingBarSize = 10; // 화면에 표시될 페이징바의 페이지 개수
 	
 	private int maxPage; 	   // 전체 페이지 중 제일 마지막 페이지
 	private int startPage; 	   // 페이징바 시작 페이지 번호
@@ -118,9 +118,13 @@ public class PageInfo {
 		
 		
 		// startPage : 페이징바 시작 페이지 번호
+		// 페이징바의 크기가 10인 경우 시작 페이지 번호는  1, 11, 21, 31, ...
+			// 500번째 글을 볼 경우 (500번째 글, 1페이지에 있음) 1-1=0/ 10 *  10 +1
 		startPage = (currentPage-1)/pagingBarSize * pagingBarSize + 1;
 		
 		// endPage : 페이징바 끝 페이지 번호
+		// 페이징바의 크기가 10인 경우 끝 페이지 번호는
+		// 10, 20, 30, 40, ....
 		endPage = startPage + pagingBarSize - 1;
 		
 		// endPage가 maxPage보다 클 경우
