@@ -86,11 +86,10 @@ public class User {
 	 * @param userQuestion
 	 * @param userAnswer
 	 */
-	public User(String userId, String userEmail, String userGrade, String userQuestion, String userAnswer) {
+	public User(String userId, String userEmail, String userQuestion, String userAnswer) {
 		super();
 		this.userId = userId;
 		this.userEmail = userEmail;
-		this.userGrade = userGrade;
 		this.userQuestion = userQuestion;
 		this.userAnswer = userAnswer;
 	}

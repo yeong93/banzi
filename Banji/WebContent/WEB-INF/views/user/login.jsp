@@ -21,7 +21,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <!-- CSS -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/SHstyle.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/login.css">
 
 <style>
 #search-id {
@@ -40,7 +40,7 @@
 
 </head>
 
-<body>
+<body id="login">
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="limiter">
         <div class="container-login100">
@@ -142,7 +142,7 @@
 
     </script>
 
-
+	
 
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

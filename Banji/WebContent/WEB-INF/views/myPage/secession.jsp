@@ -5,92 +5,10 @@
 
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 수정</title>
+<title>회원 탈퇴</title>
 
-<!-- Required meta tags -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-	crossorigin="anonymous" />
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<style>
-#mypage * {
-	font-family: "InfinitySans-RegularA1";
-}
-
-input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
-	{
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-#title {
-	text-align: center;
-}
-
-#myPage-btn {
-	font-family: "yg-jalnan" !important;
-	border: 10px solid #FFCE54 !important;
-	background-color: #FFCE54;
-	border-radius: 0;
-	border: none;
-}
-
-#myPage-btn:focus {
-	box-shadow: none;
-}
-
-#myPage-btn:hover {
-	border: 10px solid #FFCE54;
-	background-color: #ffffff;
-	color: #FFCE54;
-}
-
-.readonly {
-	background-color: #ffffff !important;
-}
-
-#mypage input, #mypage select {
-	border: none;
-	border-radius: 0;
-	border-bottom: 1px solid #ced4da;
-}
-
-#mypage input:focus, #mypage select:focus {
-	border-color: #FFCE54;
-	box-shadow: none;
-}
-
-.readonly:focus {
-	border-color: #ced4da !important;
-}
-
-#mypage fieldset {
-	border: 1px solid #ced4da;
-}
-
-#mypage legend {
-	font-size: 1.1em;
-	color: #ced4da;
-}
-
-/* *************** aside ******************* */
-#myPage-aside * {
-	text-decoration: none;
-	color: black;
-	border-radius: 0;
-	text-align: center;
-}
-
-#myPage-aside li:hover {
-	background-color: #ced4da;
-}
-</style>
+<!-- mypage CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
 </head>
 
 <body id="mypage">
@@ -103,7 +21,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			<div class="row">
 
 				<div class="col-md-3">
-					<h3 id="title">비밀번호 수정</h3>
+					<h3 id="title">회원 탈퇴</h3>
 
 					<div class="col-sm-10 mt-5 mx-auto" id="myPage-aside">
 						<ul class="list-group">
@@ -136,9 +54,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 									</div>
 								</div>
 
-								<br> <br>
-								<hr>
-								<br> <br>
+							 <hr>
 
 								<!-- 현재 비밀번호 -->
 								<div class="row mb-5 ml-3 mr-3">
@@ -198,8 +114,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 								<br>
 								<div class="row mb-5">
 									<div class="col-md-12">
-										<button class="btn btn-primary btn-lg btn-block" type="submit"
-											id="myPage-btn">탈퇴</button>
+										<button class="btn btn-primary btn-lg btn-block" type="submit" id="mypage-btn">탈퇴</button>
 									</div>
 								</div>
 							</form>
@@ -209,30 +124,44 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			</div>
 		</div>
 	</section>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	
 	<script>
 		function validate() {
 
 			if($("#id").val().trim() == ""){
-				alert("아이디를 입력해 주세요.");
+				swal({
+				    icon: "info", 
+				    title: "아이디를 입력해주세요."
+				});
 				$("#id").focus();
 				return false;
 			}
 			if($("#pwd").val().trim() == ""){
-				alert("비밀번호를 입력해 주세요.");
+				swal({
+				    icon: "info", 
+				    title: "비밀번호를 입력해주세요."
+				});
 				$("#pwd").focus();
 				return false; 
 			}
 			
 			if(!$("#agree").prop("checked")){
-				alert("약관에 동의해 주세요.");
+				swal({
+				    icon: "info", 
+				    title: "약관에 동의해주세요."
+				});
 				return false;
 			}else{
-				return confirm("정말로 탈퇴하시겠습니까?");
+				return confirm("정말로 탈퇴하시겠습니까?")
+				
+				);
 			}			
 			
 			return true;	
 		}
 	</script>
+	
 </body>
 
 </html>
