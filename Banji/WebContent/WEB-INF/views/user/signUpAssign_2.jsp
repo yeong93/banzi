@@ -29,14 +29,18 @@
             background-color:  #ffce54; 
             border: none;
         }
+        #back{
+        	height:10px;
+        }
     </style>
     </head>
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
             <!-- 헤더 들어가는 부분 -->
+            <div id="back"></div>
             <div>
             <a href="<%=request.getContextPath()%>">
-            <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+            <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="180px">
             </a>
             </div>
             <!--// 헤더 들어가는 부분 -->
@@ -67,7 +71,7 @@
                     <label for="inputId" class="col-lg-2 control-label">아이디</label>
                     <span id="checkId">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control onlyAlphabetAndNumber" id="id" name="id" data-rule-required="true" placeholder="아이디는 첫글자 영어 소문자,이후 영어 대/소문자, 숫자로 12자 이내입니다." maxlength="30">
+                        <input type="text" class="form-control onlyAlphabetAndNumber" id="id" name="id" data-rule-required="true" placeholder="아이디는 첫글자 영어 소문자,이후 영어 대/소문자, 6글자 이상 숫자로 12자 이내입니다." maxlength="30">
                     </div>
                 </div>
                 <div class="form-group" id="divPassword">

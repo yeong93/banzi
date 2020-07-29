@@ -200,7 +200,7 @@ color: white;
             <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">구성원 소개</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="<%=request.getContextPath()%>/information/list.do" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/information/list.do?type=2" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="community/list.do" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>

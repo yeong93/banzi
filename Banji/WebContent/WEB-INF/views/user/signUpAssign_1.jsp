@@ -92,16 +92,24 @@ textarea:focus, input:focus{
     background-color:none;
     font-weight:bold;
 }
+#back{
+	height:10px;
+}
 </style>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
 <body>
     <form id="form1" action="<%=request.getContextPath()%>/user/signUpAssign2.do" onsubmit="return validate();">
             <div class="wrap"><!--전체div 시작-->
-
-            <!--header 시작-->       
+            <!--header 시작-->   
+            <div id="back"></div>    
             <div class="header">
             <a href="<%=request.getContextPath()%>">       
-                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+                <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="180px">
             </a>
             </div>
             <hr class="nt_line" />
@@ -514,7 +522,6 @@ textarea:focus, input:focus{
               </div>
                      <hr class="j_hr" />
                    <div class="join_button">
-                        <%-- <button type="button" id="nextb" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign2.do'">다음</button> --%>
                         <button type="submit" id="nextb">다음</button>
                    </div>
 		    </div>

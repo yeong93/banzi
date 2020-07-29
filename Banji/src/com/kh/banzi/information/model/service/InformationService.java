@@ -47,7 +47,7 @@ public class InformationService {
 		List<Information> bList = dao.selectList(conn, pInfo);
 		conn.close();
 		
-		return null;
+		return bList;
 	}
 
 }
