@@ -1,6 +1,6 @@
+<%@page import="com.kh.banzi.common.PageInfo"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.information.model.vo.Information"%>
-<%@page import="com.kh.banzi.common.PageInfo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -100,12 +100,10 @@
 	                </tbody>
 	            </table>
 	        </div>
-	
 	        <hr>
-	        
-	        <%-- 로그인이 되어있는 경우 --%>
+	        <%-- 로그인이 되어있으면서 유저 등급이 에디터인 경우 && loginUser.getUserGrade().equals("editor") --%>
 	        <% if(loginUser != null) {%>
-	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
+	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href ='insertForm.do?type=<%=boardType%>';">글쓰기</button>
 	        <% } %>
 	        
 	        <!-- 페이징바 -->
@@ -114,11 +112,11 @@
 	        		<% if(currentPage > 10) { %>
 	        			<!-- 맨 처음 페이지로 이동[<<] -->
 	        			<li>	        														<!-- & : 파라미터 이어서 추가 -->
-	        				<a class="page-link" href="<%=request.getContextPath()%>/board/list.do?type=<%=boardType%>&cp=1">&lt;&lt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=1">&lt;&lt;</a>
 	        			</li>
 	        			<!-- 이전 순번의 페이징바로 이동[<] -->
 	        			<li>
-	        			<a class="page-link" href="<%=request.getContextPath()%>/board/list.do?type=<%=boardType%>&cp=<%=prev%>">&lt;</a>
+	        			<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=prev%>">&lt;</a>
 	        			<% } %>
 	        			<!--  10개의 페이지 목록 -->
 	        			<% for(int p = startPage; p<=endPage; p++)  {%>
@@ -128,7 +126,7 @@
 	        				<li><a class="page-link"><%=p%></a></li>
 	        				<% }else { %>
 	        					<li>
-	        					<a class="page-link" href="<%=request.getContextPath()%>/board/list.do?type=<%=boardType%>&cp=<%=p%>"><%=p %></a>
+	        					<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=p%>"><%=p %></a>
 	        					</li>
 	        				<% } %>
 	        			<% } %>
@@ -136,12 +134,12 @@
 	        			<% if((next < maxPage))  { %>
 	        			<!-- 다음 페이징바[>] -->
 	        			<li>
-	        				<a class="page-link" href="<%=request.getContextPath()%>/board/list.do?type=<%=boardType%>&cp=<%=next %>">&gt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=next %>">&gt;</a>
 	        			</li>
 
 	        			<!--  마지막 페이지로 이동 [>>] -->
 	        			<li>
-	        				<a class="page-link" href="<%=request.getContextPath()%>/board/list.do?type=<%=boardType%>&cp=<%=maxPage %>">&gt;&gt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=maxPage %>">&gt;&gt;</a>
 	        			</li>		
 	        		<% } %>
 	        	</ul>
@@ -170,7 +168,7 @@
 			var infoBoardNo = $(this).parent().children().eq(0).text();
 			// location.href : 요청을 보내서 이동하는 jquery 내부 객체
 			location.href =
-			"<%=request.getContextPath()%>/board/view.do?type=<%=boardType%>&cp=<%=currentPage%>&no=" + infoBoardNo;
+			"<%=request.getContextPath()%>/information/view.do?type=<%=boardType%>&cp=<%=currentPage%>&no=" + infoBoardNo;
 		// .으로 메소드 체이닝
 		}).on("mouseenter", function() {
 			// cursor를 pointer로 변경시킴

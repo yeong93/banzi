@@ -3,7 +3,8 @@ package com.kh.banzi.common;
 public class Attachment {
 	
 	   private int fileNo;
-	   private int boardType;
+	   private int parentBoardType;
+	   private int parentBoardNo;
 	   private String fileOriginName;
 	   private String fileChangeName;
 	   private String filePath;
@@ -14,11 +15,12 @@ public class Attachment {
 		
 	}
 
-	public Attachment(int fileNo, int boardType, String fileOriginName, String fileChangeName, String filePath,
-			int fileLevel, String fileStatus) {
+	public Attachment(int fileNo, int parentBoardType, int parentBoardNo, String fileOriginName, String fileChangeName,
+			String filePath, int fileLevel, String fileStatus) {
 		super();
 		this.fileNo = fileNo;
-		this.boardType = boardType;
+		this.parentBoardType = parentBoardType;
+		this.parentBoardNo = parentBoardNo;
 		this.fileOriginName = fileOriginName;
 		this.fileChangeName = fileChangeName;
 		this.filePath = filePath;
@@ -34,12 +36,20 @@ public class Attachment {
 		this.fileNo = fileNo;
 	}
 
-	public int getBoardType() {
-		return boardType;
+	public int getParentBoardType() {
+		return parentBoardType;
 	}
 
-	public void setBoardType(int boardType) {
-		this.boardType = boardType;
+	public void setParentBoardType(int parentBoardType) {
+		this.parentBoardType = parentBoardType;
+	}
+
+	public int getParentBoardNo() {
+		return parentBoardNo;
+	}
+
+	public void setParentBoardNo(int parentBoardNo) {
+		this.parentBoardNo = parentBoardNo;
 	}
 
 	public String getFileOriginName() {
@@ -84,11 +94,11 @@ public class Attachment {
 
 	@Override
 	public String toString() {
-		return "Attachment [fileNo=" + fileNo + ", boardType=" + boardType + ", fileOriginName=" + fileOriginName
-				+ ", fileChangeName=" + fileChangeName + ", filePath=" + filePath + ", fileLevel=" + fileLevel
-				+ ", fileStatus=" + fileStatus + "]";
+		return "Attachment [fileNo=" + fileNo + ", parentBoardType=" + parentBoardType + ", parentBoardNo="
+				+ parentBoardNo + ", fileOriginName=" + fileOriginName + ", fileChangeName=" + fileChangeName
+				+ ", filePath=" + filePath + ", fileLevel=" + fileLevel + ", fileStatus=" + fileStatus + "]";
 	}
 	   
-	
+
 	
 }
