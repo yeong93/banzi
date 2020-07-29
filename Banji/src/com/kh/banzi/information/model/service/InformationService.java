@@ -4,6 +4,7 @@ import static com.kh.banzi.common.DBCP.getConnection;
 import java.sql.Connection;
 import java.util.List;
 
+import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.information.model.dao.InformationDAO;
 import com.kh.banzi.information.model.vo.Information;
@@ -48,6 +49,50 @@ public class InformationService {
 		conn.close();
 		
 		return bList;
+	}
+	
+		/** 크로스 사이트 스크립트 방지
+		 * @param param
+		 * @return result
+		 */
+		private String replaceParameter(String param) {
+			
+		String result = param;
+		if(param != null) {
+			result = result.replaceAll("&", "&amp;");
+			result = result.replaceAll("<", "&lt;");
+			result = result.replaceAll(">", "&gt;");
+			result = result.replaceAll("\"", "&quot;");
+		}
+		
+		return result;
+	}
+	
+
+	/** 게시글(글+파일) 삽입 DAO
+	 * @param information
+	 * @param fList
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertInformation(Information information, List<Attachment> fList) throws Exception{
+		Connection conn = getConnection();
+		
+		int infoBoardNo = dao.selectNextNo(conn);
+		
+		if(infoBoardNo > 0) {
+			
+			information.setInfoBoardNo(infoBoardNo);
+			information.setInfoBoardContent(replaceParameter(information.getInfoBoardContent()));
+			int result = dao.(conn, information);
+			
+			if(result > 0 && !fList.isEmpty()) {
+				result = 0;
+				
+			}
+		}
+		
+		return result;
 	}
 
 }

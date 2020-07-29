@@ -48,9 +48,18 @@ public class Information {
 		this.categoryName = categoryName;
 	}
 	
-
+	// (2)-2 게시글 삽입용 매개변수 있는 생성자
+	public Information(String infoBoardTitle, String infoBoardContent, String userId, String categoryName,
+			int boardType) {
+		super();
+		this.infoBoardTitle = infoBoardTitle;
+		this.infoBoardContent = infoBoardContent;
+		this.userId = userId;
+		this.categoryName = categoryName;
+		this.boardType = boardType;
+	}
+	
 	// (3) getter와 setter 작성
-
 	public int getInfoBoardNo() {
 		return infoBoardNo;
 	}

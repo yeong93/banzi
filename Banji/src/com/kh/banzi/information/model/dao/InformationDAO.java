@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -95,5 +96,35 @@ public class InformationDAO {
 		
 		return bList;
 	}
+
+	/** 다음 게시글 번호 반환 DAO
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	public int selectNextNo(Connection conn) throws Exception{
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		int infoBoardNo = 0;
+		
+		String query = prop.getProperty("selectNextNo");
+		// SELECT SEQ_INF.NEXTVAL FROM DUAL
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				infoBoardNo = rset.getInt(1);
+			}
+			
+		}finally {
+			rset.close();
+			stmt.close();
+		}
+		
+		return infoBoardNo;
+	}
+
 
 }
