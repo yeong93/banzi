@@ -28,6 +28,30 @@
 </style>
 </head>
 <body>
+    <!-- sweetAlert창 추가 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+		<%
+  		String msg = (String)(request.getSession().getAttribute("msg"));
+  		String status = (String)(request.getSession().getAttribute("status"));
+  		String text = (String)(request.getSession().getAttribute("text"));
+  		%>
+  		
+  		<% if (msg != null){ %>
+	  		swal({
+	  			icon : "<%=status%>",
+	  			title : "<%=msg%>",
+	  			text : "<%=text != null ? text : ""%>"
+	  		});
+  		<%
+  			// Session에 존재하는 특정 키값의 속성 제거
+  			session.removeAttribute("msg");
+  			session.removeAttribute("status");
+  			session.removeAttribute("text");
+  		}
+  		%>
+    </script>
+
 		<div id="header">
         <a href="<%=request.getContextPath()%>">
           <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" width="200px" class="mx-auto d-block" id="main-logo">

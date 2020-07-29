@@ -111,8 +111,6 @@ public class SignUpServlet extends HttpServlet {
 			// 회원가입 성공 페이지 (유저)로 이동
 			}else if(command.equals("/signUpSuccessUser.do")) {
 				
-				System.out.println("asd");
-				
 				path = "/WEB-INF/views/user/signUpAssign_3_1.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);

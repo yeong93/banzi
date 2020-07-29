@@ -33,9 +33,10 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <!-- CSS -->
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
-  
+
+    <!-- CSS -->
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
+
   <title>BAN JI</title>
   <style>
   
@@ -199,13 +200,7 @@ color: white;
             <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">구성원 소개</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="<%=request.getContextPath()%>/user/introduce.do" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">음식</a>
-              <a class="dropdown-item" href="#">견종백과</a>
-              <a class="dropdown-item" href="#">건강상식</a>
-              <a class="dropdown-item" href="#">교육/훈련</a>
-            </div>
+            <a class="nav-link" href="<%=request.getContextPath()%>/information/list.do" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link" href="community/list.do" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>

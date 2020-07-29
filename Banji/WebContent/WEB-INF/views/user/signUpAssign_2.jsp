@@ -31,29 +31,6 @@
         }
     </style>
     </head>
-    <!-- sweetAlert창 추가 -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-		<%
-  		String msg = (String)(request.getSession().getAttribute("msg"));
-  		String status = (String)(request.getSession().getAttribute("status"));
-  		String text = (String)(request.getSession().getAttribute("text"));
-  		%>
-  		
-  		<% if (msg != null){ %>
-	  		swal({
-	  			icon : "<%=status%>",
-	  			title : "<%=msg%>",
-	  			text : "<%=text != null ? text : ""%>"
-	  		});
-  		<%
-  			// Session에 존재하는 특정 키값의 속성 제거
-  			session.removeAttribute("msg");
-  			session.removeAttribute("status");
-  			session.removeAttribute("text");
-  		}
-  		%>
-    </script>
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
             <!-- 헤더 들어가는 부분 -->
@@ -376,6 +353,7 @@
              var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
              if(!regExp.test($id.val())){
                  $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
+
              }else{ // 유효한 아이디 형식일 때
                  $.ajax({
                      url : "idDupCheck.do",
@@ -395,6 +373,15 @@
                  });
              }
          });
+
+            // 입력된 값이 지워지면 텍스트 삭제 -------------- > 안됨
+         	$(document).ready(function() { 
+         		 if($id.val().trim() ==""){
+               	 $("#checkId").text("");
+                }
+         	});
+            
+			
         </script>
             <hr/>
             <!-- 푸터 들어가는 부분 -->
