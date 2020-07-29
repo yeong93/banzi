@@ -103,7 +103,7 @@
                 <div class="form-group" id="divGrade">
                     <label for="inputEmail" class="col-lg-2 control-label">회원등급</label>
                     <div class="col-lg-10">
-                        <input type="radio" id="user" name="grade" value="user">사용자
+                        <input type="radio" id="user" name="grade" value="user" checked="checked">사용자
                         <input type="radio" id="user" name="grade" value="veterinarian">수의사
                         <input type="radio" id="user" name="grade" value="animaltrainer">훈련사
                         <input type="radio" id="user" name="grade" value="editor">에디터

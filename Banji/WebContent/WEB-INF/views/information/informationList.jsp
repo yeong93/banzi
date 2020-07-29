@@ -46,13 +46,23 @@
         background-color:#ffce54;
         border-color:white;
         }
-        
+        #image_area{
+        width:1000px;
+        height:200px;
+        }
+        #back{
+        height:20px;
+        }
 	</style>
 	
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
   <section id="content">
+  	<div id="back"></div>
+  	<div id="image_area" class="mx-auto">
+  	<img src="<%=request.getContextPath()%>/resources/img/information_banner.jpg">
+  	</div>
   	<div class="container">
 		<div class="container">
 	        <div class="my-5">
