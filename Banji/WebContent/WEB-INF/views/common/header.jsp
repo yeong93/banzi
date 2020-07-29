@@ -135,9 +135,6 @@ color: white;
 	border: none !important;
 	color: #3a3847 !important;
 }
-header{
-position:relative;
-}
   </style>
   
   <!--------------------------------- sweet alert ---------------------------------------- -->

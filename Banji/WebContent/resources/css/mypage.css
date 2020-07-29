@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+#mypage *{
+	font-family: "InfinitySans-RegularA1";
+}
+
+#mypage input[type="number"]::-webkit-outer-spin-button, #mypage input[type="number"]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+#title {
+	text-align: center;
+}
+
+#mypage-btn {
+	font-family: "yg-jalnan" !important;
+	border: 10px solid #FFCE54 !important;
+	background-color: #FFCE54;
+	border-radius: 0;
+	border: none;
+}
+
+#mypage-btn:focus {
+	box-shadow: none;
+}
+
+#mypage-btn:hover {
+	border: 10px solid #FFCE54;
+	background-color: #ffffff;
+	color: #FFCE54;
+}
+
+.readonly {
+	background-color: #ffffff !important;
+}
+
+#mypage input, #mypage select {
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid #ced4da;
+}
+
+#mypage input:focus, #mypage select:focus {
+	border-color: #FFCE54;
+	box-shadow: none;
+}
+
+.readonly:focus {
+	border-color: #ced4da !important;
+}
+
+#mypage fieldset {
+	border: 1px solid #ced4da;
+}
+
+#mypage legend {
+	font-size: 1.1em;
+	color: #ced4da;
+}
+
+/* *************** aside ******************* */
+#mypage-aside *{
+	text-decoration: none;
+	color: black;
+	border-radius: 0;
+	text-align: center;
+}
+
+#mypage-aside li:hover{
+	background-color: #ced4da;
+}

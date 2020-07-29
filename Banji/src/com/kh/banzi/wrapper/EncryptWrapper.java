@@ -30,7 +30,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper{
 		case "pwd" : case "pwd1" :
 			// changePwd의 name 속성
 		case "password2" : case "newPwd1" :
-		case "userPwd" :
+		case "userPwd" : case "nowPwd" : case "newPwd" :
 			encPwd = getSha512(super.getParameter(name)); break;
 		default : encPwd = super.getParameter(name);
 				// 전달받은 파라미터 그대로 반환

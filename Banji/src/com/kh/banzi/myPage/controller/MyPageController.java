@@ -52,11 +52,10 @@ public class MyPageController extends HttpServlet {
 				User loginUser = (User)session.getAttribute("loginUser");
 				
 				String userEmail = request.getParameter("email");
-				String userGrade = request.getParameter("grade");
 				String userQuestion = request.getParameter("question");
 				String userAnswer = request.getParameter("answer");
 				
-				User user = new User(loginUser.getUserId(), userEmail, userGrade, userQuestion, userAnswer);
+				User user = new User(loginUser.getUserId(), userEmail, userQuestion, userAnswer);
 				
 				int result = new MyPageService().changeUser(user);
 				
@@ -98,14 +97,14 @@ public class MyPageController extends HttpServlet {
 				
 				if(result > 0) {
 					status = "success";
-					msg = "비밀번호가 변경되었습니다.";
+					msg = "비밀번호가 수정되었습니다.";
 					response.sendRedirect(request.getContextPath());
 				}else if(result < 0) {
 					status = "error";
 					msg = "현재 비밀번호가 일치하지 않습니다.";
 				}else {
 					status = "error";
-					msg = "비밀번호 변경에 실패하였습니다.";
+					msg = "비밀번호 수정에 실패하였습니다.";
 				}
 				session.setAttribute("status", status);
 				session.setAttribute("msg", msg);

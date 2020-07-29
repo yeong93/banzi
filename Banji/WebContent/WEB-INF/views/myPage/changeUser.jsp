@@ -6,95 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
+<!-- mypage CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
 
-<!-- Required meta tags -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-	crossorigin="anonymous" />
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<style>
-
-#mypage *{
-	font-family: "InfinitySans-RegularA1";
-}
-
-input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
-	{
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-#title {
-	text-align: center;
-}
-
-#myPage-btn {
-	font-family: "yg-jalnan" !important;
-	border: 10px solid #FFCE54 !important;
-	background-color: #FFCE54;
-	border-radius: 0;
-	border: none;
-}
-
-#myPage-btn:focus {
-	box-shadow: none;
-}
-
-#myPage-btn:hover {
-	border: 10px solid #FFCE54;
-	background-color: #ffffff;
-	color: #FFCE54;
-}
-
-.readonly {
-	background-color: #ffffff !important;
-}
-
-#mypage input, #mypage select {
-	border: none;
-	border-radius: 0;
-	border-bottom: 1px solid #ced4da;
-}
-
-#mypage input:focus, #mypage select:focus {
-	border-color: #FFCE54;
-	box-shadow: none;
-}
-
-.readonly:focus {
-	border-color: #ced4da !important;
-}
-
-#mypage fieldset {
-	border: 1px solid #ced4da;
-}
-
-#mypage legend {
-	font-size: 1.1em;
-	color: #ced4da;
-}
-
-/* *************** aside ******************* */
-#myPage-aside *{
-	text-decoration: none;
-	color: black;
-	border-radius: 0;
-	text-align: center;
-}
-
-#myPage-aside li:hover{
-	background-color: #ced4da;
-}
-
-
-</style>
-</head>
+</head> 
 
 <body id="mypage">
 
@@ -160,7 +75,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 								<script>
 									$.each($("#question > option"), function(index, item){
 										if($(item).val() == "<%=loginUser.getUserQuestion()%>"){
-											$(item).prop("selected",true);
+											$(item).prop("selected", true);
 										}
 									});
 								</script>
@@ -172,39 +87,12 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 									</div>
 								</div>
 
-
-								<!-- 등급 -->
-								<div class="row mb-5 ml-4 mr-4">
-									<fieldset class="col-md-12">
-										<legend class="col-md-3 mb-4">등급</legend>
-
-										&nbsp;<input type="radio" id="user" name="grade" value="user" >
-										<label for="user">사용자</label>&nbsp;&nbsp;&nbsp; 
-										
-										&nbsp;<input type="radio" id="veterinarian" name="grade" value="veterinarian"> 
-										<label for="veterinarian">수의사</label>&nbsp;&nbsp;&nbsp;
-										
-										&nbsp;<input type="radio" id="trainer" name="grade"value="trainer"> 
-										<label for="trainer">훈련사</label> 
-										
-										&nbsp;<input type="radio" id="editor" name="grade" value="editor">
-										<label for="editor">에디터</label>&nbsp;&nbsp;&nbsp; 
-										
-										<br><br>
-									</fieldset>
-								</div>
-								<script>
-								
-									$(function(){
-										$("input:radio[value='<%=loginUser.getUserGrade()%>']").prop("checked", true);
-									});
-								</script>
 								
 								<hr>
 								<br>
 								<div class="row mb-5">
 									<div class="col-md-12">
-										<button class="btn btn-primary btn-lg btn-block" type="submit" id="myPage-btn">수정</button>
+										<button class="btn btn-primary btn-lg btn-block" type="submit" id="mypage-btn">수정</button>
 									</div>
 								</div>
 							</form>
@@ -214,17 +102,24 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			</div>
 		</div>
 	</section>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
 		function validate() {
 			
 			if($("#answer").val().trim() == ""){
-				alert("보안 질문에 답변해주세요.");
+				swal({
+				    icon: "info", 
+				    title: "보안질문에 답변해주세요."
+				});
 				$("#answer").focus();
 				return false; 
 			}
 			
 			if($("#email").val().trim() == ""){
-				alert("이메일을 입력해주세요.");
+				swal({
+				    icon: "info", 
+				    title: "이메일을 입력해주세요."
+				});
 				$("#email").focus();
 				return false; 
 			}
