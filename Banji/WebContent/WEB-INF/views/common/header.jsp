@@ -33,6 +33,8 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- CSS -->
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
   <title>BAN JI</title>
   <style>
   
