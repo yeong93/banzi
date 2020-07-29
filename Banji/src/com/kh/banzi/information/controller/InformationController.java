@@ -1,6 +1,8 @@
 package com.kh.banzi.information.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.banzi.common.Attachment;
+import com.kh.banzi.common.MyFileRenamePolicy;
 import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.information.model.service.InformationService;
 import com.kh.banzi.information.model.vo.Information;
+import com.kh.banzi.user.model.vo.User;
+import com.oreilly.servlet.MultipartRequest;
 
 @WebServlet("/information/*")
 public class InformationController extends HttpServlet {
@@ -72,7 +78,69 @@ public class InformationController extends HttpServlet {
 				view.forward(request, response);
 				
 				
-			}else if(command.equals("")){
+			}else if(command.equals("/insert.do")){
+
+				int maxSize = 1024 * 1024 * 10; // 10MB
+				
+				String root = request.getSession().getServletContext().getRealPath("/");
+
+				String filePath = root + "resources\\uploadImages";
+
+				MultipartRequest mRequest = 
+				new MultipartRequest(request, filePath, maxSize, "UTF-8",
+						new MyFileRenamePolicy());
+				String infoBoardTitle = mRequest.getParameter("title");
+				String infoBoardContent = mRequest.getParameter("content");
+				String categoryName = mRequest.getParameter("category");
+				
+				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
+				
+				Information information = new Information(infoBoardTitle, infoBoardContent, userId, categoryName, boardType);
+				
+				List<Attachment> fList = new ArrayList<Attachment>();
+				
+				Enumeration<String> files = mRequest.getFileNames();
+				
+				Attachment temp = null;
+				while(files.hasMoreElements()) {
+					String name = files.nextElement();
+					
+					if(mRequest.getFilesystemName(name) != null) {
+						temp = new Attachment();
+						temp.setFileOriginName(mRequest.getOriginalFileName(name));
+						temp.setFileChangeName(mRequest.getFilesystemName(name));
+						
+						int fileLevel = 0;
+						switch(name) {
+						case "img1" : fileLevel = 0; break;
+						case "img2" : fileLevel = 1; break;
+						case "img3" : fileLevel = 2; break;
+						case "img4" : fileLevel = 3; break;
+						}
+						temp.setFileLevel(fileLevel);
+						// 파일 저장 경로 추가
+						temp.setFilePath(filePath);
+						
+						fList.add(temp);
+					}
+				}
+				int result = service.insertInformation(information,fList);
+				
+				if(result >0) {
+					status = "success";
+					msg = "게시글이 등록되었습니다.";
+					path = "view.do?type=" + boardType+"&cp=1&no="+result;
+					
+				}else {
+					status = "error";
+					msg = "게시글 등록 실패";
+					path = request.getHeader("referer");
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
+				
+			}else if(command.equals("")) {
 				
 			}
 			

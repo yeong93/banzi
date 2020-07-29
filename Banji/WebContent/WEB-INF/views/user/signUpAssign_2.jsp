@@ -32,6 +32,9 @@
         #back{
         	height:10px;
         }
+        #group{
+        	margin:auto;
+        }
     </style>
     </head>
     <body>
@@ -126,11 +129,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-10">
+                	<div id="group">
+                    <div class="col-lg-offset-2 col-lg-10 mx-auto">
                         <button type="submit" class="btn btn-primary color" id="btn" >회원가입</button>
                         <button type="reset" class="btn btn-primary color" id="btn2">취소</button>
                     </div>
-                </div>
+                    </div>
+                    </div>
             </form>
         
         <script>
