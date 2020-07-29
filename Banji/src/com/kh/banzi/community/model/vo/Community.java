@@ -9,10 +9,10 @@ public class Community {
     private String title;
     private String content;
     private int views;
+    private String boardType;
     
     public Community() {
     }
-    
     
 
     public Community(String regName, Timestamp regDate, String title, String content, int views) {

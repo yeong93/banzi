@@ -12,6 +12,7 @@ import com.kh.banzi.community.model.vo.PageInfo;
 public class CommunityService {
     
     private CommnityDAO dao;
+    private Connection conn;
 
     public CommunityService() throws Exception{
        dao = new CommnityDAO();
@@ -24,7 +25,7 @@ public class CommunityService {
      * @throws Exception
      */
     public PageInfo getPageInfo(String currentPage) throws Exception{
-       Connection conn = getConnection();
+       conn = getConnection();
 
        // currentPage가 null인 경우 1, 아닌 경우 정수형으로 파싱
        int cp = (currentPage == null) ? 1 : Integer.parseInt(currentPage);
@@ -38,13 +39,32 @@ public class CommunityService {
     }
 
     public List<Community> selectList(PageInfo pInfo) throws Exception {
-        Connection conn = getConnection();
+        conn = getConnection();
         
         List<Community> cList = dao.selectList(conn, pInfo);
 
         conn.close();
 
         return cList;
+    }
+
+    public Community selectCommunity(int boardNo) throws Exception{
+        conn = getConnection();
+        
+        Community community = dao.selectCommunity(conn, boardNo);
+        
+        if(community != null) {
+            int result = dao.increaseView(conn, boardNo);
+            
+            if(result > 0) {
+                conn.commit();
+                community.setViews(community.getViews() + 1);
+            }
+        }
+        
+        conn.close();
+        
+        return community;
     }
 
 }

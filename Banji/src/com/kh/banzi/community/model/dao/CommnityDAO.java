@@ -82,7 +82,9 @@ public class CommnityDAO {
             cList = new ArrayList<>();
             
             while(rset.next()) {
-                cList.add(new Community(rset.getString("USER_NAME"),
+                cList.add(new Community(
+                                        rset.getInt("BOARD_NO"),
+                                        rset.getString("USER_NAME"),
                                         rset.getTimestamp("REG_DATE"),
                                         rset.getString("TITLE"),
                                         rset.getString("CONTENT"),
@@ -96,5 +98,49 @@ public class CommnityDAO {
         
         
         return cList;
+    }
+
+
+
+
+    public Community selectCommunity(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Community community = null;
+        
+        String query = prop.getProperty("selectCommunity");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            if(rset.next()) {
+                community = new Community(boardNo, rset.getString("USER_ID"), rset.getTimestamp("REG_DATE"), rset.getString("TITLE"), rset.getString("CONTENT"), rset.getInt("VIEWS"));
+            }
+        }finally {
+            rset.close();
+            pstmt.close();
+        }
+        
+        return community;
+    }
+
+
+
+
+    public int increaseView(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        
+        String query = prop.getProperty("increaseView");
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result;
     }
 }

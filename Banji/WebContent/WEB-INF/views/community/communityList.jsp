@@ -5,6 +5,16 @@
 <%
   PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
   List<Community> cList = (List<Community>)request.getAttribute("cList");
+  
+ int currentPage = pInfo.getCurrentPage();
+ int listCount = pInfo.getListCount();
+ int maxPage = pInfo.getMaxPage();
+ int startPage = pInfo.getStartPage();
+ int endPage = pInfo.getEndPage();
+ 
+ int prev = (currentPage-1)/10*10;   // < 버튼 
+ 
+ int next = (currentPage+9)/10*10+1; // > 버튼 
 %>
 	
 <!DOCTYPE html>
@@ -32,6 +42,9 @@
         .container{
           padding-top:145px;
         }
+        table *{
+          text-align : center;
+        }
 	</style>
 	
 </head>
@@ -57,12 +70,10 @@
                 
                    <%}  else{%> 
                                <% for(Community c : cList) {%>
-                                  <tr>
+                                  <tr id="<%=c.getBoardNo()%>">
                                      <td class="boardTitle">
                                       <%=c.getTitle() %>
-                                      
                                      </td>
-                                     
                                      <td><%=c.getRegName() %></td>
                                      <td><%=c.getViews() %></td>
                                      <td><%=c.getRegDate() %></td>
@@ -82,6 +93,56 @@
 	        <% } %> --%>
 	        
 	        <!-- 페이징바 -->
+	          <div style="clear:both">
+              <ul class ="pagination">
+               <% if(currentPage > 10) { %>
+                    <!--  맨 처음 페이지로 이동[<<] -->
+                    <li>
+                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?&cp=1">&lt;&lt;</a>
+                    </li>
+                 
+                    <!--  이전 순번의 페이징 바로 이동[<] -->
+                    <li>
+                       <a class = "page-link"
+                       href = "<%=request.getContextPath()%>/board/list.do?cp=<%=prev%>">&lt;</a>
+                    </li>
+                    <%}%>
+                    <!--  10개의 페이지 목록 -->
+                    <% for(int p = startPage; p<=endPage; p++) {%>
+                       
+                       <%if (p== currentPage) {%>
+                       
+                    <li><a class="page-link"><%=p %></a></li>
+                    
+                    <%} else{%>
+                    
+                    <li>
+                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=p%>"><%=p %></a>
+                    
+                    <%} %>
+                    
+                    <%} %>
+                    
+                    
+                    <% if((next < maxPage)) {%>
+                       <!-- 다음 페이지[>] -->
+                    
+                    <li>
+                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=next%>">&gt;</a>
+                    </li>
+                    
+                    <!--  마지막 페이지로 이동[>>] -->
+                    
+                    <li>
+                       <a class="page-link" href="<%=request.getContextPath()%>/board/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
+                    </li>
+                    
+                    
+                    <%} %>
+                    
+              
+              </ul>
+           </div>
 	        
 	        
 	        
@@ -106,6 +167,14 @@
 	<script>
 		//------------------------------------------------------------------------------------------------------------
 		// 게시글 상세보기 기능 (jquery를 통해 작업)
+     $("#list-table td").on("click", function(){
+         var boardNo = $(this).parent().attr("id");
+         
+         location.href = "<%=request.getContextPath()%>/community/view.do?cp=<%=currentPage%>&no="+boardNo;
+      }).on("mouseenter",function(){
+         $(this).parent().css("cursor","pointer")
+      })
+      ; 
 		
 		//------------------------------------------------------------------------------------------------------------
 		// 검색
