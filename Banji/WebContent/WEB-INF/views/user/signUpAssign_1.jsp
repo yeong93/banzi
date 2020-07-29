@@ -95,7 +95,7 @@ textarea:focus, input:focus{
 </style>
 <body>
 <body>
-    <form id="form1" runat="server" onsubmit="return validate();">
+    <form id="form1" action="<%=request.getContextPath()%>/user/signUpAssign2.do" onsubmit="return validate();">
             <div class="wrap"><!--전체div 시작-->
 
             <!--header 시작-->       
@@ -514,7 +514,8 @@ textarea:focus, input:focus{
               </div>
                      <hr class="j_hr" />
                    <div class="join_button">
-                        <button type="button" id="nextb" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign2.do'">다음</button>
+                        <%-- <button type="button" id="nextb" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign2.do'">다음</button> --%>
+                        <button type="submit" id="nextb">다음</button>
                    </div>
 		    </div>
 		    <!--article 끝-->
@@ -523,12 +524,35 @@ textarea:focus, input:focus{
             <!--footer 끝-->
 	 <!--전체div 끝-->    
     </form>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+		<%
+  		String msg = (String)(request.getSession().getAttribute("msg"));
+  		String status = (String)(request.getSession().getAttribute("status"));
+  		String text = (String)(request.getSession().getAttribute("text"));
+  		%>
+  		
+  		<% if (msg != null){ %>
+	  		swal({
+	  			icon : "<%=status%>",
+	  			title : "<%=msg%>",
+	  			text : "<%=text != null ? text : ""%>"
+	  		});
+  		<%
+  			// Session에 존재하는 특정 키값의 속성 제거
+  			session.removeAttribute("msg");
+  			session.removeAttribute("status");
+  			session.removeAttribute("text");
+  		}
+  		%>
+    </script>
     <script>
     	function validate(){
-    		$(!("#agree")).on("click", function(){
-    			alert("약관에 동의해주세요.");
-    			return false;
-    		});
+    		if( !$("#agree").prop("checked")){
+    			swal("약관에 동의해주세요.");
+	   			return false; 
+    		}
+    		return true;
     	}
     </script>
 </body>

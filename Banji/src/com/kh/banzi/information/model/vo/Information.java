@@ -6,87 +6,137 @@ public class Information {
 	private int infoBoardNo;
 	private String infoBoardTitle;
 	private String infoBoardContent;
+	private String userId;
 	private int readCount;
-	private Timestamp infoCreateDate;
-	private Timestamp infoModifyDate;
-	private String infoStatus;
-	private int infoBoardType;
+	private Timestamp infoBoardCreateDate;
+	private Timestamp infoBoardModifyDate;
+	private String categoryName;
+	private String infoBoardStatus;
+	private int boardType;
 	
 	// (1) 기본 생성자
 	public Information() {
 		
 	}
-	
 	// (2) 매개변수 있는 생성자
-	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, int readCount,
-			Timestamp infoCreateDate, Timestamp infoModifyDate, String infoStatus, int infoBoardType) {
+
+	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, String userId, int readCount,
+			Timestamp infoBoardCreateDate, Timestamp infoBoardModifyDate, String categoryName, String infoBoardStatus,
+			int boardType) {
 		super();
 		this.infoBoardNo = infoBoardNo;
 		this.infoBoardTitle = infoBoardTitle;
 		this.infoBoardContent = infoBoardContent;
+		this.userId = userId;
 		this.readCount = readCount;
-		this.infoCreateDate = infoCreateDate;
-		this.infoModifyDate = infoModifyDate;
-		this.infoStatus = infoStatus;
-		this.infoBoardType = infoBoardType;
+		this.infoBoardCreateDate = infoBoardCreateDate;
+		this.infoBoardModifyDate = infoBoardModifyDate;
+		this.categoryName = categoryName;
+		this.infoBoardStatus = infoBoardStatus;
+		this.boardType = boardType;
 	}
-	// (3) getter와 setter 작성
 	
+	// (2)-1 게시글 조회용 매개변수 있는 생성자
+	public Information(int infoBoardNo, String infoBoardTitle, String userId, int readCount,
+			Timestamp infoBoardModifyDate, String categoryName) {
+		super();
+		this.infoBoardNo = infoBoardNo;
+		this.infoBoardTitle = infoBoardTitle;
+		this.userId = userId;
+		this.readCount = readCount;
+		this.infoBoardModifyDate = infoBoardModifyDate;
+		this.categoryName = categoryName;
+	}
+	
+
+	// (3) getter와 setter 작성
+
 	public int getInfoBoardNo() {
 		return infoBoardNo;
 	}
+
 	public void setInfoBoardNo(int infoBoardNo) {
 		this.infoBoardNo = infoBoardNo;
 	}
+
 	public String getInfoBoardTitle() {
 		return infoBoardTitle;
 	}
+
 	public void setInfoBoardTitle(String infoBoardTitle) {
 		this.infoBoardTitle = infoBoardTitle;
 	}
+
 	public String getInfoBoardContent() {
 		return infoBoardContent;
 	}
+
 	public void setInfoBoardContent(String infoBoardContent) {
 		this.infoBoardContent = infoBoardContent;
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public int getReadCount() {
 		return readCount;
 	}
+
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
-	public Timestamp getInfoCreateDate() {
-		return infoCreateDate;
+
+	public Timestamp getInfoBoardCreateDate() {
+		return infoBoardCreateDate;
 	}
-	public void setInfoCreateDate(Timestamp infoCreateDate) {
-		this.infoCreateDate = infoCreateDate;
+
+	public void setInfoBoardCreateDate(Timestamp infoBoardCreateDate) {
+		this.infoBoardCreateDate = infoBoardCreateDate;
 	}
-	public Timestamp getInfoModifyDate() {
-		return infoModifyDate;
+
+	public Timestamp getInfoBoardModifyDate() {
+		return infoBoardModifyDate;
 	}
-	public void setInfoModifyDate(Timestamp infoModifyDate) {
-		this.infoModifyDate = infoModifyDate;
+
+	public void setInfoBoardModifyDate(Timestamp infoBoardModifyDate) {
+		this.infoBoardModifyDate = infoBoardModifyDate;
 	}
-	public String getInfoStatus() {
-		return infoStatus;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setInfoStatus(String infoStatus) {
-		this.infoStatus = infoStatus;
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
-	public int getInfoBoardType() {
-		return infoBoardType;
+
+	public String getInfoBoardStatus() {
+		return infoBoardStatus;
 	}
-	public void setInfoBoardType(int infoBoardType) {
-		this.infoBoardType = infoBoardType;
+
+	public void setInfoBoardStatus(String infoBoardStatus) {
+		this.infoBoardStatus = infoBoardStatus;
+	}
+
+	public int getBoardType() {
+		return boardType;
+	}
+
+	public void setBoardType(int boardType) {
+		this.boardType = boardType;
 	}
 
 	@Override
 	public String toString() {
 		return "Information [infoBoardNo=" + infoBoardNo + ", infoBoardTitle=" + infoBoardTitle + ", infoBoardContent="
-				+ infoBoardContent + ", readCount=" + readCount + ", infoCreateDate=" + infoCreateDate
-				+ ", infoModifyDate=" + infoModifyDate + ", infoStatus=" + infoStatus + ", infoBoardType="
-				+ infoBoardType + "]";
+				+ infoBoardContent + ", userId=" + userId + ", readCount=" + readCount + ", infoBoardCreateDate="
+				+ infoBoardCreateDate + ", infoBoardModifyDate=" + infoBoardModifyDate + ", categoryName="
+				+ categoryName + ", infoBoardStatus=" + infoBoardStatus + ", boardType=" + boardType + "]";
 	}
 	
 	
