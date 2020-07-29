@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.information.model.vo.Information;
 
@@ -63,9 +64,6 @@ public class InformationDAO {
 		ResultSet rset = null;
 		List<Information> bList = null;
 		String query = prop.getProperty("selectList");
-		
-		System.out.println(query);
-		System.out.println(pInfo);
 		
 		try {
 			int startRow = (pInfo.getCurrentPage()-1) * pInfo.getLimit() + 1;
@@ -124,6 +122,65 @@ public class InformationDAO {
 		}
 		
 		return infoBoardNo;
+	}
+
+	/** 게시글 삽입 DAO
+	 * @param conn
+	 * @param information
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertInformation(Connection conn, Information information) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertInformation");
+		try {
+			pstmt = conn.prepareStatement(query);
+			// INSERT INTO INFORMATION_BOARD(INFORMATION_BOARD_NO, INFORMATION_BOARD_TITLE,
+			// INFORMATION_BOARD_CONTENT, INFORMATION_BOARD_WRITER,INFORMATION_CATEGORY, BOARD_TYPE)
+			// VALUES (?, ?, (SELECT USER_NO FROM USER_TBL WHERE USER_NO=?), ?, ?)
+			pstmt.setInt(1, information.getInfoBoardNo());
+			pstmt.setString(2, information.getInfoBoardTitle());
+			pstmt.setString(3, information.getInfoBoardContent());
+			pstmt.setString(4, information.getUserId());
+			pstmt.setString(5, information.getCategoryName());
+			pstmt.setInt(6, information.getBoardType());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
+	/** 파일 등록 DAO
+	 * @param conn
+	 * @param at
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertAttachment(Connection conn, Attachment at) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertAttachment");
+		// insertAttachment = INSERT INTO ATTACHMENT VALUES(SEQ_FNO.NEXTVAL, 2, ?, ?, ?, ?, DEFAULT)
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, at.getParentBoardNo());
+			pstmt.setString(2, at.getFileOriginName());
+			pstmt.setString(3, at.getFileChangeName());
+			pstmt.setString(4, at.getFilePath());
+			pstmt.setInt(5, at.getFileLevel());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
 	}
 
 

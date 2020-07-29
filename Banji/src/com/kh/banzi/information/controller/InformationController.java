@@ -56,7 +56,6 @@ public class InformationController extends HttpServlet {
 			
 			// 게시판은 기본적으로 게시판 타입(종류), 현재 페이지 정보를 유지
 			// 게시판 타입을 쿼리스트링에서 얻어오기
-			System.out.println(request.getParameter("type"));
 			
 			int boardType = Integer.parseInt(request.getParameter("type"));
 			
@@ -77,7 +76,13 @@ public class InformationController extends HttpServlet {
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
+			// 게시글 작성 화면으로 이동
+			}else if(command.equals("/insertForm.do")) {
+				path = "/WEB-INF/views/information/informationList.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
 				
+			// 게시글 작성
 			}else if(command.equals("/insert.do")){
 
 				int maxSize = 1024 * 1024 * 10; // 10MB
