@@ -95,10 +95,11 @@ public class MyPageController extends HttpServlet {
 				
 				int result = new MyPageService().changePwd(user, newPwd);
 				
+				path="changePwdForm.do";
 				if(result > 0) {
 					status = "success";
 					msg = "비밀번호가 수정되었습니다.";
-					response.sendRedirect(request.getContextPath());
+					path = request.getContextPath();
 				}else if(result < 0) {
 					status = "error";
 					msg = "현재 비밀번호가 일치하지 않습니다.";
@@ -108,7 +109,7 @@ public class MyPageController extends HttpServlet {
 				}
 				session.setAttribute("status", status);
 				session.setAttribute("msg", msg);
-				response.sendRedirect("changePwdForm.do");
+				response.sendRedirect(path);
 				
 			}else if(command.equals("/secessionForm.do")){
 				path = "/WEB-INF/views/myPage/secession.jsp";

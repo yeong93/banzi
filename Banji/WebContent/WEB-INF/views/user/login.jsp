@@ -1,7 +1,6 @@
 <%@page import="com.kh.banzi.user.model.vo.User"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +51,7 @@
 
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="text" name="userId" placeholder="아이디" id="userId" value="<%=rememberId%>">
+                        <input class="input100" type="text" name="userId" placeholder="아이디" id="userId">
                         <span class="focus-input100"></span>
                     </div>
 
@@ -65,12 +64,11 @@
                     <div class="flex-sb-m w-full p-t-3 p-b-24">
                         <div class="contact100-form-checkbox">
                             <div id="remember-area">
-                                <input class="input-checkbox100" type="checkbox" id="rememberId"  name="rememberId" <%= isRemember ? "checked" : "" %>>
+                                <input class="input-checkbox100" type="checkbox" id="rememberId"  name="rememberId">
                                 <label class="label-checkbox100" for="rememberId">아이디 기억하기</label>
                             </div>
                             <div id="search-area">
-                                <a href="<%=request.getContextPath()%>/userLogin/searchIdForm.do" class="search" name="search-id">아이디 찾기&nbsp;&nbsp;</a>
-                                <a href="<%=request.getContextPath()%>/userLogin/searchPwdForm.do" class="search" name="seearch-Pwd">비밀번호 찾기</a>
+                                <a href="#modal-container-1" data-toggle="modal" class="search" name="search-pwd">비밀번호 찾기&nbsp;&nbsp;</a>
                             </div>
 
                         </div>
@@ -86,10 +84,34 @@
         </div>
     </div>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-
+    
+		<!-- ---------------------------------- modal 1 -------------------------------------------- --> 
+   
+   <div class="modal fade" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title login100-form-title" id="myModalLabel">비밀번호 찾기</h5>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">                  
+					<form class="form-signin" method="POST" action="<%=request.getContextPath()%>/member/login.do"
+						onsubmit="return idSearch();">
+						
+						
+							
+						<button class="login100-form-btn" type="submit">SEARCH</button><br>
+						<button type="button" class="login100-form-btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign1.do'">회원가입</button>
+					</form>
+				</div>
+		
+			</div>
+		</div>
+	</div>
 
     <script>
-	
     	function fnLogin(){
     		if(loginValidate()){
     			$.ajax({

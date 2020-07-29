@@ -3,19 +3,6 @@
 <%@page import="com.kh.banzi.user.model.vo.User"%>
 <%	
 	User loginUser = (User)session.getAttribute("loginUser");
-
-	boolean isRemember = false;
-	String rememberId = "";
-	Cookie[] cookies = request.getCookies();
-	
-	if(cookies != null){
-		for(Cookie c : cookies){
-			if("remeberId".equals(c.getName())){
-				rememberId = c.getValue();
-				isRemember = true;
-			}
-		}
-	}
 %>
 <!DOCTYPE html>
 <html>
