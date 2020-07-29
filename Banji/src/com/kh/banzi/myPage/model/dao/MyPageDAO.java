@@ -43,10 +43,9 @@ public class MyPageDAO {
 			pstmt = conn.prepareStatement(query);
 			
 			pstmt.setString(1, user.getUserEmail());
-			pstmt.setString(2, user.getUserGrade());
-			pstmt.setString(3, user.getUserQuestion());
-			pstmt.setString(4, user.getUserAnswer());
-			pstmt.setString(5, user.getUserId());
+			pstmt.setString(2, user.getUserQuestion());
+			pstmt.setString(3, user.getUserAnswer());
+			pstmt.setString(4, user.getUserId());
 			result = pstmt.executeUpdate();
 			
 		} finally {

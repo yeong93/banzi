@@ -5,95 +5,11 @@
 
 <head>
 <meta charset="UTF-8">
-<title>회원 탈퇴</title>
+<title>비밀번호 수정</title>
 
-<!-- Required meta tags -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-	crossorigin="anonymous" />
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- mypage CSS -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
 
-<style>
-
-#mypage *{
-	font-family: "InfinitySans-RegularA1";
-}
-
-input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
-	{
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-#title {
-	text-align: center;
-}
-
-#myPage-btn {
-	font-family: "yg-jalnan" !important;
-	border: 10px solid #FFCE54 !important;
-	background-color: #FFCE54;
-	border-radius: 0;
-	border: none;
-}
-
-#myPage-btn:focus {
-	box-shadow: none;
-}
-
-#myPage-btn:hover {
-	border: 10px solid #FFCE54;
-	background-color: #ffffff;
-	color: #FFCE54;
-}
-
-.readonly {
-	background-color: #ffffff !important;
-}
-
-#mypage input, #mypage select {
-	border: none;
-	border-radius: 0;
-	border-bottom: 1px solid #ced4da;
-}
-
-#mypage input:focus, #mypage select:focus {
-	border-color: #FFCE54;
-	box-shadow: none;
-}
-
-.readonly:focus {
-	border-color: #ced4da !important;
-}
-
-#mypage fieldset {
-	border: 1px solid #ced4da;
-}
-
-#mypage legend {
-	font-size: 1.1em;
-	color: #ced4da;
-}
-
-/* *************** aside ******************* */
-#myPage-aside *{
-	text-decoration: none;
-	color: black;
-	border-radius: 0;
-	text-align: center;
-}
-
-#myPage-aside li:hover{
-	background-color: #ced4da;
-}
-
-
-</style>
 </head>
 
 <body id="mypage">
@@ -106,7 +22,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			<div class="row">
 
 				<div class="col-md-3">
-						<h3 id="title">회원 탈퇴</h3>
+						<h3 id="title">비밀번호 수정</h3>
 						
 						<div class="col-sm-10 mt-5 mx-auto" id="myPage-aside">
 							<ul class="list-group">
@@ -127,8 +43,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 								<!-- 현재 비밀번호 -->
 								<div class="row mb-5 ml-3 mr-3">
 									<div class="col-md-12">
-										<input type="password" class="form-control" id="nowPwd"
-											name="nowPwd" placeholder="현재 비밀번호">
+										<input type="password" class="form-control" id="nowPwd" name="nowPwd" placeholder="현재 비밀번호">
 									</div>
 								</div>
 								
@@ -156,7 +71,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 								<br>
 								<div class="row mb-5">
 									<div class="col-md-12">
-										<button class="btn btn-primary btn-lg btn-block" type="submit" id="myPage-btn">수정</button>
+										<button class="btn btn-primary btn-lg btn-block" type="submit" id="mypage-btn">수정</button>
 									</div>
 								</div>
 							</form>
@@ -166,6 +81,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			</div>
 		</div>
 	</section>
+	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>
 
    var pwdCheck = { 
@@ -174,11 +90,11 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			"checkPwd":false
 		};
    
-   var $pwd = $("#newPwd, #checkPwd");
+   var $changePwd = $("#newPwd, #checkPwd");
 	 var $newPwd = $("newPwd");
 	 var $checkPwd = $("checkPwd");
 	
-	$pwd.on("input", function(){
+	 $changePwd.on("input", function(){
 		
 		var regExp = /^[A-Za-z0-9]{6,12}$/;
 		
@@ -209,21 +125,44 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 	});
    
    function validate() {
+	   
+	   if($("#nowPwd").val().trim() == $("#newPwd").val().trim()){
+			  swal({
+				    icon: "warning", 
+				    title: "새 비밀번호 재입력",
+				    text : "현재 비밀번호와 다른 비밀번호를 입력해주세요."
+				});
+			  $("#newPwd").val("");
+			  $("#checkPwd").val("");
+			  $("#newPwd").focus();
+			  return false; 
+		  }
+
+	 
 		
 		if($("#nowPwd").val().trim() == ""){
-			swal("현재 비밀번호를 입력해주세요.");
+			swal({
+			    icon: "info", 
+			    title: "현재 비밀번호를 입력해주세요."
+			});
 			$("#nowPwd").focus();
 			return false; 
 		}
 		
 		if($("#newPwd").val().trim() == ""){
-			swal("새 비밀번호를 입력해주세요.");
+			swal({
+			    icon: "info", 
+			    title: "새 비밀번호를 입력해주세요."
+			});
 			$("#newPwd").focus();
 			return false; 
 		}
 		
 		if($("#checkPwd").val().trim() == ""){
-			swal("새 비밀번호 확인을 입력해주세요.");
+			swal({
+			    icon: "info", 
+			    title: "새 비밀번호 확인을 입력해주세요."
+			});
 			$("#checkPwd").focus();
 			return false; 
 		}
@@ -237,13 +176,17 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 				case "checkPwd" : msg="새 비밀번호가";  break;
 				}
 				
-				swal(msg + "유효하지 않습니다.");
+				swal({
+				    icon: "info", 
+				    title: msg + "유효하지 않습니다."
+				});
 				var el = "#"+key;
 				$(el).focus();
 				return false;
 			}
 		}
-
+		
+		
 		return true;	
 	};
 		
