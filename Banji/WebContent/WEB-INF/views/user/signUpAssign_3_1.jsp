@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 가입 완료 - 사용자</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style>
  @font-face {
       font-family: "InfinitySans-RegularA1";
@@ -24,6 +29,9 @@
         text-align: center;
     }
     #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#808080; color:white
+    }
+    #back{
+    height:10px;
     }
 </style>
 </head>
@@ -51,14 +59,16 @@
   		}
   		%>
     </script>
-
+		
 		<div id="header">
+		<div id="back"></div>
         <a href="<%=request.getContextPath()%>">
-          <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" width="200px" class="mx-auto d-block" id="main-logo">
+          <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" width="190px" class="mx-auto d-block" id="main-logo">
         </a>
         </div>
        <div id="section">
-       <h1><%=signUp.getUserName()%>님의 회원가입이 완료되었습니다!</h1>
+       <br><br><br><br>
+       <h3><%=signUp.getUserName()%>님의 회원가입이 완료되었습니다!</h3>
               <button type="button" id="main" onclick="location.href='<%=request.getContextPath()%>'">홈으로</button>
     </div> 
 </body>

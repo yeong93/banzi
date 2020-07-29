@@ -63,18 +63,22 @@ public class InformationDAO {
 		List<Information> bList = null;
 		String query = prop.getProperty("selectList");
 		
+		System.out.println(query);
+		System.out.println(pInfo);
+		
 		try {
 			int startRow = (pInfo.getCurrentPage()-1) * pInfo.getLimit() + 1;
 			int endRow = startRow + pInfo.getLimit() - 1;
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, pInfo.getBoardType());
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
 			Information information = null;
 			bList = new ArrayList<Information>();
+
 			while(rset.next()) {
 				information = new Information
 						(rset.getInt("INFORMATION_BOARD_NO"), rset.getString("INFORMATION_BOARD_TITLE"), rset.getString("USER_ID"), 

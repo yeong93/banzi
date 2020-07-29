@@ -21,7 +21,15 @@
     }
     #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#808080; color:white
     }
+    #back{
+   	height:10px;
+   	}
 </style>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
     <!-- sweetAlert창 추가 -->
@@ -47,11 +55,13 @@
   		}
   		%>
     </script>
+    <div id="back"></div>
     <div class="header">       
-       <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="200px">
+       <img src="<%=request.getContextPath()%>/resources/img/logo_main.png" class="mx-auto d-block" id="main-logo" width="190px">
     </div>
        <div id="section">
-       <h1>전문가 승인이 진행중입니다.<br> 관리자가 승인시 회원 가입이 완료됩니다.</h1>
+       <br>
+       <h3>전문가 승인이 진행중입니다.<br> 관리자가 승인시 회원 가입이 완료됩니다.</h3>
               <button type="button" id="main" onclick="location.href='<%=request.getContextPath()%>'">홈으로</button>
     </div> 
 </body>
