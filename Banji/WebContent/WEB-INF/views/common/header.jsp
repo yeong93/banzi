@@ -33,8 +33,10 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <!-- CSS -->
    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
+
   <title>BAN JI</title>
   <style>
   
@@ -210,10 +212,10 @@ color: white;
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">이벤트</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/event/eventForm.do" role="button" aria-haspopup="true" aria-expanded="false">이벤트</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">진행중인 이벤트</a>
-              <a class="dropdown-item" href="#">종료된 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/eventForm.do">진행중인 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/endEventForm.do">종료된 이벤트</a>
             </div>
           </li>
           <li class="nav-item dropdown">
