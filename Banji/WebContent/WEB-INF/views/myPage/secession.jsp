@@ -154,10 +154,8 @@
 				return false;
 			}else{
 				return confirm("정말로 탈퇴하시겠습니까?")
-				
-				);
 			}			
-			
+				
 			return true;	
 		}
 	</script>

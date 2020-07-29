@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.kh.banzi.wrapper.EncryptWrapper;
 
 							// form action이 일어날 때
-@WebFilter(urlPatterns = {"/user/signUp.do", "/userLogin/login.do", "/myPage/changePwd.do"})
+@WebFilter(urlPatterns = {"/user/signUp.do", "/userLogin/login.do", "/myPage/changePwd.do", "/myPage/secession.do"})
 public class EncryptFilter implements Filter {
 
 

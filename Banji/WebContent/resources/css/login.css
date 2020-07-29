@@ -152,10 +152,11 @@ iframe {
 
 #search-area {
 	width: 50%;
+	text-align: right;
 }
 
 #remember-area label {
-	line-height: 150%;
+	line-height: 200%;
 	color: #3a3847;
 }
 
