@@ -90,6 +90,7 @@ public class CommunityService {
 
 
             result = dao.insertCommunity(conn, community);
+            System.out.println(result);
 
             if(result > 0 && !fList.isEmpty()) {
                 result = 0;
@@ -98,16 +99,14 @@ public class CommunityService {
 
                     at.setParentBoardNo(boardNo);
                     at.setParentBoardType(community.getBoardType());
-
-                    result = dao.inserBoardType(conn, at);{
-                        if (result > 0)
-                            result = dao.insertAttachment(conn, at);
-                    }
+                    
+                    result = dao.insertAttachment(conn, at);
+                    
                     if(result == 0) break;
                 }   
             }
         }
-        
+
         // 트랜잭션 처리 및 파일 삭제
         if (result > 0) {
             result = boardNo;
@@ -116,7 +115,7 @@ public class CommunityService {
             for(Attachment at : fList) {
                 String filePath = at.getFilePath();
                 String fileName = at.getFileChangeName();
-                
+
                 File deleteFile = new File(filePath + fileName);
                 deleteFile.delete();
             }
@@ -137,6 +136,32 @@ public class CommunityService {
         }
 
         return result;
+    }
+
+    /** 썸네일
+     * @param pInfo
+     * @return fList
+     * @throws Exception
+     */
+    public List<Attachment> selectFileList(PageInfo pInfo) throws Exception{
+        conn = getConnection();
+        List<Attachment> fList =dao.selectFileList(conn,pInfo);
+
+        conn.close();
+        
+        return fList;
+    }
+
+    /** 게시글 목록 조회
+     * @param boardNo
+     * @return
+     * @throws Exception
+     */
+    public List<Attachment> selectFiles(int boardNo) throws Exception{
+        conn = getConnection();
+        List<Attachment> fList = dao.selectFiles(conn, boardNo);
+        conn.close();
+        return fList;
     }
 
 }

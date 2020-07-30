@@ -1,3 +1,4 @@
+<%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.community.model.vo.Community"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kh.banzi.community.model.vo.PageInfo"%>
@@ -5,6 +6,8 @@
 <%
   PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
   List<Community> cList = (List<Community>)request.getAttribute("cList");
+  List<Attachment> fList = (List<Attachment>)request.getAttribute("fList"); 
+
   
  int currentPage = pInfo.getCurrentPage();
  int listCount = pInfo.getListCount();
@@ -24,6 +27,9 @@
 <meta charset="UTF-8">
 <title>게시판</title>
     <style>
+       *{
+      font-family: "InfinitySans-RegularA1";
+      }
     	.pagination {
             justify-content: center;
         }
@@ -50,6 +56,9 @@
         }
         table td{
           font-weight:400;
+        }
+        th:first-of-type{
+        width:30%;
         }
 	</style>
 	
@@ -78,6 +87,17 @@
                                <% for(Community c : cList) {%>
                                   <tr id="<%=c.getBoardNo()%>">
                                      <td class="boardTitle">
+                                                                           <%
+                                        String src = null;
+                                        for(Attachment at : fList){
+                                            if(at.getParentBoardNo() == c.getBoardNo()){
+                                                src = request.getContextPath()+"/resources/uploadImages/"+at.getFileChangeName();
+                                                %>
+                                                  <img src="<%=src %>">
+                                                <%
+                                            }
+                                        }
+                                      %>
                                       <%=c.getTitle() %>
                                      </td>
                                      <td><%=c.getRegName() %></td>

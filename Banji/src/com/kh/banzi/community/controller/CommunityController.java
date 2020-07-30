@@ -55,12 +55,14 @@ public class CommunityController extends HttpServlet {
                 PageInfo pInfo = cService.getPageInfo(currentPage);
 
                 List<Community> cList = cService.selectList(pInfo);
-
+                
+                List<Attachment> fList = cService.selectFileList(pInfo);
 
 
                 path = "/WEB-INF/views/community/communityList.jsp";
                 request.setAttribute("pInfo", pInfo);
                 request.setAttribute("cList", cList);
+                request.setAttribute("fList", fList);
                 view = request.getRequestDispatcher(path);
                 view.forward(request, response);
 
@@ -75,6 +77,12 @@ public class CommunityController extends HttpServlet {
 
                 // 2. 게시글 조회 성공 시 이미지 조회
                 if(community != null) {
+                    System.out.println("게시글 regName" + community.getRegName());
+                    List<Attachment> fList = cService.selectFiles(boardNo);
+                    
+                    if(!fList.isEmpty()) 
+                       request.setAttribute("fList", fList);
+                    
                     path = "/WEB-INF/views/community/communityView.jsp";
 
                     request.setAttribute("community", community);

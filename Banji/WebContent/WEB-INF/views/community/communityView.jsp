@@ -4,6 +4,7 @@
 <%@page import="java.util.ArrayList"%>
 
 <% 
+  ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
   Community community = (Community)request.getAttribute("community");
 	String cp = request.getParameter("cp");
 	
@@ -82,9 +83,6 @@
 
 			<div id="board-area">
 
-<%-- 				<!-- Category -->
-				<h6 class="mt-4">카테고리 : [<%= board.getCategoryName() %>]</h6> --%>
-				
 				<!-- Title -->
 				<h3 class="mt-4"><%= community.getTitle() %></h3>
 
@@ -102,6 +100,35 @@
 				</p>
 
 				<hr>
+               <% if(fList != null){ %>
+                <div class="carousel slide m-3" id="carousel-325626">
+                    
+                    <div class="carousel-inner boardImgArea">
+                     <% 
+                        String src = null;
+                        boolean flag = true;
+                        for(int i=0; i<4 ; i++) {
+                         for(Attachment at : fList){
+                          if(at.getFileLevel() == i){
+                           src = request.getContextPath()+"/resources/uploadImages/"+at.getFileChangeName();
+                           String imgClass = "carousel-item";
+                           
+                           if(flag){
+                            imgClass += " active";
+                            flag=false;
+                           }
+                     %>     
+                          <div class="<%=imgClass%>">
+                            <img class="d-block w-100 boardImg" src="<%= src %>"/>
+                            <input type="hidden" value=<%=at.getFileNo() %>>
+                           </div> 
+                        
+                      <%  } } } %>
+                      
+                    </div> 
+                    <a class="carousel-control-prev" href="#carousel-325626" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a class="carousel-control-next" href="#carousel-325626" data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
+                </div>
+                <% } %>				
 				
 
 				<!-- Content -->
@@ -112,12 +139,11 @@
 				 
 				
 				<div>
-<%-- 					<% if(loginMember != null && (board.getMemberId().equals(loginMember.getMemberId()))) {%>
-					<a href="delete.do?type=<%=type%>&no=<%=board.getBoardNo() %>" class="btn btn-primary float-right">삭제</a>    
+ 					<% if(loginUser != null && (community.getRegName().equals(loginUser.getUserName()))) {%>
 			  <button id="deleteBtn" class="btn btn-primary float-right">삭제</button>
 					<!-- 삭제 버튼 클릭시 해당 게시글 상태를 'N'으로 바꾸고 목록으로 돌아가기 --> 
-					<a href="updateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=board.getBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1">수정</a>
-					<% } %> --%>
+					<a href="updateForm.do?cp=<%=cp%>&no=<%=community.getBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1">수정</a>
+					<% } %> 
 					
 					<a href="list.do?cp=<%=cp%>" class="btn btn-primary float-right">목록으로</a>
 				</div>
@@ -129,11 +155,11 @@
 	</div>
 	
 	<script>
-<%-- 	 $("#deleteBtn").on("click", function(){
+ 	 $("#deleteBtn").on("click", function(){
 		  if(confirm("정말 삭제 하시겠습니까?")){
-			  location.href="delete.do?type=<%=type%>&no=<%=community.getBoardNo()%>";
+			  location.href="delete.do?no=<%=community.getBoardNo()%>";
 		  }
-	 }); --%>
+	 }); 
 
 	</script>
 </body>
