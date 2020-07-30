@@ -23,7 +23,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
+<title>정보 게시판</title>
     <style>
 	    *{
 	    font-family: "InfinitySans-RegularA1";
@@ -53,6 +53,10 @@
         #back{
         height:20px;
         }
+        .page-link {
+        color:#ffce54;
+        }
+        
 	</style>
 	
 </head>
@@ -107,7 +111,7 @@
 	        <% } %>
 	        
 	        <!-- 페이징바 -->
-	        <div style="clear : both">
+	        <div style="clear : both" id="page">
 	        	<ul class="pagination">
 	        		<% if(currentPage > 10) { %>
 	        			<!-- 맨 처음 페이지로 이동[<<] -->
@@ -130,7 +134,6 @@
 	        					</li>
 	        				<% } %>
 	        			<% } %>
-	        			
 	        			<% if((next < maxPage))  { %>
 	        			<!-- 다음 페이징바[>] -->
 	        			<li>
@@ -145,19 +148,19 @@
 	        	</ul>
 	        </div>
 	        <!-- 검색 -->
-	        <div>
+	 <!--        <div>
 	            <form action="search" method="GET" class="text-center" id="searchForm">
 	                <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
 	                    <!-- <option value="title" selected>글제목</option> -->
-	                    <option value="title">글제목</option>
+	     <!--               <option value="title">글제목</option>
 	                    <option value="content">내용</option>
 	                    <option value="titcont">제목+내용</option>
 	                </select>
 	                <input type="text" name="searchValue" class="form-control" style="width:25%; display: inline-block;">
 	                <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
 	            </form>
-	        </div>
-    	</div>
+	        </div>  
+    	</div> --> 
 		<%@ include file="../common/footer.jsp"%>
 	</div>
 	

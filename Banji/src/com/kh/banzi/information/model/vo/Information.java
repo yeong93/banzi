@@ -59,6 +59,21 @@ public class Information {
 		this.boardType = boardType;
 	}
 	
+
+	// (2) - 3 게시글 상세 조회용 매개변수 있는 생성자
+	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, String userId, int readCount,
+			String categoryName, Timestamp infoBoardCreateDate, Timestamp infoBoardModifyDate) {
+		super();
+		this.infoBoardNo = infoBoardNo;
+		this.infoBoardTitle = infoBoardTitle;
+		this.infoBoardContent = infoBoardContent;
+		this.userId = userId;
+		this.readCount = readCount;
+		this.categoryName = categoryName;
+		this.infoBoardCreateDate = infoBoardCreateDate;
+		this.infoBoardModifyDate = infoBoardModifyDate;
+	}
+
 	// (3) getter와 setter 작성
 	public int getInfoBoardNo() {
 		return infoBoardNo;

@@ -76,13 +76,13 @@ public class InformationController extends HttpServlet {
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
-			// 게시글 작성 화면으로 이동
+			//  ================= 게시글 작성 화면 이동 Controller =========================
 			}else if(command.equals("/insertForm.do")) {
 				path = "/WEB-INF/views/information/informationList.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
-			// 게시글 작성
+			//  ================= 게시글 작성 Controller =========================
 			}else if(command.equals("/insert.do")){
 
 				int maxSize = 1024 * 1024 * 10; // 10MB
@@ -94,12 +94,13 @@ public class InformationController extends HttpServlet {
 				MultipartRequest mRequest = 
 				new MultipartRequest(request, filePath, maxSize, "UTF-8",
 						new MyFileRenamePolicy());
+				
 				String infoBoardTitle = mRequest.getParameter("title");
 				String infoBoardContent = mRequest.getParameter("content");
 				String categoryName = mRequest.getParameter("category");
 				
 				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
-				
+
 				Information information = new Information(infoBoardTitle, infoBoardContent, userId, categoryName, boardType);
 				
 				List<Attachment> fList = new ArrayList<Attachment>();
@@ -145,8 +146,47 @@ public class InformationController extends HttpServlet {
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
 				
-			}else if(command.equals("")) {
+			// ============= 게시글 상세 조회 Controller =============================
+			}else if(command.equals("/view.do")) {
+				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
+				// 1. 게시글 조회
+				Information information = service.selectInformation(infoBoardNo);
+				if(information != null) {
+					List<Attachment> fList = service.selectFiles(infoBoardNo);
+					
+					if(!fList.isEmpty()) {
+						request.setAttribute("fList", fList);
+					}
+					path = "/WEB-INF/views/information/informationView.jsp";
+					request.setAttribute("information", information);
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}else {
+					status = "error";
+					msg = "게시글 조회 실패";
+					request.getSession().setAttribute("status", status);
+					request.getSession().setAttribute("msg", msg);
+					// 이전 페이지로 이동함
+					response.sendRedirect(request.getHeader("referer"));
+				}
 				
+			//  ================= 게시글 삭제 Controller =========================
+			}else if(command.equals("/delete.do")) {
+				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
+				int result = service.deleteInformation(infoBoardNo);
+				
+				if(result >0) {
+					status = "success";
+					msg = "게시글이 삭제되었습니다.";
+					path = "list.do?type=" + boardType;
+				}else {
+					status = "error";
+					msg = "게시글 삭제에 실패하셨습니다." ;
+					path = request.getHeader("referer");
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
 			}
 			
 			
