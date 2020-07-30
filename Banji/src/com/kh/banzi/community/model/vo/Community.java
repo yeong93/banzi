@@ -9,11 +9,17 @@ public class Community {
     private String title;
     private String content;
     private int views;
-    private String boardType;
+    private int boardType;
     
-    public Community() {
+    public Community() {}
+    
+    public Community(String regName, String title, String content, int boardType) {
+        super();
+        this.regName = regName;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
     }
-    
 
     public Community(String regName, Timestamp regDate, String title, String content, int views) {
         super();
@@ -34,6 +40,30 @@ public class Community {
         this.content = content;
         this.views = views;
     }
+    
+
+    public Community(int boardNo, String regName, Timestamp regDate, String title, String content, int views,
+            int boardType) {
+        super();
+        this.boardNo = boardNo;
+        this.regName = regName;
+        this.regDate = regDate;
+        this.title = title;
+        this.content = content;
+        this.views = views;
+        this.boardType = boardType;
+    }
+
+
+    public int getBoardType() {
+        return boardType;
+    }
+
+
+    public void setBoardType(int boardType) {
+        this.boardType = boardType;
+    }
+
 
     public int getBoardNo() {
         return boardNo;

@@ -7,7 +7,8 @@
 <title>BAN JI</title>
   <meta charset="UTF-8">
   <title>07.시맨틱태그</title>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
+  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 

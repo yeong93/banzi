@@ -11,6 +11,7 @@
  int maxPage = pInfo.getMaxPage();
  int startPage = pInfo.getStartPage();
  int endPage = pInfo.getEndPage();
+ int boardType = pInfo.getBoardType();
  
  int prev = (currentPage-1)/10*10;   // < 버튼 
  
@@ -36,9 +37,19 @@
         .boardTitle > img{
         	width: 50px;
         	height: 50px;
+        	
         }
         table *{
           text-align : center;
+        }
+        .container{
+          padding-top:157px;
+        }
+        table th{
+          font-weight:bold;
+        }
+        table td{
+          font-weight:400;
         }
 	</style>
 	
@@ -48,7 +59,7 @@
 		<%@ include file="../common/header.jsp"%>
 
 		<div class="container">
-	        <div class="my-5">
+	        <div class="my">
 	            <table class="table table-hover table-striped" id="list-table">
 	                <thead>
 	                    <tr>
@@ -83,9 +94,9 @@
 	        <hr>
 	        
 	        <%-- 로그인이 되어있는 경우 --%>
-<%-- 	        <% if(loginMember != null) {%>
-	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm';">글쓰기</button>
-	        <% } %> --%>
+	        <% if(loginUser != null) {%>
+	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
+	        <% } %> 
 	        
 	        <!-- 페이징바 -->
 	          <div style="clear:both">

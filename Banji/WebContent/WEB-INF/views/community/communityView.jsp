@@ -1,3 +1,4 @@
+<%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.community.model.vo.Community"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
@@ -5,6 +6,7 @@
 <% 
   Community community = (Community)request.getAttribute("community");
 	String cp = request.getParameter("cp");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -67,11 +69,14 @@
 	#replyListArea{
 		list-style-type: none;
 	}
+	.container{
+	  padding-top:157px;
+	}
 </style>
 </head>
 <body>
-	<div class="container">
 		<%@ include file="../common/header.jsp"%>
+	<div class="container">
 
 		<div>
 
@@ -97,38 +102,7 @@
 				</p>
 
 				<hr>
-<%--                <% if(fList != null){ %>
-								<div class="carousel slide m-3" id="carousel-325626">
-                    
-                    <div class="carousel-inner boardImgArea">
-                     <% 
-	                   		String src = null;
-	                    	boolean flag = true;
-                   			for(int i=0; i<4 ; i++) {
-                   			 for(Attachment at : fList){
-	            
-	                    	  if(at.getFileLevel() == i){
-	                    		 src = request.getContextPath()+"/resources/uploadImages/"+at.getFileChangeName();
-	                    		 String imgClass = "carousel-item";
-	                    	   
-	                    		 if(flag){
-	                    			imgClass += " active";
-	                    			flag=false;
-	                    		 }
-                 	   %> 	  
-	                    	  <div class="<%= imgClass%>">
-	                          <img class="d-block w-100 boardImg" src="<%= src %>" />
-	                          <input type="hidden" value=<%=at.getFileNo() %>>
-	                         </div> 
-	                    	
-	                    <%  } } } %>
-	                    
-                    </div> 
-                    <a class="carousel-control-prev" href="#carousel-325626" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a class="carousel-control-next" href="#carousel-325626" data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
-                </div>
-                <% } %> --%>
 				
-
 
 				<!-- Content -->
 				<div id="board-content"><%= community.getContent() %></div>
