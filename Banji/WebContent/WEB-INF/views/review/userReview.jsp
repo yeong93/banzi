@@ -1,11 +1,17 @@
+<%@page import="com.kh.banzi.review.model.vo.PageInfo"%>
+<%@page import="com.kh.banzi.review.model.vo.Review"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<% 
+ 	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
+ 	List<Review> rList = (List<Review>)request.getAttribute("rList");
+	String type = request.getParameter("type");
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>  
-    
     <meta charset="UTF-8">
 <title></title>
 <style>
@@ -199,7 +205,7 @@
         /* button */
         .button-area {
             height: 100px;
-            width: 80%;
+            width: 52%;
             margin: auto;
         }
 
@@ -212,6 +218,7 @@
         }
 
         /* modal*/
+        
         .modal-header {
             padding-bottom: 4px;
         }
@@ -230,7 +237,7 @@
 
         .reply-writer {
             display: inline-block;
-            width: 10%;
+            width: 12%;
         }
 
         .reply-content {
@@ -249,17 +256,6 @@
         }
 
         /* heart */
-        .ratingbox:hover input[type="radio"]:checked ~ label  {
-            color: #eed490;
-        }
-
-        input[type="radio"] {
-            display: none;
-        }
-        input[type="radio"]:checked ~ label {
-            color: red;
-        }
-
         label {
             font-size: 1.1rem !important;
             float: right;
@@ -267,11 +263,27 @@
             padding-right: 2px;
             flex-direction: row;
         }
+        
+        input[type="radio"] {
+            display: none;
+        }
+        
+        input[type="radio"]:checked ~ label {
+            color: red;
+        }
+        
+        /*
+        .ratingbox:hover input[type="radio"]:checked ~ label  {
+            color: #eed490;
+        }
+
+
 
         label:hover, label:hover ~ label {
             color: red !important;
             
         }
+        */
 </style>
 </head>
 
@@ -292,30 +304,35 @@
         <div class="review-button"><a>용 품</a></div>
     </div>
 
-
+	<%if(rList.isEmpty()){ %>
+    	<table><tr><td colspan="6">존재하는 게시글이 없습니다.</td></tr></table>
+  	<% }else{ %>
+   	
+   	
     <!-- 1 -->
-    <div class="container">
+	<%int num=0; %>
+	   	<%for(int i=0; i<3; i++){ %>
+	    <div class="container">
+	    	<%for(int j=0; j<3; j++){ %>
+   		
         <!--review box 1-1-->
-        <div class="review-box">
+        <div class="review-box" data-target="#myModal" data-toggle="modal">
             <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘.png">
-                </div>
+                <div class="circle-img"><img src="<%=request.getContextPath()%>/resources/img/개아이콘.png"></div>
+                
                 <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
+                    <div class="review-title-name"><%=rList.get(num).getReviewWriterNo()%>님</div>
                     <div class="review-title-heart">
-
                        <div class="ratingbox clearfix">
                            <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
                            <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-3" value="3"/><label for="rating-3" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-4" value="4"/><label for="rating-4" class="fa fa-heart">♥</label>
+                           <input type="radio" name="rating" id="rating-5" value="5"/><label for="rating-5" class="fa fa-heart">♥</label>
                         </div>
-                        
                     </div>
                 </div>
-            </div>
+            </div> <!-- review_top end -->
 
             <div class="review-box-center">
                 <div class="review-box-inside"></div>
@@ -325,184 +342,21 @@
 
             <div class="review-box-bottom">
                 <p>
-                   
-               
+                	<%=rList.get(num).getReviewContent() %>
                 </p>
             </div>
-        </div>
+        </div> <!-- review-box end -->
+		<%num++; } %>
+    	</div> <!-- container end -->
+       <%} %>
+      <%} %>
 
-        <!--review box 1-2-->
-        <div class="review-box">
-            <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘2.png">
-                </div>
-                <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">
-                        <div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-            </div>
-
-            <div class="review-box-bottom">
-                <p>
-                    이 사이트를 통해서 알게된 병원입니다!
-                    솔직한 후기 덕분에 안심하고 맡길 수 있었습니다.<br>
-                    좋으신 의료진 덕분에 저희 강아지가 잘 치료받아
-                    잘 뛰어놀수 있게 되었습니다 ^^
-                    <br>
-                    앞으로도 이 병원에 정착해서 다닐 생각입니다!
-                </p>
-            </div>
-        </div>
-
-        <!--review box 1-3-->
-        <div class="review-box">
-            <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘.png">
-                </div>
-                <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">
-
-                       <div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-            </div>
-
-            <div class="review-box-bottom">
-                <p>
-                    이 사이트를 통해서 알게된 병원입니다!
-                    솔직한 후기 덕분에 안심하고 맡길 수 있었습니다.<br>
-                    좋으신 의료진 덕분에 저희 강아지가 잘 치료받아
-                    잘 뛰어놀수 있게 되었습니다 ^^
-                    <br>
-                    앞으로도 이 병원에 정착해서 다닐 생각입니다!
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- 2 -->
-    <div class="container">
-        <!--review box 2-2-->
-        <div class="review-box">
-            <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘2.png">
-                </div>
-                <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">
-                    	<div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-            </div>
-
-            <div class="review-box-bottom">
-                <p>내용
-                </p>
-            </div>
-        </div>
-
-        <!--review box 2-2-->
-        <div class="review-box">
-            <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘2.png">
-                </div>
-                <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">
-                    	 <div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/> <label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/> <label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/> <label for="rating-5" class="fa fa-heart">♥</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-            </div>
-
-            <div class="review-box-bottom">
-                <p></p>
-            </div>
-        </div>
-
-        <!--review box 2-3-->
-        <div class="review-box">
-            <div class="review-box-top">
-                <div class="circle-img">
-                    <img src="/resources/img/개아이콘.png">
-                </div>
-                <div class="review-title">
-                    <div class="review-title-name">홍길동님</div>
-                    <div class="review-title-heart">♥♥♥♡</div>
-                </div>
-            </div>
-
-            <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-            </div>
-
-            <div class="review-box-bottom">
-                <p></p>
-            </div>
-        </div>
-    </div>
-
+   <% if(loginUser != null){ %>
     <div class="button-area">
         <button type="button" class="btn btn-info btn-lg" id="btn"
-            onclick="location.href = '/review/writeReviewForm.do';">글쓰기</button>
+            onclick="location.href='writeReviewForm.do?type=<%=type%>';">글쓰기</button>
     </div>
+    <%} %>
 
 
 
@@ -550,12 +404,7 @@
                             d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
                     </svg>
                     <p>
-                        우리아이*랑병원 후기입니다. <br>
-                        저희 아이가 아파서 병원에 입원했었는데요, 선생님과 직원들 덕분에
-                        건강하게 집에 돌아올 수 있었습니다.<br>
-                        직원분들이 굉장히 섬세하고 친절하고, 시설 또한 최신식이여서
-                        믿고 맡길 수 있었습니다.
-                        병원에 호텔링 서비스도 같이 있어서 맡길 일이 생기면 다음에 이용해 볼 생각입니다.
+                        내용 section
                     </p>
                     <hr>
                     <p class="reply-writer">홍길동</p>
@@ -574,5 +423,15 @@
 
 	<%@ include file="../common/footer.jsp"%>
 </body>
+<script>
 
+//하트 체크 (아직 fix못시킴)
+
+$(function() {
+	$("#rating-" + <%= rList.get(0).getReviewRating()%>).prop("checked", true);
+
+	});
+
+
+</script>
 </html>
