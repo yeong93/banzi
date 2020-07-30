@@ -1,6 +1,7 @@
 package com.kh.banzi.event.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.banzi.community.model.vo.PageInfo;
+import com.kh.banzi.common.Attachment;
 import com.kh.banzi.event.model.service.EventService;
+import com.kh.banzi.event.model.vo.Event;
+import com.kh.banzi.event.model.vo.PageInfo;
 
 @WebServlet("/event/*")
 public class EventController extends HttpServlet {
@@ -36,15 +39,33 @@ public class EventController extends HttpServlet {
 
 		try {
 			
-			EventService sService = new EventService();
+			EventService eService = new EventService();
 			
 			int boardType = 4;
-			String currentPage = request.getParameter("cp");
+			String currentPage = "1";
 			
-			if(command.equals("/event.do")) {
+//--------------------------------- 진행중인 이벤트 ------------------------------------
+			if(command.equals("/eventForm.do")) {
 				errorMsg = "진행중인 이벤트 목록 조회";
 				
-			   PageInfo pInfo = EventService.getPageInfo(boardType, currentPage);
+		
+				 PageInfo pInfo = EventService.getPageInfo(currentPage);
+				 List<Event> eList = eService.eventList(pInfo); List<Attachment> fList =
+				 eService.fileList(pInfo);
+				
+				
+				path = "/WEB-INF/views/event/eventList.jsp";
+			
+				request.setAttribute("pInfo", pInfo); request.setAttribute("eList", eList);
+				request.setAttribute("fList", fList);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+				
+				
+				
+//--------------------------------- 종료된 이벤트 ------------------------------------
+//--------------------------------- 이벤트 당첨자 ------------------------------------
 			}
 			
 
