@@ -526,11 +526,9 @@ textarea:focus, input:focus{
                    </div>
 		    </div>
 		    <!--article 끝-->
-            <!--footer 시작-->
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-            <!--footer 끝-->
 	 <!--전체div 끝-->    
     </form>
+    	  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 		<%

@@ -1,5 +1,4 @@
 <%@page import="com.kh.banzi.common.PageInfo"%>
-<%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.information.model.vo.Information"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,7 +6,6 @@
 	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
 	List<Information> bList = (List<Information>)request.getAttribute("bList");
 	
-	// pInfo.getCurrentPage();
 	int currentPage = pInfo.getCurrentPage();
 	int listCount = pInfo.getListCount();                                                                                
 	int maxPage = pInfo.getMaxPage();
@@ -56,7 +54,9 @@
         .page-link {
         color:#ffce54;
         }
-        
+        #selectArea{
+        width:150px;
+        }
 	</style>
 	
 </head>
@@ -67,7 +67,17 @@
   	<div id="image_area" class="mx-auto">
   	<img src="<%=request.getContextPath()%>/resources/img/information_banner.jpg">
   	</div>
-  	<div class="container">
+       <div class="form-group">
+       <div id="selectArea" class="mx-auto">
+        <label for="inputQuestion" class="col-lg-2 control-label"></label>
+            <select class="form-control" id="question" name="question" >
+                <option value="1">음식</option>
+                <option value="2">견종백과</option>
+                <option value="3">건강상식</option>
+                <option value="4">교육/훈련</option>
+            </select>
+        </div>
+    </div>
 		<div class="container">
 	        <div class="my-5">
 	            <table class="table table-hover table-striped" id="list-table">
@@ -105,8 +115,8 @@
 	            </table>
 	        </div>
 	        <hr>
-	        <%-- 로그인이 되어있으면서 유저 등급이 에디터인 경우 && loginUser.getUserGrade().equals("editor") --%>
-	        <% if(loginUser != null) {%>
+	        <%-- 로그인이 되어있으면서 유저 등급이 에디터인 경우에만 글쓰기 버튼이 보임 --%>
+	        <%  if(loginUser != null && loginUser.getUserGrade().trim().equals("editor")) {%>
 	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href ='insertForm.do?type=<%=boardType%>';">글쓰기</button>
 	        <% } %>
 	        
@@ -147,21 +157,6 @@
 	        		<% } %>
 	        	</ul>
 	        </div>
-	        <!-- 검색 -->
-	 <!--        <div>
-	            <form action="search" method="GET" class="text-center" id="searchForm">
-	                <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-	                    <!-- <option value="title" selected>글제목</option> -->
-	     <!--               <option value="title">글제목</option>
-	                    <option value="content">내용</option>
-	                    <option value="titcont">제목+내용</option>
-	                </select>
-	                <input type="text" name="searchValue" class="form-control" style="width:25%; display: inline-block;">
-	                <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
-	            </form>
-	        </div>  
-    	</div> --> 
-		<%@ include file="../common/footer.jsp"%>
 	</div>
 	
 	<script>
@@ -178,24 +173,19 @@
 			$(this).parent().css("cursor" , "pointer");
 		});
 		
-		
-		
-		//------------------------------------------------------------------------------------------------------------
-		// 검색
-		
-	</script>
-  </section>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
-  </script>
-  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-
+		</script>
+	  </section>
+	  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+	  </script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+	  </script>
+	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+	    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+	  </script>
+	  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	
+		
 </body>
 </html>
