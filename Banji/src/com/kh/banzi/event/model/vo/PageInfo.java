@@ -4,7 +4,7 @@ public class PageInfo {
 
 	private int currentPage; 			// 현재 페이지 번호
 	private int listCount;   			// 전체 게시글 수
-	private int limit = 10;       		// 한 페이지에 보여지는 게시글 수 = 10
+	private int limit = 6;       		// 한 페이지에 보여지는 게시글 수 = 6
 	private int pagingBarSize = 10;  	// 화면에 표시될 페이징바의 페이지 개수 = 10
 	
 	private int maxPage;				// 전체 페이지 중 제일 마지막 페이지
@@ -20,6 +20,14 @@ public class PageInfo {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		this.boardType = boardType;
+		
+		makePageInfo();
+	}
+	
+	public PageInfo(int currentPage, int listCount) {
+		super();
+		this.currentPage = currentPage;
+		this.listCount = listCount;
 		
 		makePageInfo();
 	}
@@ -159,7 +167,7 @@ public class PageInfo {
 			endPage = startPage + pagingBarSize - 1;
 			
 		}
-		
 	}
 	
 }
+

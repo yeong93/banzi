@@ -5,16 +5,17 @@ import java.sql.Timestamp;
 public class Event {
 	
 	private int eventNo;
+	private String eventWriter;
 	private String eventTitle;
 	private String eventContent;
+	private String eventFull;
 	private Timestamp createDay;
 	private Timestamp modifyDay;
 	private Timestamp startDay;
 	private Timestamp endDay;
-	private int readCount;
-	private int eventWriter;
+	private String eventStatus;
 	private int boardType = 4;
-	private int eventType;
+	
 	
 	
 	public Event() {
@@ -23,21 +24,49 @@ public class Event {
 	}
 
 
-	public Event(int eventNo, String eventTitle, String eventContent, Timestamp createDay, Timestamp modifyDay,
-			Timestamp startDay, Timestamp endDay, int readCount, int eventWriter, int boardType, int eventType) {
+
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, String eventFull,
+			Timestamp createDay, Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus,
+			int boardType) {
 		super();
 		this.eventNo = eventNo;
+		this.eventWriter = eventWriter;
 		this.eventTitle = eventTitle;
 		this.eventContent = eventContent;
+		this.eventFull = eventFull;
 		this.createDay = createDay;
 		this.modifyDay = modifyDay;
 		this.startDay = startDay;
 		this.endDay = endDay;
-		this.readCount = readCount;
-		this.eventWriter = eventWriter;
+		this.eventStatus = eventStatus;
 		this.boardType = boardType;
-		this.eventType = eventType;
 	}
+
+	
+
+	
+
+
+
+	/** 이벤트 목록 조회
+	 * @param eventNo
+	 * @param eventWriter
+	 * @param eventTitle
+	 * @param eventContent
+	 * @param startDay
+	 * @param endDay
+	 */
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp startDay,
+			Timestamp endDay) {
+		super();
+		this.eventNo = eventNo;
+		this.eventWriter = eventWriter;
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.startDay = startDay;
+		this.endDay = endDay;
+	}
+
 
 
 	public int getEventNo() {
@@ -45,9 +74,23 @@ public class Event {
 	}
 
 
+
 	public void setEventNo(int eventNo) {
 		this.eventNo = eventNo;
 	}
+
+
+
+	public String getEventWriter() {
+		return eventWriter;
+	}
+
+
+
+	public void setEventWriter(String eventWriter) {
+		this.eventWriter = eventWriter;
+	}
+
 
 
 	public String getEventTitle() {
@@ -55,9 +98,11 @@ public class Event {
 	}
 
 
+
 	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
 	}
+
 
 
 	public String getEventContent() {
@@ -65,9 +110,23 @@ public class Event {
 	}
 
 
+
 	public void setEventContent(String eventContent) {
 		this.eventContent = eventContent;
 	}
+
+
+
+	public String getEventFull() {
+		return eventFull;
+	}
+
+
+
+	public void setEventFull(String eventFull) {
+		this.eventFull = eventFull;
+	}
+
 
 
 	public Timestamp getCreateDay() {
@@ -75,9 +134,11 @@ public class Event {
 	}
 
 
+
 	public void setCreateDay(Timestamp createDay) {
 		this.createDay = createDay;
 	}
+
 
 
 	public Timestamp getModifyDay() {
@@ -85,9 +146,11 @@ public class Event {
 	}
 
 
+
 	public void setModifyDay(Timestamp modifyDay) {
 		this.modifyDay = modifyDay;
 	}
+
 
 
 	public Timestamp getStartDay() {
@@ -95,9 +158,11 @@ public class Event {
 	}
 
 
+
 	public void setStartDay(Timestamp startDay) {
 		this.startDay = startDay;
 	}
+
 
 
 	public Timestamp getEndDay() {
@@ -105,29 +170,23 @@ public class Event {
 	}
 
 
+
 	public void setEndDay(Timestamp endDay) {
 		this.endDay = endDay;
 	}
 
 
-	public int getReadCount() {
-		return readCount;
+
+	public String getEventStatus() {
+		return eventStatus;
 	}
 
 
-	public void setReadCount(int readCount) {
-		this.readCount = readCount;
+
+	public void setEventStatus(String eventStatus) {
+		this.eventStatus = eventStatus;
 	}
 
-
-	public int getEventWriter() {
-		return eventWriter;
-	}
-
-
-	public void setEventWriter(int eventWriter) {
-		this.eventWriter = eventWriter;
-	}
 
 
 	public int getBoardType() {
@@ -135,30 +194,21 @@ public class Event {
 	}
 
 
+
 	public void setBoardType(int boardType) {
 		this.boardType = boardType;
 	}
 
 
-	public int getEventType() {
-		return eventType;
-	}
-
-
-	public void setEventType(int eventType) {
-		this.eventType = eventType;
-	}
-
 
 	@Override
 	public String toString() {
-		return "Event [eventNo=" + eventNo + ", eventTitle=" + eventTitle + ", eventContent=" + eventContent
-				+ ", createDay=" + createDay + ", modifyDay=" + modifyDay + ", startDay=" + startDay + ", endDay="
-				+ endDay + ", readCount=" + readCount + ", eventWriter=" + eventWriter + ", boardType=" + boardType
-				+ ", eventType=" + eventType + "]";
+		return "Event [eventNo=" + eventNo + ", eventWriter=" + eventWriter + ", eventTitle=" + eventTitle
+				+ ", eventContent=" + eventContent + ", eventFull=" + eventFull + ", createDay=" + createDay
+				+ ", modifyDay=" + modifyDay + ", startDay=" + startDay + ", endDay=" + endDay + ", eventStatus="
+				+ eventStatus + ", boardType=" + boardType + "]";
 	}
 	
-	
-	
+
 
 }
