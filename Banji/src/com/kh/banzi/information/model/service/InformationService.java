@@ -117,4 +117,62 @@ public class InformationService {
 		return result;
 	}
 
+
+	/** 게시글 상세 조회 Service
+	 * @param infoBoardNo
+	 * @return information
+	 * @throws Exception
+	 */
+	public Information selectInformation(int infoBoardNo) throws Exception{
+		Connection conn = getConnection();
+		// 1. 게시글 상세 조회
+		Information information = dao.selectInformation(conn, infoBoardNo);
+		
+		// 2. 상세 조회 성공시 조회수 1 증가
+		if(information != null) {
+			int result = dao.increaseCount(conn, infoBoardNo);
+			
+			if(result >0) {
+				conn.commit();
+				// 반환되는 information 객체에 저장된 조회수(ReadCount)를 DB에 맞게 1 증가
+				information.setReadCount(information.getReadCount()+1);
+			}
+		}
+		conn.close();
+		return information;
+	}
+
+
+	/** 게시글에 포함된 이미지 조회 Serivce
+	 * @param infoBoardNo 
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectFiles(int infoBoardNo) throws Exception{
+		Connection conn = getConnection();
+		
+		List<Attachment> fList = dao.selectFiles(conn, infoBoardNo);
+		conn.close();
+		
+		return fList;
+	}
+
+
+	/** 게시글 삭제용 Service
+	 * @param infoBoardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteInformation(int infoBoardNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int result = dao.deleteInformation(conn, infoBoardNo);
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	}
+
 }

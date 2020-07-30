@@ -27,6 +27,17 @@ public class Attachment {
 		this.fileLevel = fileLevel;
 		this.fileStatus = fileStatus;
 	}
+	
+	
+
+	// 게시글에 포함된 이미지 조회용 매개변수 있는 생성자
+	public Attachment(int fileNo, String fileChangeName, String filePath, int fileLevel) {
+		super();
+		this.fileNo = fileNo;
+		this.fileChangeName = fileChangeName;
+		this.filePath = filePath;
+		this.fileLevel = fileLevel;
+	}
 
 	public int getFileNo() {
 		return fileNo;

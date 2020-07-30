@@ -183,5 +183,131 @@ public class InformationDAO {
 		return result;
 	}
 
+	/** 게시글 상세 조회용 DAO
+	 * @param conn
+	 * @param infoBoardNo
+	 * @return information
+	 * @throws Exception
+	 */
+	public Information selectInformation(Connection conn, int infoBoardNo) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Information information = null;
+		String query = prop.getProperty("selectInformation");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			// SELECT * FROM V_INFORMATION_LIST WHERE INFORMATION_BOARD_NO= ? AND INFORMATION_BOARD_STATUS='Y'
+			pstmt.setInt(1, infoBoardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				information = new Information
+			(rset.getInt("INFORMATION_BOARD_NO"), rset.getString("INFORMATION_BOARD_TITLE"),
+			 rset.getString("INFORMATION_BOARD_CONTENT"), 
+			 rset.getString("USER_ID"), rset.getInt("READ_COUNT"), 
+			 rset.getString("CATEGORY_NAME"),
+			 rset.getTimestamp("INFORMATION_BOARD_CREATE_DT"),
+			 rset.getTimestamp("INFORMATION_BOARD_MODIFY_DT"));
+			}
+			
+		}finally {
+			rset.close();
+			pstmt.close();
+		}
+		
+		return information;
+	}
+
+	/** 조회수 증가 DAO
+	 * @param conn
+	 * @param infoBoardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int increaseCount(Connection conn, int infoBoardNo) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("increaseCount");
+		// UPDATE INFORMATION_BOARD SET READ_COUNT = READ_COUNT+1 WHERE INFORMATION_BOARD_NO = ?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, infoBoardNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
+	/** 게시글에 포함된 이미지 조회 DAO
+	 * @param conn
+	 * @param infoBoardNo
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectFiles(Connection conn, int infoBoardNo) throws Exception{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Attachment> fList = null;
+		String query = prop.getProperty("selectFiles");
+		Attachment at = null;
+		
+		/*
+		SELECT FILE_NO, FILE_CHANGE_NAME, FILE_PATH, FILE_LEVEL 
+		FROM ATTACHMENT 
+		JOIN BOARD_TYPE ON(PARENT_BOARD_TYPE = BOARD_TYPE_NO)
+		WHERE PARENT_BOARD_NO = ? AND PARENT_BOARD_TYPE = 2 AND FILE_STATUS = 'Y'
+		*/
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, infoBoardNo);
+			
+			rset = pstmt.executeQuery();
+			fList = new ArrayList<Attachment>();
+
+				while(rset.next()) {
+						at = new Attachment(rset.getInt("FILE_NO"),
+								rset.getString("FILE_CHANGE_NAME"), rset.getString("FILE_PATH"),
+								rset.getInt("FILE_LEVEL"));
+						fList.add(at);
+						}
+				
+
+			}finally{
+				rset.close();
+				pstmt.close();
+			}
+		
+		return fList;
+	}
+
+	/** 게시글 삭제용 DAO
+	 * @param conn
+	 * @param infoBoardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteInformation(Connection conn, int infoBoardNo) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteInformation");
+		// UPDATE INFORMATION_BOARD SET INFORMATION_BOARD_STATUS='N' WHERE INFORMATION_BOARD_NO=?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, infoBoardNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
 
 }
