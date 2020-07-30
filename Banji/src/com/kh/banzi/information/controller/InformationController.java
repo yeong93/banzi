@@ -78,7 +78,7 @@ public class InformationController extends HttpServlet {
 				
 			//  ================= 게시글 작성 화면 이동 Controller =========================
 			}else if(command.equals("/insertForm.do")) {
-				path = "/WEB-INF/views/information/informationList.jsp";
+				path = "/WEB-INF/views/information/informationInsert.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
@@ -187,6 +187,10 @@ public class InformationController extends HttpServlet {
 				request.getSession().setAttribute("status", status);
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
+				
+			// ================= 게시글 수정 Controller =========================
+			}else if(command.equals("/update.do")) {
+				
 			}
 			
 			
