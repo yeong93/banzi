@@ -26,8 +26,13 @@
 <head>
 <meta charset="UTF-8">
 <title>진행중인 이벤트</title>
-<!-- mypage CSS -->
+<!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
+
+<style>
+	.btnArea{height: 45px !important; border: none !important;}
+	.btnArea button {margin-left: 230px !important;}
+</style>
 
 </head>
 
@@ -88,11 +93,18 @@
 						<% } %>
 						
 					<% } %>
-						
+				<li class="btnArea"></li>
+				<li class="btnArea"></li>			
+				<li class="container-login100-form-btn btnArea" >
+					<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
+							<button type="button" class="login100-form-btn" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
+					<% } %>
+				</li>
+			
 			</ul>
-			
-			
+		
 
+			
 			<!-- -------------------------------- 페이징 바 -------------------------------- -->
 			<ul class="paging">
 					
@@ -113,15 +125,10 @@
 						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=next%>">&gt;</a></li>
 						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=maxPage%>">&gt;&gt;</a></li>
 					<% } %>
-					
-					<li>
-					<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
-							<button type="button" class="btn btn-primary btn-warning ml-5" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
-					<% } %>
-					</li>
 			
 			</ul>
-		
+			
+
 		</div>
 		<!-- //container -->
 

@@ -19,10 +19,6 @@
 <!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
-<style>
-
-	#file{padding:0;}
-</style>
 
 </head>
 <body>
@@ -38,11 +34,11 @@
 				<form action="<%=request.getContextPath()%>/event/insert.do?type=1&cp=<%=cp%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 				  
-				  <table class="mx-auto table table-striped">
+				  <table class="mx-auto table">
 				  
 				  	<tr>
 				  		<td><p>제목</p></td>
-				  		<td><input type="text" class="form-control" id="title" name="title" size="70"></td>
+				  		<td><input type="text" id="title" name="title" size="70"></td>
 				  	</tr>
 				  	
 				  	<tr>
@@ -57,12 +53,12 @@
 				  	
 				  	<tr>
 				  		<td><p>이벤트 시작일</p></td>
-				  		<td><input type="datetime-local" id="startDay" id="startDay"></td>
+				  		<td><input type="datetime-local" id="startDay" name="startDay"></td>
 				  	</tr>
 				  	
 				  	<tr>
 				  		<td><p>이벤트 종료일</p></td>
-				  		<td><input type="datetime-local" id="endDay" id="endDay"></td>
+				  		<td><input type="datetime-local" id="endDay" name="endDay"></td>
 				  	</tr>
 				  	
 				  	<tr>
@@ -77,9 +73,9 @@
 				  	<tr>
 				  		<td><p>이미지 파일</p></td>
 				  		<td>
-				  			<div id="fileArea">
-									<input type="file" id="file" name="file" onchange="LoadImg(this,1)"> 
-								</div>
+				  			<div class="form-group" id="fileArea">
+							    <input type="file" style="height: 30px" class="form-control-file" id="file" name="name">
+							</div>
 				  		</td>
 				  	</tr>
 				  	
