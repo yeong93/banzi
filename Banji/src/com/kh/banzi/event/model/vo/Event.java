@@ -1,6 +1,6 @@
 package com.kh.banzi.event.model.vo;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Event {
 	
@@ -9,12 +9,12 @@ public class Event {
 	private String eventTitle;
 	private String eventContent;
 	private String eventFull;
-	private Timestamp createDay;
-	private Timestamp modifyDay;
-	private Timestamp startDay;
-	private Timestamp endDay;
+	private Date createDay;
+	private Date modifyDay;
+	private Date startDay;
+	private Date endDay;
 	private String eventStatus;
-	private int boardType = 4;
+	private int boardType = 7;
 	
 	
 	
@@ -26,8 +26,7 @@ public class Event {
 
 
 	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, String eventFull,
-			Timestamp createDay, Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus,
-			int boardType) {
+			Date createDay, Date modifyDay, Date startDay, Date endDay, String eventStatus, int boardType) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
@@ -42,16 +41,10 @@ public class Event {
 		this.boardType = boardType;
 	}
 
-	/** 이벤트 목록 조회
-	 * @param eventNo
-	 * @param eventWriter
-	 * @param eventTitle
-	 * @param eventContent
-	 * @param startDay
-	 * @param endDay
-	 */
-	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp startDay,
-			Timestamp endDay) {
+	
+
+
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Date startDay, Date endDay) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
@@ -123,49 +116,49 @@ public class Event {
 
 
 
-	public Timestamp getCreateDay() {
+	public Date getCreateDay() {
 		return createDay;
 	}
 
 
 
-	public void setCreateDay(Timestamp createDay) {
+	public void setCreateDay(Date createDay) {
 		this.createDay = createDay;
 	}
 
 
 
-	public Timestamp getModifyDay() {
+	public Date getModifyDay() {
 		return modifyDay;
 	}
 
 
 
-	public void setModifyDay(Timestamp modifyDay) {
+	public void setModifyDay(Date modifyDay) {
 		this.modifyDay = modifyDay;
 	}
 
 
 
-	public Timestamp getStartDay() {
+	public Date getStartDay() {
 		return startDay;
 	}
 
 
 
-	public void setStartDay(Timestamp startDay) {
+	public void setStartDay(Date startDay) {
 		this.startDay = startDay;
 	}
 
 
 
-	public Timestamp getEndDay() {
+	public Date getEndDay() {
 		return endDay;
 	}
 
 
 
-	public void setEndDay(Timestamp endDay) {
+	public void setEndDay(Date endDay) {
 		this.endDay = endDay;
 	}
 
@@ -202,7 +195,9 @@ public class Event {
 				+ ", modifyDay=" + modifyDay + ", startDay=" + startDay + ", endDay=" + endDay + ", eventStatus="
 				+ eventStatus + ", boardType=" + boardType + "]";
 	}
-	
 
+
+
+	
 
 }
