@@ -19,7 +19,6 @@ public class PageInfo {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		this.boardType = boardType;
-
 		makePageInfo();
 	}
 

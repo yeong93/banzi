@@ -37,22 +37,32 @@ public class reviewServlet extends HttpServlet {
 		String text = null;
 		String errorMsg = null;
 		
+		System.out.println("command : " + command);
+		
 		try {
 			ReviewService reviewService = new ReviewService();
 			
 			int boardType = Integer.parseInt(request.getParameter("type"));
-//			String currentPage = request.getParameter("cp");
+			String currentPage = request.getParameter("cp");
 			
 			// 게시글 목록 조회
 			if(command.equals("/review.do")) {
 				errorMsg = "리뷰 목록 조회";
 				
+				PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
+				
+				List<Review> rList = reviewService.selectList(pInfo);
+				
+				// 이름 얻어오기 
 				
 				
-				List<Review> rList = reviewService.selectList();
+				
+//				List<Attachment> fList = reviewService.selectFileList(pInfo);
 				
 				path = "/WEB-INF/views/review/userReview.jsp";
+				request.setAttribute("pInfo", pInfo);
 				request.setAttribute("rList", rList);
+//				request.setAttribute("fList", fList);
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -77,14 +87,16 @@ public class reviewServlet extends HttpServlet {
 				
 				String reviewTitle = mRequest.getParameter("title");
 				int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
-				// int reviewRating =  Integer.parseInt(mRequest.getParameter("rating"));
 				String reviewContent = mRequest.getParameter("content");
+				
+				int reviewRating =  Integer.parseInt(mRequest.getParameter("rating"));
+				System.out.println("reviewRating : " + reviewRating);
 				
 				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
 				
-				Review review = new Review(userId, reviewTitle, reviewContent, reviewCategory, boardType);
-				
-				List<Attachment> rList = new ArrayList<Attachment>();
+				Review review = new Review(userId, reviewTitle, reviewContent, reviewRating, reviewCategory, boardType);
+				System.out.println("review -c : " + review);
+				List<Attachment> fList = new ArrayList<Attachment>();
 				Enumeration<String> files = mRequest.getFileNames();
 				
 				Attachment temp = null; // 임시 참조 변수
@@ -115,12 +127,12 @@ public class reviewServlet extends HttpServlet {
 						// 파일이 저장되어있는 경로 추가
 						temp.setFilePath(filePath);
 						
-						rList.add(temp);
+						fList.add(temp);
 						// 파일 얻어오기 끝
 					}
 				}
 				
-				int result = reviewService.insertReview(review, rList, boardType);
+				int result = reviewService.insertReview(review, fList, boardType);
 				
 				if(result>0) {
 					status= "success";
