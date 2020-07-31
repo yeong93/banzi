@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,8 +13,6 @@ import java.util.Properties;
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.event.model.vo.Event;
 import com.kh.banzi.event.model.vo.PageInfo;
-
-import oracle.net.aso.e;
 
 public class EventDAO {
 	
@@ -31,23 +28,25 @@ public class EventDAO {
 		prop.load(new FileReader(fileName));
 	}
 
-	/** 진행중인 이벤트 수 조회
+	
+	/** 글 개수 조회_게시판 별(evnetType)
 	 * @param conn
-	 * @param boardType
+	 * @param eventType
 	 * @return listCount
 	 * @throws Exception
 	 */
-	public int listCount(Connection conn) throws Exception{
+	public int listCount(Connection conn, int eventType) throws Exception{
 		
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
 
 		String query = prop.getProperty("listCount");
 
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, eventType);
+			rset = pstmt.executeQuery();
 
 			if(rset.next()) {
 				listCount = rset.getInt(1);
@@ -55,19 +54,14 @@ public class EventDAO {
 
 		} finally {
 			rset.close();
-			stmt.close();
+			pstmt.close();
 		}
 
 		return listCount;
 	}
 
-	/** 진행중인 이벤트 목록 조회
-	 * @param conn
-	 * @param pInfo
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Event> eventList(Connection conn, PageInfo pInfo) throws Exception{
+	
+	public List<Event> eventList(Connection conn, PageInfo pInfo , int eventType) throws Exception{
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -80,10 +74,9 @@ public class EventDAO {
 			int endRow = startRow + pInfo.getLimit() - 1;
 			
 			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
+			pstmt.setInt(1, eventType);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			
 			eList = new ArrayList<Event>();
@@ -109,13 +102,8 @@ public class EventDAO {
 		return null;
 	}
 
-	/** 파일 목록 조회
-	 * @param conn
-	 * @param pInfo
-	 * @return fList
-	 * @throws Exception
-	 */
-	public List<Attachment> fileList(Connection conn, PageInfo pInfo) throws Exception{
+	
+	public List<Attachment> fileList(Connection conn, PageInfo pInfo, int eventType) throws Exception{
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -128,8 +116,9 @@ public class EventDAO {
 			int endRow = startRow + pInfo.getLimit() - 1;
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, eventType);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rset = pstmt.executeQuery();
 			
 			fList = new ArrayList<Attachment>();
