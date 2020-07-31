@@ -23,7 +23,6 @@ import com.kh.banzi.community.model.vo.PageInfo;
 public class CommunityService {
 
     private CommnityDAO dao;
-    private Connection conn;
 
     public CommunityService() throws Exception{
         dao = new CommnityDAO();
@@ -36,7 +35,7 @@ public class CommunityService {
      * @throws Exception
      */
     public PageInfo getPageInfo(String currentPage) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
 
         // currentPage가 null인 경우 1, 아닌 경우 정수형으로 파싱
         int cp = (currentPage == null) ? 1 : Integer.parseInt(currentPage);
@@ -50,7 +49,7 @@ public class CommunityService {
     }
 
     public List<Community> selectList(PageInfo pInfo) throws Exception {
-        conn = getConnection();
+        Connection conn = getConnection();
 
         List<Community> cList = dao.selectList(conn, pInfo);
 
@@ -60,7 +59,7 @@ public class CommunityService {
     }
 
     public Community selectCommunity(int boardNo) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
 
         Community community = dao.selectCommunity(conn, boardNo);
 
@@ -84,7 +83,7 @@ public class CommunityService {
      * @return result
      */
     public int insertBoard(Community community, List<Attachment> fList) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
 
         int result = 0;
 
@@ -154,7 +153,7 @@ public class CommunityService {
      * @throws Exception
      */
     public List<Attachment> selectFileList(PageInfo pInfo) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
         List<Attachment> fList =dao.selectFileList(conn,pInfo);
 
         conn.close();
@@ -168,7 +167,7 @@ public class CommunityService {
      * @throws Exception
      */
     public List<Attachment> selectFiles(int boardNo) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
         List<Attachment> fList = dao.selectFiles(conn, boardNo);
         conn.close();
         return fList;
@@ -180,7 +179,7 @@ public class CommunityService {
      * @throws Exception
      */
     public int deleteCommunity(int boardNo) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
         int result = (dao.deleteCommunity(conn, boardNo) > 0 && dao.deleteFiles(conn, boardNo) > 0 ) ? 1 : 0;
         
         if (result > 0)
@@ -199,7 +198,7 @@ public class CommunityService {
      * @throws Exception
      */
     public Community updateView(int boardNo) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
         Community community = dao.updateView(conn, boardNo);
         community.setContent(community.getContent().replaceAll("<br>", "\r\n")); 
         
@@ -214,7 +213,7 @@ public class CommunityService {
      * @throws Exception
      */
     public int updateCommunity(Community community, List<Attachment> fList) throws Exception{
-        conn = getConnection();
+        Connection conn = getConnection();
         int result = 0;
         
         community.setContent(replaceParameter(community.getContent())); // 크로스 사이트 스크립팅 방지
@@ -260,15 +259,8 @@ public class CommunityService {
          }
         List<Attachment> tempList = null;
         
-        // service의 모든 동작이 성공적으로 진행된 경우
-        // deleteFile에 담긴 기존 파일을 삭제해야되고
-        
-        // service 동작 중 오류 또는 실패 발생 시
-        // fList에 담긴 새로운 파일을 삭제해야함.
-        
         if(result>0) {
            result = community.getBoardNo();
-           // 수정 완료 후 해당 게시글 상세 보기를 위해 result에 글번호를 저장하여 반환
            conn.commit();
            tempList = deleteFiles;
         }else {

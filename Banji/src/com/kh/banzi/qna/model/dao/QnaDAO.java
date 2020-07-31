@@ -4,11 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+import com.kh.banzi.common.PageInfo;
+import com.kh.banzi.community.model.vo.Reply;
+import com.kh.banzi.qna.model.vo.Qna;
 
 public class QnaDAO {
     
@@ -45,5 +50,86 @@ public class QnaDAO {
         }
         return listCount;
     }
+
+    public List<Qna> selectList(Connection conn, PageInfo pInfo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        List<Qna> qList = new ArrayList<>();
+        
+        String query = prop.getProperty("selectList");
+        
+        try {
+            int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
+            
+            int endRow = startRow + pInfo.getLimit() - 1;
+            
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()) {
+                qList.add(
+                        new Qna(rset.getInt("BOARD_NO"),
+                                rset.getString("USER_NAME"),
+                                rset.getString("TITLE"),
+                                rset.getString("CONTENT"),
+                                rset.getDate("REG_DATE"),
+                                rset.getInt("BOARD_TYPE"),
+                                rset.getInt("REPLY_COUNT"))
+                        );
+                
+            }
+        }finally {
+            rset.close();
+            pstmt.close();
+        }
+        return qList;
+    }
+
+    public Qna selectQna(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectQna");
+        Qna qna = null;
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            rset = pstmt.executeQuery();
+            if(rset.next()) {
+                qna = new Qna(rset.getString("USER_NAME"),
+                              rset.getString("TITLE"),
+                              rset.getString("CONTENT"),
+                              rset.getDate("REG_DATE"));
+            }
+        }finally {
+            rset.close();
+        }
+        return qna;
+    }
+
+    public List<Reply> selectReply(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectReply");
+        Reply reply = null;
+        List<Reply> rList = new ArrayList<>();
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            rset = pstmt.executeQuery();
+            if(rset.next()) {
+                reply = new Reply(rset.getString("USER_ID"),
+                        rset.getString("CONTENT"),
+                        rset.getTimestamp("REG_DATE"));
+                rList.add(reply);
+            }
+        }finally {
+            pstmt.close();
+        }
+        return rList;
+    }
+
 
 }
