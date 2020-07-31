@@ -130,6 +130,7 @@ public class CommunityService {
             }
             conn.rollback();
         }
+        conn.close();
 
         return result;
     }
@@ -180,14 +181,16 @@ public class CommunityService {
      */
     public int deleteCommunity(int boardNo) throws Exception{
         conn = getConnection();
-        if ((dao.deleteCommunity(conn, boardNo) > 0 && dao.deleteFiles(conn, boardNo) > 0 )) {
-            conn.commit();
-            return 1;
-        }else {
-            conn.rollback();
-            return 0;
-        }
+        int result = (dao.deleteCommunity(conn, boardNo) > 0 && dao.deleteFiles(conn, boardNo) > 0 ) ? 1 : 0;
         
+        if (result > 0)
+            conn.commit();
+        else
+            conn.rollback();
+        
+        conn.close();
+        
+        return result;
     }
 
     /** 자유게시판 수정 View
