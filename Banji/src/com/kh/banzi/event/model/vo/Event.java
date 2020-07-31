@@ -42,12 +42,6 @@ public class Event {
 		this.boardType = boardType;
 	}
 
-	
-
-	
-
-
-
 	/** 이벤트 목록 조회
 	 * @param eventNo
 	 * @param eventWriter

@@ -79,7 +79,6 @@ public class MyPageService {
 		}
 	
 		conn.close();
-		
 		return result;
 	}
 

@@ -40,7 +40,7 @@ public class EventDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
-
+		
 		String query = prop.getProperty("listCount");
 
 		try {
@@ -81,7 +81,6 @@ public class EventDAO {
 			
 			eList = new ArrayList<Event>();
 			Event e = null;
-			
 			while(rset.next()) {
 				e = new Event(
 						rset.getInt("RNUM"), 
@@ -99,7 +98,7 @@ public class EventDAO {
 			pstmt.close();
 		}
 		
-		return null;
+		return eList;
 	}
 
 	
@@ -119,8 +118,8 @@ public class EventDAO {
 			pstmt.setInt(1, eventType);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
-			rset = pstmt.executeQuery();
 			
+			rset = pstmt.executeQuery();
 			fList = new ArrayList<Attachment>();
 			Attachment at = null;
 			while(rset.next()) {

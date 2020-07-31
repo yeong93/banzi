@@ -64,10 +64,10 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("loginUser", loginUser);
 					session.setMaxInactiveInterval(1800);
 
-					String rememberId = request.getParameter("rememberId");
-					Cookie cookie = new Cookie("rememberId", userId);
-					
-					if(rememberId != null) { 
+					String saveId = request.getParameter("saveId");
+					Cookie cookie = new Cookie("saveId", userId);
+					System.out.println("saveId : " + saveId);
+					if(saveId != null) { 
 						cookie.setMaxAge(60*60*24*7);
 					}else {
 						cookie.setMaxAge(0);

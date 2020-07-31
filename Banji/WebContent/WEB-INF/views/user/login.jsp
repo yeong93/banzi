@@ -1,6 +1,24 @@
 <%@page import="com.kh.banzi.user.model.vo.User"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+	
+/* 	User loginUser = (User)session.getAttribute("loginUser"); */
+	
+	boolean isSave = false;
+	String saveId = ""; 
+	Cookie[] cookies = request.getCookies();
+	
+	if(cookies != null){
+		for(Cookie c : cookies){
+			
+			if("saveId".equals(c.getName())){ 
+				saveId = c.getValue(); 
+				isSave = true;
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +62,14 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-t-50 p-b-90">
-                <form class="form-signin" method="POST" action="<%=request.getContextPath()%>/login/login.do" onsubmit="return fnLogin();">
+                <form class="form-signin" method="POST" action="<%=request.getContextPath()%>/userLogin/login.do" onsubmit="return fnLogin();">
 
 
                     <span class="login100-form-title p-b-51">로그인</span>
 
 
                     <div class="wrap-input100 validate-input m-b-16">
-                        <input class="input100" type="text" name="userId" placeholder="아이디" id="userId">
+                        <input class="input100" type="text" name="userId" placeholder="아이디" id="userId" value="<%=saveId%>">
                         <span class="focus-input100"></span>
                     </div>
 
@@ -64,8 +82,8 @@
                     <div class="flex-sb-m w-full p-t-3 p-b-24">
                         <div class="contact100-form-checkbox">
                             <div id="remember-area">
-                                <input class="input-checkbox100" type="checkbox" id="rememberId"  name="rememberId">
-                                <label class="label-checkbox100" for="rememberId">아이디 기억하기</label>
+                                <input class="input-checkbox100" type="checkbox" id="saveId"  name="saveId" <%= isSave ? "checked":"" %>>
+                                <label class="label-checkbox100" for="saveId">아이디 기억하기</label>
                             </div>
                             <div id="search-area">
                                 <a href="#modal-container-1" data-toggle="modal" class="search" name="search-pwd">비밀번호 찾기&nbsp;&nbsp;</a>
@@ -119,7 +137,7 @@
     				data: {"userId":$("#userId").val(),
     					   "userPwd":$("#userPwd").val()},
     				type: "POST",
-    				dataType: "JSON",
+    				//dataType: "JSON",
     				success: function(fail){
     					if(fail == 1){
     						swal({
@@ -132,6 +150,11 @@
     						$("#userId").val() == "";
     						$("#userPwd").val() == "";
     					}else{
+    						
+    						if($("#saveId").val() == "on"){
+    							setCookie("saveId", $("#userId").val(), 7);
+    						}
+    						
     						location.href = "<%=request.getHeader("referer")%>";
     					}
     				}, error : function(){
@@ -159,10 +182,13 @@
 			
 		}
         
-      
-        
 
-    </script>
+					function setCookie (name, value, exp) {
+						var date = new Date();
+						date.setTime(date.getTime() + exp*24*60*60*1000);
+						document.cookie = name + '=' + value + ';expires='	+ date.toUTCString() + ';path=/';
+					};
+				</script>
 
 	
 
