@@ -72,12 +72,22 @@ public class Information {
 		this.infoBoardModifyDate = infoBoardModifyDate;
 	}
 
-
-
+	// 게시글 수정 화면 구성을 위한 매개변수 있는 생성자
+	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, String categoryName) {
+		super();
+		this.infoBoardNo = infoBoardNo;
+		this.infoBoardTitle = infoBoardTitle;
+		this.infoBoardContent = infoBoardContent;
+		this.categoryName = categoryName;
+	}
+	
+	
 	// (3) getter와 setter 작성
 	public int getInfoBoardNo() {
 		return infoBoardNo;
 	}
+
+
 
 	public void setInfoBoardNo(int infoBoardNo) {
 		this.infoBoardNo = infoBoardNo;

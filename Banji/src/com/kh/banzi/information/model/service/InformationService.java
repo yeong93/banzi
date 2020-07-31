@@ -3,6 +3,7 @@ import static com.kh.banzi.common.DBCP.getConnection;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.banzi.common.Attachment;
@@ -173,6 +174,51 @@ public class InformationService {
 		else conn.rollback();
 		
 		conn.close();
+		
+		return result;
+	}
+
+
+	/** 게시글 수정 화면 구성 View
+	 * @param infoBoardNo
+	 * @return information
+	 * @throws Exception
+	 */
+	public Information updateView(int infoBoardNo) throws Exception{
+		
+		Connection conn = getConnection();
+		Information information = dao.updateView(conn, infoBoardNo);
+		// 개행문자 처리
+		information.setInfoBoardContent(information.getInfoBoardContent().replace("<br>", "\r\n"));
+		conn.close();
+		
+		return information;
+	}
+
+
+	/** 게시글 수정 Service
+	 * @param information
+	 * @param fList
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateInformation(Information information, List<Attachment> fList) throws Exception{
+		Connection conn = getConnection();
+		int result = 0;
+		information.setInfoBoardContent(replaceParameter(information.getInfoBoardContent()));
+		information.setInfoBoardContent(information.getInfoBoardContent().replace("\r\n", "<br>"));
+		
+		result = dao.updateInformation(conn, information);
+		
+		List<Attachment> deleteFiles = new ArrayList<Attachment>();
+		
+		if(result >0 && !fList.isEmpty()) {
+			result = 0; // result 재사용
+			
+			List<Attachment> oldList =  dao.selectFiles(conn, information.getInfoBoardNo());
+			
+		}
+		
 		
 		return result;
 	}

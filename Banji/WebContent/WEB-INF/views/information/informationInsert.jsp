@@ -61,29 +61,23 @@
 					<label class="input-group-addon mr-3 insert-label">제목</label> 
 					<input type="text" class="form-control" id="title" name="title" size="70">
 				</div>
-
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label">작성자</label>
 					<!-- h5 : input 태그 아니라서 form으로 넘어가지 않음, 세션으로 넘겨줄 것 -->
 					<h5 class="my-0" id="writer"><%= loginUser.getUserId() %></h5>
 				</div>
-
-
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label">작성일</label>
 					<!-- 날짜 :sysdate로 설정 -->
 					<h5 class="my-0" id="today"></h5>
 				</div>
-
 				<hr>
-
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label"></label>
 					<div class="boardImg" id="titleImgArea">
 						<img id="titleImg" width="700" height="300">
 					</div>
 				</div>
-
 				<div class="form-inline mb-2">
 					<label class="input-group-addon mr-3 insert-label"></label>
 					<div class="mr-2 boardImg" id="contentImgArea1">
@@ -96,8 +90,6 @@
 						<img id="contentImg3" width="700" height="300">
 					</div>
 				</div>
-
-
 				<!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
 					<!--  multiple 속성
