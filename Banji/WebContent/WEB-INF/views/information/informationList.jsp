@@ -100,11 +100,9 @@
 	                		<tr>
 	                			<td><%=information.getInfoBoardNo() %></td>
 	                			<td><%=information.getCategoryName() %></td>
-	                			
 	                			<td class="boardTitle">
 	                				<%=information.getInfoBoardTitle() %>
 	                			</td>
-	                			
 	                			<td><%=information.getUserId() %></td>
 	                			<td><%=information.getReadCount() %></td>
 	                			<td><%=information.getInfoBoardModifyDate() %></td>

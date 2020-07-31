@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정보 게시판 글쓰기</title>
+<title>정보 게시판  - 글쓰기</title>
 <style>
     *{
     font-family: "InfinitySans-RegularA1";
@@ -30,8 +30,8 @@
 </style>
 </head>
 <body>
-		<%@ include file="../common/header.jsp"%>
-
+	<%@ include file="../common/header.jsp"%>
+	<section id="content">
 		<div class="container my-5">
 
 			<h3>게시글 등록</h3>
@@ -54,7 +54,7 @@
 						<option value="1">음식</option>
 						<option value="2">견종백과</option>
 						<option value="3">건강상식</option>
-						<option value="4">요리</option>
+						<option value="4">교육,훈련</option>
 					</select>
 				</div>
 				<div class="form-inline mb-2">
@@ -89,11 +89,9 @@
 					<div class="mr-2 boardImg" id="contentImgArea1">
 						<img id="contentImg1" width="700" height="300">
 					</div>
-
 					<div class="mr-2 boardImg" id="contentImgArea2">
 						<img id="contentImg2" width="700" height="300">
 					</div>
-
 					<div class="mr-2 boardImg" id="contentImgArea3">
 						<img id="contentImg3" width="700" height="300">
 					</div>
@@ -120,20 +118,17 @@
 					<div>
 						<label for="content">내용</label>
 					</div>
-					<textarea class="form-control" id="content" name="content"
+					<textarea class="form-control" id="content2" name="content"
 						rows="10" style="resize: none;"></textarea>
 				</div>
-
-
 				<hr class="mb-4">
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary" id="insertBtn">등록</button>
 					<button type="button" class="btn btn-primary" id="listBtn">목록으로</button>
 				</div>
-
 			</form>
 		</div>
-
+		</section>
 		<%@ include file="../common/footer.jsp"%>
 
 	<script>
@@ -153,10 +148,10 @@
 				$("#title").focus();
 				return false;
 			}
-
-			if ($("#content").val().trim().length == 0) {
+			console.log($("#content2").val());
+			if ($("#content2").val().trim().length == 0) {
 				alert("내용을 입력해 주세요.");
-				$("#content").focus();
+				$("#content2").focus();
 				return false;
 			}
 		}

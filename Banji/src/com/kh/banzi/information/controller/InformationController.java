@@ -94,13 +94,11 @@ public class InformationController extends HttpServlet {
 				MultipartRequest mRequest = 
 				new MultipartRequest(request, filePath, maxSize, "UTF-8",
 						new MyFileRenamePolicy());
-				
 				String infoBoardTitle = mRequest.getParameter("title");
 				String infoBoardContent = mRequest.getParameter("content");
 				String categoryName = mRequest.getParameter("category");
-				
-				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
 
+				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
 				Information information = new Information(infoBoardTitle, infoBoardContent, userId, categoryName, boardType);
 				
 				List<Attachment> fList = new ArrayList<Attachment>();

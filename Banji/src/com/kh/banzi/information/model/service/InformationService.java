@@ -79,10 +79,10 @@ public class InformationService {
 	public int insertInformation(Information information, List<Attachment> fList) throws Exception{
 		Connection conn = getConnection();
 		int result = 0;
+		
 		int infoBoardNo = dao.selectNextNo(conn);
 		
 		if(infoBoardNo > 0) {
-			
 			information.setInfoBoardNo(infoBoardNo);
 			information.setInfoBoardContent(replaceParameter(information.getInfoBoardContent()));
 			information.setInfoBoardContent(information.getInfoBoardContent().replace("\r\n", "<br>"));
@@ -95,6 +95,7 @@ public class InformationService {
 					at.setParentBoardNo(infoBoardNo);
 					
 					result = dao.insertAttachment(conn, at);
+					
 					if(result == 0) break;
 				}
 			}
@@ -148,6 +149,7 @@ public class InformationService {
 	 * @return fList
 	 * @throws Exception
 	 */
+	
 	public List<Attachment> selectFiles(int infoBoardNo) throws Exception{
 		Connection conn = getConnection();
 		

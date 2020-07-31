@@ -33,6 +33,9 @@ public class UserDAO {
 		int result = 0;
 		String query = prop.getProperty("signUp");
 		
+		// INSERT INTO USER_TBL VALUES (SEQ_USR.NEXTVAL,?,?,?,?,?,?,?,DEFAULT,
+		//(SELECT CASE WHEN ? = 'user' THEN 'Y' ELSE 'N' END USER_GRADE FROM DUAL))
+		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, user.getUserId());
@@ -45,7 +48,7 @@ public class UserDAO {
 			pstmt.setString(8, user.getUserGrade());
 			
 			result = pstmt.executeUpdate();
-			
+			System.out.println(user);
 		}finally {
 			pstmt.close();
 		}

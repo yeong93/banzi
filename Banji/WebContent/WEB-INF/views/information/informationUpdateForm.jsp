@@ -31,8 +31,8 @@
 </style>
 </head>
 <body>
-		<%@ include file="../common/header.jsp"%>
-
+	<%@ include file="../common/header.jsp"%>
+		<section id="content">
 		<div class="container my-5">
 
 			<h3>게시글 수정</h3>
@@ -109,7 +109,6 @@
 
 
 				<hr class="mb-4">
-
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary">수정</button>
 					<button type="button" class="btn btn-primary"
@@ -118,7 +117,7 @@
 
 			</form>
 		</div>
-
+	</section>
 		<%@ include file="../common/footer.jsp"%>
 
 	<script>
