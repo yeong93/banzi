@@ -50,14 +50,15 @@ public class EventController extends HttpServlet {
 				errorMsg = "진행중인 이벤트 목록 조회";
 				
 		
-				 PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
-				 List<Event> eList = eService.eventList(pInfo, eventType); 
-				 List<Attachment> fList = eService.fileList(pInfo, eventType);
+				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
+				List<Event> eList = eService.eventList(pInfo, eventType); 
+				List<Attachment> fList = eService.fileList(pInfo, eventType);
 				
 				
 				path = "/WEB-INF/views/event/eventList.jsp";
 			
-				request.setAttribute("pInfo", pInfo); request.setAttribute("eList", eList);
+				request.setAttribute("pInfo", pInfo); 
+				request.setAttribute("eList", eList);
 				request.setAttribute("fList", fList);
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
