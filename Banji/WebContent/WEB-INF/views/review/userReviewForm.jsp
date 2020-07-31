@@ -14,6 +14,9 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<!-- 별점용 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
 	@font-face {
@@ -58,6 +61,7 @@
 	h3 {font-family: 'GmarketSansMedium';}
 	
 	/* 별css */
+	/*
 	.rating {
 		display: inline-flex;
 		flex-direction: row-reverse;
@@ -93,6 +97,7 @@
 	.rating>input:checked ~label:before {
 		opacity: 1
 	}
+	*/
 	
 	/* 이미지 업로드 부분*/
 	.boardImg {
@@ -120,12 +125,12 @@
 			
 			<div class="form-group">
 				<label for="exampleFormControlInput1">작성자</label> 
-				<p class="writer-area"><%=loginUser.getUserName()%></p>
+				<span class="writer-area"><%=loginUser.getUserName()%></span>
 			</div>
 			
 			<div class="form-group">
 			<label for="exampleFormControlInput1">작성날짜</label> 
-				<p class="my-0" id="today"></p>
+				<span class="my-0" id="today" ></span>
 			</div>
 
 			<!-- 
@@ -163,7 +168,23 @@
 			</div>
 			<div class="form-group">
 			 -->
-			
+				
+				<div class="form-group">
+				<label>평가</label><br>
+					
+			        <div class="make_star">
+			            <div class="rating" data-rate="targetNum" >
+			                <i class="fas fa-star"></i>
+			                <i class="fas fa-star"></i>
+			                <i class="fas fa-star"></i>
+			                <i class="fas fa-star"></i>
+			                <i class="fas fa-star"></i>
+			            </div>
+			        </div>
+			        
+			        <input type="hidden" id="rating" name="rating">
+			        
+				</div>
 
 				<label>이미지</label>
 				<!-- 이미지 업로드 부분 -->
@@ -184,12 +205,13 @@
 
 				<label for="exampleFormControlTextarea1">내용</label>
 				<textarea class="form-control" id="content" name="content" rows="10" style="resize: none;"></textarea>
+				
+				<br>
+				<button type="button" class="btn btn-secondary">목록으로</button>
+				&nbsp;
+				<button type="submit" class="btn btn-info">등록하기</button>
+			
 			</div>
-
-			<br>
-			<button type="button" class="btn btn-secondary">목록으로</button>
-			&nbsp;
-			<button type="submit" class="btn btn-info">등록하기</button>
 
 
 			<!-- 숨긴 input태그 -->
@@ -280,11 +302,23 @@
 	        }
 
 	        reader.readAsDataURL(value.files[0]);
-	        // FileReader.readAsDataURL()
-	      	// 지정된의 내용을 읽기 시작합니다. Blob완료되면 result속성 data:에 파일 데이터를 나타내는 URL이 포함 됩니다.
 	      }
 	    }
 		
+	    
+	    // 별점용 -> 실행하자마자 action 쿼리스트링으로 보낸다.
+	    $(function(){
+		
+		    $('.make_star svg').click(function(){
+		        var targetNum = $(this).index()+1;
+		        $('.make_star svg').css({color:'#000'});
+		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#F05522'});
+		        console.log(targetNum);
+		        
+		      	$("#rating").val(targetNum);
+		    })
+		});
+	    
 	</script>
 </body>
 

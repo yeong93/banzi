@@ -5,8 +5,8 @@ import java.sql.Date;
 public class Review {
 	private int reviewBoardNo;
 	private int reviewWriterNo; 
-	//-> private String userId; 로변경? 일단 둘다 살리는걸로!
 	private String userId;
+	private String userName;
 	private String reviewTitle;
 	private String reviewContent;
 	private Date reviewCreateDate;
@@ -20,7 +20,7 @@ public class Review {
 	public Review() {	}
 
 	public Review(int reviewBoardNo, int reviewWriterNo, String reviewTitle, String reviewContent,
-			Date reviewCreateDate, Date reviewModifyDate, int reviewRating, int reviewCategory, String reviewStatus,
+			Date reviewCreateDate, int reviewRating, int reviewCategory, String reviewStatus,
 			int readCount, int boardType) {
 		super();
 		this.reviewBoardNo = reviewBoardNo;
@@ -28,7 +28,6 @@ public class Review {
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
 		this.reviewCreateDate = reviewCreateDate;
-		this.reviewModifyDate = reviewModifyDate;
 		this.reviewRating = reviewRating;
 		this.reviewCategory = reviewCategory;
 		this.reviewStatus = reviewStatus;
