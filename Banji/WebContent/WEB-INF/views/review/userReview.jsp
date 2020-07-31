@@ -1,3 +1,5 @@
+<%@page import="com.kh.banzi.review.model.vo.Attachment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.banzi.review.model.vo.PageInfo"%>
 <%@page import="com.kh.banzi.review.model.vo.Review"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,13 +8,27 @@
 <% 
  	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
  	List<Review> rList = (List<Review>)request.getAttribute("rList");
+ 	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type");
+	
+	int currentPage = pInfo.getCurrentPage();
+	int listCount = pInfo.getListCount();
+	int maxPage = pInfo.getMaxPage();
+	int startPage = pInfo.getStartPage();
+	int endPage = pInfo.getEndPage();
+	int boardType = pInfo.getBoardType();
+	
+	int prev = (currentPage-1)/10*10; // < 버튼
+	int next = (currentPage+9)/10*10+1; // > 버튼
 %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>  
     <meta charset="UTF-8">
+    
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title></title>
 <style>
 	        /* 여기어때 잘난체 */
@@ -203,17 +219,9 @@
         }
 
         /* button */
-        .button-area {
-            height: 100px;
-            width: 52%;
-            margin: auto;
-        }
-
         #btn {
             background-color: #ffce54;
             border: none;
-            margin-top: 40px;
-            margin-right: 110px;
             float: right;
         }
 
@@ -254,36 +262,24 @@
         .modal-footer {
             display: inline-block;
         }
+		
+		/* 페이징바 */
+    	.pagination {
+            justify-content: center;
+        }
+        #searchForm{
+            position: relative;
+        }
 
-        /* heart */
-        label {
-            font-size: 1.1rem !important;
-            float: right;
-            color: #bababa;
-            padding-right: 2px;
-            flex-direction: row;
+        #searchForm>*{
+            top : 0;
         }
         
-        input[type="radio"] {
-            display: none;
+        .boardTitle > img{
+        	width: 50px;
+        	height: 50px;
         }
-        
-        input[type="radio"]:checked ~ label {
-            color: red;
-        }
-        
-        /*
-        .ratingbox:hover input[type="radio"]:checked ~ label  {
-            color: #eed490;
-        }
-
-
-
-        label:hover, label:hover ~ label {
-            color: red !important;
-            
-        }
-        */
+      
 </style>
 </head>
 
@@ -322,7 +318,10 @@
                 
                 <div class="review-title">
                     <div class="review-title-name"><%=rList.get(num).getReviewWriterNo()%>님</div>
+                    
                     <div class="review-title-heart">
+                    
+                    <!-- 
                        <div class="ratingbox clearfix">
                            <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
                            <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
@@ -330,6 +329,19 @@
                            <input type="radio" name="rating" id="rating-4" value="4"/><label for="rating-4" class="fa fa-heart">♥</label>
                            <input type="radio" name="rating" id="rating-5" value="5"/><label for="rating-5" class="fa fa-heart">♥</label>
                         </div>
+                     -->
+                     
+                    <div class="reviewStar">
+						<div class="rating" data-rate="<%=rList.get(num).getReviewRating()%>">
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>	
+						</div>
+					</div>
+                     
+                     
                     </div>
                 </div>
             </div> <!-- review_top end -->
@@ -339,7 +351,8 @@
                 <div class="review-box-inside"></div>
                 <div class="review-box-inside"></div>
             </div>
-
+            
+		
             <div class="review-box-bottom">
                 <p>
                 	<%=rList.get(num).getReviewContent() %>
@@ -351,13 +364,62 @@
        <%} %>
       <%} %>
 
-   <% if(loginUser != null){ %>
-    <div class="button-area">
+  
+	
+	
+	<!-- 페이징바 -->
+	        <div style="clear:both">
+	        	<ul class="pagination">
+	        		<%if(currentPage>10){ %>
+	        			<!-- 맨 처음 페이지로 이동[<<] -->
+	        			<li>
+	        				<a class="page-link" 
+	        					href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=1">&lt;&lt;</a>
+	        			</li>
+	        			
+	        			<!-- 이전 순번의 페이징바로  이동[<] -->
+	        			<li>
+	        			<a class="page-link"
+	        				href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=prev%>">&lt;</a>
+	        			</li>
+	        			<%} %>
+	        			
+	        			<!-- 10개의 페이지 목록 -->
+	        			<%for(int p=startPage; p<endPage; p++){ %>
+	        				<%if(p == currentPage){ %>
+	        					<li><a class="page-link"><%=p%></a></li>
+	        				<%}else{ %>
+	        					<li>
+	        						<a class="page-link"
+	        						href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=p%>"><%=p %></a>
+	        					</li>
+	        				<%} %>
+	        			<%} %>
+	        			<!-- if(currentPage+9)/10*10+1; < 전체 페이지중 제일 마지막 페이지 -->
+	        			<%if(next <maxPage){ %>
+	        				<!-- 다음 페이징바[>] -->
+	        				<li>
+	        					<a class="page-link"
+	        						href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=next%>">&gt;</a>
+	        				</li>
+	        				
+	        				<!-- 마지막 페이지로 이동[>>] -->
+	        				<li>
+	        					<a class="page-link"
+	        						href="<%=request.getContextPath()%>/reviewlist.do?type=<%=boardType%>&cp=<%=maxPage%>">&gt;&gt;</a>
+	        				</li>
+	        			<%} %>
+	        			
+	        			
+	        			 <% if(loginUser != null){ %>
         <button type="button" class="btn btn-info btn-lg" id="btn"
             onclick="location.href='writeReviewForm.do?type=<%=type%>';">글쓰기</button>
-    </div>
     <%} %>
-
+	        	</ul>
+	        	
+	        	
+	        
+	        </div>
 
 
     <!-- Modal -->
@@ -426,11 +488,25 @@
 <script>
 
 //하트 체크 (아직 fix못시킴)
+// $(function() {$
+	// ("#rating-" +
+	//<= rList.get()
+	// .getReviewRating()%>)
+	// .prop("checked", true);});
 
-$(function() {
-	$("#rating-" + <%= rList.get(0).getReviewRating()%>).prop("checked", true);
+$(function(){
+    var rating = $('.reviewStar .rating');
 
-	});
+    rating.each(function(){
+        var targetScore = $(this).attr('data-rate');
+        console.log(targetScore);
+        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
+    });
+});
+	// targetScore값이 변경값
+	
+
+	
 
 
 </script>
