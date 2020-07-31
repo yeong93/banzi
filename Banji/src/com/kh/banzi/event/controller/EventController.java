@@ -41,17 +41,18 @@ public class EventController extends HttpServlet {
 			
 			EventService eService = new EventService();
 			
-			int boardType = 4;
-			String currentPage = "1";
+			int eventType = Integer.parseInt(request.getParameter("type"));
+			String currentPage = request.getParameter("cp");
+			System.out.println(eventType);
 			
 //--------------------------------- 진행중인 이벤트 ------------------------------------
-			if(command.equals("/eventForm.do")) {
+			if(command.equals("/eventList.do")) {
 				errorMsg = "진행중인 이벤트 목록 조회";
 				
 		
-				 PageInfo pInfo = EventService.getPageInfo(currentPage);
-				 List<Event> eList = eService.eventList(pInfo); List<Attachment> fList =
-				 eService.fileList(pInfo);
+				 PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
+				 List<Event> eList = eService.eventList(pInfo, eventType); 
+				 List<Attachment> fList = eService.fileList(pInfo, eventType);
 				
 				
 				path = "/WEB-INF/views/event/eventList.jsp";

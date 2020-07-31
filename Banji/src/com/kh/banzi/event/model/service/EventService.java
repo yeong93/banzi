@@ -26,31 +26,33 @@ public class EventService {
 	 * @return pInfo
 	 * @throws Exception
 	 */
-	public static PageInfo getPageInfo(String currentPage) throws Exception{
+	public static PageInfo getPageInfo(String currentPage, int eventType) throws Exception{
 		
 		Connection conn = getConnection();
 		
 		int cp = currentPage == null ? 1 : Integer.parseInt(currentPage);
 		
-		int listCount = dao.listCount(conn);
+		int listCount = dao.listCount(conn, eventType);
 		
 		conn.close();
 		return new PageInfo(cp, listCount);
 	}
 
-	/** 진행중인 이벤트 목록
+	
+	/** 글 목록 조회
 	 * @param pInfo
+	 * @param eventType
 	 * @return eList
 	 * @throws Exception
 	 */
-	public List<Event> eventList(PageInfo pInfo) throws Exception{
+	public List<Event> eventList(PageInfo pInfo, int eventType) throws Exception{
 		
 		Connection conn = getConnection();
 
-		List<Event> bList = dao.eventList(conn,pInfo);
+		List<Event> eList = dao.eventList(conn, pInfo, eventType);
 
 		conn.close();
-		return null;
+		return eList;
 	}
 
 	/** 파일 목록 조회
@@ -58,13 +60,13 @@ public class EventService {
 	 * @return fList
 	 * @throws Exception
 	 */
-	public List<Attachment> fileList(PageInfo pInfo) throws Exception{
+	public List<Attachment> fileList(PageInfo pInfo, int eventType) throws Exception{
 		Connection conn = getConnection();
 		
-		List<Attachment> fList = dao.fileList(conn, pInfo);
+		List<Attachment> fList = dao.fileList(conn, pInfo, eventType);
 		
 		conn.close();
-		return null;
+		return fList;
 	}
 
 }

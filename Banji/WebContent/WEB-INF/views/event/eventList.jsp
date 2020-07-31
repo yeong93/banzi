@@ -17,8 +17,8 @@
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType();
 
-	int prev = (currentPage - 1) / 6 * 10;
-	int next = (currentPage + 5) / 6 * 10 + 1;
+	int prev = (currentPage - 1)/10 * 10;
+	int next = (currentPage + 9)/10 * 10 + 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -43,9 +43,9 @@
 
 			<!-- -------------------------------- 메뉴 -------------------------------- -->
 			<ul class="tabType1">
-				<li class="on"><a href="/event/list.do">진행중 이벤트</a></li>
-				<li><a href="/event/past.do">종료된 이벤트</a></li>
-				<li><a href="/event/winner/list.do">당첨자 발표</a></li>
+				<li class="on"><a href="/event/eventList.do?type=1">진행중 이벤트</a></li>
+				<li><a href="/event/pastList.do?type=2">종료된 이벤트</a></li>
+				<li><a href="/event/winnerList.do?type=3">당첨자 발표</a></li>
 			</ul>
 
 			<!-- -------------------------------- 이벤트 -------------------------------- -->
@@ -69,7 +69,7 @@
 										}
 									}
 								%>
-								<li><a src="<%=src%>>" target="_blank" title="새창열림">
+								<li><a src="<%=src%>" target="_blank" title="새창열림">
 									<p class="thumb"><img src="#" alt=""></p>
 									<p class="ing">진행중</p>
 									<p class="tit"><%=e.getEventContent()%></p>
@@ -78,50 +78,7 @@
 						<% } %>
 						
 					<% } %>
-					
-				<li>
-					<div class="thumb">
-						<img src="#" alt="이벤트 이미지">
-						<div class="end">
-							<p class="text">
-								이벤트가<br>종료되었습니다.
-							</p>
-						</div>
-					</div>
-					<p class="ing">종료</p>
-					<p class="tit">!이벤트 제목</p>
-					<p class="date">!이벤트 시작일 ~ !이벤트 종료일</p>
-				</li>
-
-				<li>
-					<div class="thumb">
-						<img src="#" alt="">
-						<div class="end">
-							<p class="text">
-								이벤트가<br>종료되었습니다.
-							</p>
-
-						</div>
-					</div>
-					<p class="ing">종료</p>
-					<p class="tit">이벤트 제목</p>
-					<p class="date">2020.01.06 ~ 2020.02.28</p>
-				</li>
-
-				<li>
-					<div class="thumb">
-						<img src="#" alt="">
-						<div class="end">
-							<p class="text">
-								이벤트가<br>종료되었습니다.
-							</p>
-						</div>
-					</div>
-					<p class="ing">종료</p>
-					<p class="tit">이벤트 제목</p>
-					<p class="date">2019.12.18 ~ 2020.01.31</p>
-				</li>
-
+						
 			</ul>
 
 			<!-- -------------------------------- 페이징 바 -------------------------------- -->

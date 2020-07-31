@@ -200,10 +200,11 @@ color: white;
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="<%=request.getContextPath()%>/event/eventForm.do" role="button" aria-haspopup="true" aria-expanded="false">이벤트</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/event/eventList.do?type=1" role="button" aria-haspopup="true" aria-expanded="false">이벤트</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/eventForm.do">진행중인 이벤트</a>
-              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/endEventForm.do">종료된 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/eventList.do?type=1">진행중인 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/pastList.do?type=2">종료된 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/winnerList.do?type=3">당첨자 발표</a>
             </div>
           </li>
           <li class="nav-item dropdown">
