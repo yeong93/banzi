@@ -186,9 +186,77 @@ public class InformationController extends HttpServlet {
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
 				
+			// ================= 게시글 수정 화면 이동  Controller =========================
+			}else if(command.equals("/updateForm.do")) {
+				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
+				// 업데이트를 위한 게시글 정보 조회 서비스 호출
+				Information information = service.updateView(infoBoardNo);
+				System.out.println(information);
+				if(information != null) {
+					List<Attachment> fList = service.selectFiles(infoBoardNo);
+					if(!fList.isEmpty()) {
+						request.setAttribute("fList", fList);
+					}
+				path = "/WEB-INF/views/information/informationUpdateForm.jsp";
+				request.setAttribute("information", information);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				}
+				
 			// ================= 게시글 수정 Controller =========================
 			}else if(command.equals("/update.do")) {
+				int maxSize = 1024 * 1024 * 10;
+				String root = request.getSession().getServletContext().getRealPath("/");
+				String filePath = root + "resources\\uploadImages\\";
 				
+				MultipartRequest mRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+				
+				int infoBoardNo = Integer.parseInt(mRequest.getParameter("no"));
+				String infoBoardTitle = mRequest.getParameter("title");
+				String infoBoardContent = mRequest.getParameter("content");
+				String categoryName = mRequest.getParameter("category");
+				
+				Information information = new Information(infoBoardNo, infoBoardTitle, infoBoardContent, categoryName);
+				
+				List<Attachment> fList = new ArrayList<Attachment>();
+				Enumeration<String> files = mRequest.getFileNames();
+				
+				Attachment temp = null;
+				while(files.hasMoreElements()) {
+					String name = files.nextElement();
+					
+					if(mRequest.getFilesystemName(name) != null) {
+						temp = new Attachment();
+						
+						temp.setFileOriginName(mRequest.getOriginalFileName(name));
+						temp.setFileChangeName(mRequest.getFilesystemName(name));
+						
+						int fileLevel = 0;
+						switch(name) {
+						case "img1" : fileLevel = 0; break;
+						case "img2" : fileLevel = 1; break;
+						case "img3" : fileLevel = 2; break;
+						case "img4" : fileLevel = 3; break;
+						}
+						temp.setFileLevel(fileLevel);
+						temp.setFilePath(filePath);
+						fList.add(temp);
+					}
+				}
+				int result = service.updateInformation(information, fList);
+				
+				if(result >0) {
+					status = "success";
+					msg = "게시글 수정에 성공했습니다.";
+					path = "view.do?type="+boardType+"&cp="+currentPage+"&no="+result;
+				}else {
+					status = "error";
+					msg = "게시글 수정에 실패했습니다.";
+					path = request.getHeader("referer"); // 이전 페이지로 이동
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
 			}
 			
 			

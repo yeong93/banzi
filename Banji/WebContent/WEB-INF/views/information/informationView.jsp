@@ -76,6 +76,10 @@
     background-color:#ffce54;
     border-color:white;
     }
+    #imgArea{
+    	width:700px;
+    	height:300px;
+    }
 </style>
 </head>
 <body>
@@ -129,15 +133,13 @@
 	                    		 }
                  	   %> 	  
 	                    	  <div class="<%= imgClass%>">
-	                          <img class="d-block w-100 boardImg" src="<%= src %>" />
+	                          <img class="d-block w-100 boardImg" id="imgArea" src="<%= src %>" />
 	                          <input type="hidden" value=<%=at.getFileNo() %>>
 	                         </div> 
 	                    	
 	                    <%  } } } %>
 	                    
                     </div> 
-                    
-                    
                     <a class="carousel-control-prev" href="#carousel-325626" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a class="carousel-control-next" href="#carousel-325626" data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
                 </div>
 

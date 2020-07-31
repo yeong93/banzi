@@ -311,5 +311,65 @@ public class InformationDAO {
 		return result;
 	}
 
+	/** 게시글 수정 화면 구성 DAO
+	 * @param conn
+	 * @param infoBoardNo
+	 * @return information
+	 * @throws Exception
+	 */
+	public Information updateView(Connection conn, int infoBoardNo)throws Exception {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Information information = null;
+		String query = prop.getProperty("updateView");
+		// 
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, infoBoardNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				information = new Information(infoBoardNo, rset.getString("INFORMATION_BOARD_TITLE"),
+						rset.getString("INFORMATION_BOARD_CONTENT"), rset.getString("INFORMATION_CATEGORY"));
+			}
+			
+		}finally {
+			rset.close();
+			pstmt.close();
+		}
+		
+		return information;
+	}
+
+	/** 게시글 수정 DAO
+	 * @param conn
+	 * @param information
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateInformation(Connection conn, Information information) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateInformation");
+		// UPDATE INFORMATION_BOARD SET INFORMATION_BOARD_TITLE=?, 
+		// INFORMATION_BOARD_CONTENT=?, INFORMATION_CATEGORY=?,  
+		// INFORMATION_BOARD_MODIFY_DT= SYSDATE
+		// WHERE INFORMATION_BOARD_NO=?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, information.getInfoBoardTitle());
+			pstmt.setString(2, information.getInfoBoardContent());
+			pstmt.setInt(3, Integer.parseInt(information.getCategoryName()));
+			pstmt.setInt(4, information.getInfoBoardNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
 
 }
