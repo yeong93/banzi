@@ -13,6 +13,24 @@ public class Community {
     
     public Community() {}
     
+    
+    public Community(String title, String content) {
+        super();
+        this.title = title;
+        this.content = content;
+    }
+    
+    
+
+
+    public Community(int boardNo, String title, String content) {
+        super();
+        this.boardNo = boardNo;
+        this.title = title;
+        this.content = content;
+    }
+
+
     public Community(String regName, String title, String content, int boardType) {
         super();
         this.regName = regName;

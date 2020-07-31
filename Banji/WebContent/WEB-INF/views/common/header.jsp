@@ -47,6 +47,7 @@ height : 157px;
 width: 100%;
 z-index : 100;
 background-color : white;
+top : 0px;
 }
 #main-logo{
 padding: 11px;

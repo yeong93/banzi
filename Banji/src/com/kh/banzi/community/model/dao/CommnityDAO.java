@@ -309,5 +309,131 @@ public class CommnityDAO {
         
         return fList;
     }
+
+
+
+
+    public int deleteCommunity(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("deleteCommunity");
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        
+        return result;
+    }
+
+
+
+
+    public int deleteFiles(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("deleteFiles");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            result = pstmt.executeUpdate();
+            
+        }finally {
+            pstmt.close();
+        }
+        return result;
+    }
+
+
+
+
+    /** 게시글 수정 화면
+     * @param conn
+     * @param boardNo
+     * @return
+     * @throws Exception
+     */
+    public Community updateView(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Community community = null;
+        String query = prop.getProperty("updateView");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            
+            if (rset.next()) 
+                community = new Community(rset.getString("TITLE"),rset.getString("CONTENT"));
+        }finally {
+            rset.close();
+            pstmt.close();
+        }
+        return community;
+    }
+
+
+
+
+    /** 게시글 수정 DAO
+     * @param conn
+     * @param community
+     * @return
+     * @throws Exception
+     */
+    public int updateBoard(Connection conn, Community community) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query =prop.getProperty("updateBoard");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, community.getTitle());
+            pstmt.setString(2, community.getContent());
+            pstmt.setInt(3, community.getBoardNo());
+            
+            result = pstmt.executeUpdate(); 
+        }finally {
+            pstmt.close();
+        }
+        
+        return result;
+    }
+
+
+
+
+    /** 파일 정보 수정 DAO
+     * @param conn
+     * @param newFile
+     * @return result
+     * @throws Exception
+     */
+    public int updateAttachment(Connection conn, Attachment newFile) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("updateAttachment");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           
+           pstmt.setString(1, newFile.getFileOriginName());
+           pstmt.setString(2, newFile.getFileChangeName());
+           pstmt.setString(3, newFile.getFilePath());
+           pstmt.setInt(4, newFile.getFileNo());
+           
+           result = pstmt.executeUpdate();
+        }finally {
+           pstmt.close();
+        }
+        
+        return result;
+    }
     
 }
