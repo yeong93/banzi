@@ -49,8 +49,7 @@ public class Information {
 	}
 	
 	// (2)-2 게시글 삽입용 매개변수 있는 생성자
-	public Information(String infoBoardTitle, String infoBoardContent, String userId, String categoryName,
-			int boardType) {
+	public Information(String infoBoardTitle, String infoBoardContent, String userId, String categoryName, int boardType) {
 		super();
 		this.infoBoardTitle = infoBoardTitle;
 		this.infoBoardContent = infoBoardContent;
@@ -58,7 +57,6 @@ public class Information {
 		this.categoryName = categoryName;
 		this.boardType = boardType;
 	}
-	
 
 	// (2) - 3 게시글 상세 조회용 매개변수 있는 생성자
 	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent, String userId, int readCount,
@@ -73,6 +71,8 @@ public class Information {
 		this.infoBoardCreateDate = infoBoardCreateDate;
 		this.infoBoardModifyDate = infoBoardModifyDate;
 	}
+
+
 
 	// (3) getter와 setter 작성
 	public int getInfoBoardNo() {

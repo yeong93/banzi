@@ -50,8 +50,9 @@ public class Attachment {
         this.filePath = filePath;
         this.fileLevel = fileLevel;
     }
+    
 
-    public int getFileNo() {
+	public int getFileNo() {
         return fileNo;
     }
 
