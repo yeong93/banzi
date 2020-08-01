@@ -1,6 +1,6 @@
 package com.kh.banzi.event.model.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Event {
 	
@@ -9,10 +9,10 @@ public class Event {
 	private String eventTitle;
 	private String eventContent;
 	private String eventFull;
-	private Date createDay;
-	private Date modifyDay;
-	private Date startDay;
-	private Date endDay;
+	private Timestamp createDay;
+	private Timestamp modifyDay;
+	private Timestamp startDay;
+	private Timestamp endDay;
 	private String eventStatus;
 	private int boardType = 7;
 	
@@ -24,9 +24,9 @@ public class Event {
 	}
 
 
-
 	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, String eventFull,
-			Date createDay, Date modifyDay, Date startDay, Date endDay, String eventStatus, int boardType) {
+			Timestamp createDay, Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus,
+			int boardType) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
@@ -41,10 +41,13 @@ public class Event {
 		this.boardType = boardType;
 	}
 
-	
 
 
-	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Date startDay, Date endDay) {
+
+
+
+
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp startDay, Timestamp endDay) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
@@ -53,6 +56,20 @@ public class Event {
 		this.startDay = startDay;
 		this.endDay = endDay;
 	}
+
+
+	public Event(String eventWriter, String eventTitle, String eventContent, Timestamp startDay, Timestamp endDay) {
+		super();
+		this.eventWriter = eventWriter;
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.startDay = startDay;
+		this.endDay = endDay;
+	}
+
+
+
+	
 
 
 
@@ -62,9 +79,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventNo(int eventNo) {
 		this.eventNo = eventNo;
 	}
+
+
+
+
 
 
 
@@ -74,9 +99,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventWriter(String eventWriter) {
 		this.eventWriter = eventWriter;
 	}
+
+
+
+
 
 
 
@@ -86,9 +119,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
 	}
+
+
+
+
 
 
 
@@ -98,9 +139,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventContent(String eventContent) {
 		this.eventContent = eventContent;
 	}
+
+
+
+
 
 
 
@@ -110,57 +159,97 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventFull(String eventFull) {
 		this.eventFull = eventFull;
 	}
 
 
 
-	public Date getCreateDay() {
+
+
+
+
+	public Timestamp getCreateDay() {
 		return createDay;
 	}
 
 
 
-	public void setCreateDay(Date createDay) {
+
+
+
+
+	public void setCreateDay(Timestamp createDay) {
 		this.createDay = createDay;
 	}
 
 
 
-	public Date getModifyDay() {
+
+
+
+
+	public Timestamp getModifyDay() {
 		return modifyDay;
 	}
 
 
 
-	public void setModifyDay(Date modifyDay) {
+
+
+
+
+	public void setModifyDay(Timestamp modifyDay) {
 		this.modifyDay = modifyDay;
 	}
 
 
 
-	public Date getStartDay() {
+
+
+
+
+	public Timestamp getStartDay() {
 		return startDay;
 	}
 
 
 
-	public void setStartDay(Date startDay) {
+
+
+
+
+	public void setStartDay(Timestamp startDay) {
 		this.startDay = startDay;
 	}
 
 
 
-	public Date getEndDay() {
+
+
+
+
+	public Timestamp getEndDay() {
 		return endDay;
 	}
 
 
 
-	public void setEndDay(Date endDay) {
+
+
+
+
+	public void setEndDay(Timestamp endDay) {
 		this.endDay = endDay;
 	}
+
+
+
+
 
 
 
@@ -170,9 +259,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setEventStatus(String eventStatus) {
 		this.eventStatus = eventStatus;
 	}
+
+
+
+
 
 
 
@@ -182,9 +279,17 @@ public class Event {
 
 
 
+
+
+
+
 	public void setBoardType(int boardType) {
 		this.boardType = boardType;
 	}
+
+
+
+
 
 
 

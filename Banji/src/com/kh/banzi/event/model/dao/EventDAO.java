@@ -87,8 +87,8 @@ public class EventDAO {
 						rset.getString("USER_ID"),
 						rset.getString("EVENT_TITLE"),
 						rset.getString("EVENT_CONTENT"), 
-						rset.getDate("EVENT_START_DT"),
-						rset.getDate("EVENT_END_DT")
+						rset.getTimestamp("EVENT_START_DT"),
+						rset.getTimestamp("EVENT_END_DT")
 						);
 				eList.add(e);
 			}
