@@ -125,7 +125,7 @@ public class CommunityController extends HttpServlet {
 
                 Enumeration<String> files = mRequest.getFileNames(); 
 
-                Attachment temp = null; // 임시 참조 변수 
+                Attachment temp = null; // 임시 참조 변수; 
                 while(files.hasMoreElements()) {
 
                     String name = files.nextElement();

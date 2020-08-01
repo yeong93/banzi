@@ -27,8 +27,8 @@
 <title>게시판</title>
    <style>
        *{
-      font-family: "InfinitySans-RegularA1";
-      }
+         font-family: "InfinitySans-RegularA1";
+       }
       .pagination {
             justify-content: center;
         }
@@ -74,6 +74,14 @@
         .ok{
          background-color: #FFBA00;
          color:black;
+        }
+        .nick_box{
+         font-weight:bold;
+         margin-bottom:10px;
+        }
+        .reply_content{
+         font-weight:200;
+         font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
         }
   </style>
   
@@ -203,6 +211,10 @@
 			      <div id="content" class="modal-body" style="word-break:break-all;">
 			        ...
 			      </div>
+			      <div id="reply" class="modal-body">
+			       <hr>
+			       댓글
+			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
@@ -229,16 +241,20 @@
     		url : "<%=request.getContextPath()%>/qna/view.do?cp=<%=currentPage%>&no="+boardNo,
     	  type : "GET",
     	  dataType : "JSON",
-    	  success : function(qna){
-    		  console.log(qna);
-    		  $("#exampleModalLabel").text(qna.title);
-    		  $("#content").text(qna.content);
-/*     		  if(reply != undefined ){
-    			  $hr = $("<hr>");
-    			  $p1 = $("<p>").text("내용 :" + reply.content);
-    			  $("#content").append($hr, $p1);
-    		  } */
-    		  console.log(reply);
+    	  success : function(map){
+    		  console.log(map);
+    		  console.log(map.rList.length)
+    		  $("#reply").text("");
+    		  $("#exampleModalLabel").text(map.qna.title);
+    		  $("#content").text(map.qna.content);
+     		  if(map.rList.length != 0){
+     			  for(var i = 0; i < map.rList.length; i++){
+    			   $hr = $("<hr>");
+    			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
+    			   $p1 = $("<p>").addClass("reply_content").text(map.rList[i].content);
+    			   $("#reply").append($hr,$div, $p1);
+     			  }
+    		  }  
     	  }, error : function(){
     		  console.log("ajax 통신 실패");
     	  }

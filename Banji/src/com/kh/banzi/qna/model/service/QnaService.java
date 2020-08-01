@@ -2,12 +2,14 @@ package com.kh.banzi.qna.model.service;
 
 import static com.kh.banzi.common.DBCP.getConnection;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.naming.NamingException;
 
+import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.qna.model.dao.QnaDAO;
@@ -61,6 +63,75 @@ public class QnaService {
         return rList;
     }
 
+    /** QNA 등록
+     * @param qna
+     * @param fList
+     * @return result
+     */
+    public int insertQna(Qna qna, List<Attachment> fList) throws Exception{
+        Connection conn = getConnection();
+        
+        int result = 0;
+        
+        int boardNo = dao.selecNextNo(conn);
+        if (boardNo > 0) {
+            qna.setBoardNo(boardNo);
+            System.out.println(boardNo);
+
+            qna.setContent(replaceParameter(qna.getContent()));
+            qna.setContent(qna.getContent().replaceAll("\r\n", "<br>"));
+
+
+            result = dao.insertQna(conn, qna);
+            System.out.println(result);
+
+            if(result > 0 && !fList.isEmpty()) {
+                result = 0;
+
+                for(Attachment at : fList) {
+
+                    at.setParentBoardNo(boardNo);
+                    at.setParentBoardType(qna.getBoardType());
+                    
+                    result = dao.insertAttachment(conn, at);
+                    
+                    if(result == 0) break;
+                }   
+            }
+        }
+
+        // 트랜잭션 처리 및 파일 삭제
+        if (result > 0) {
+            result = boardNo;
+            conn.commit();
+        }else {
+            for(Attachment at : fList) {
+                String filePath = at.getFilePath();
+                String fileName = at.getFileChangeName();
+
+                File deleteFile = new File(filePath + fileName);
+                deleteFile.delete();
+            }
+            conn.rollback();
+        }
+        conn.close();
+        
+        return result;
+    }
+    
+    
+    // 크로스 사이트 스크립트 방지 메소드
+    private String replaceParameter(String param) {
+        String result = param;
+        if(param != null) {
+            result = result.replaceAll("&", "&amp;");
+            result = result.replaceAll("<", "&lt;");
+            result = result.replaceAll(">", "&gt;");
+            result = result.replaceAll("\"", "&quot;");
+        }
+
+        return result;
+    }
 
 
 }

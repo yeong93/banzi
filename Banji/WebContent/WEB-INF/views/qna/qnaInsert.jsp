@@ -31,7 +31,7 @@
 
          <h3>게시글 등록</h3>
          <hr>
-         <form action="<%=request.getContextPath()%>/community/insert.do?type=<%=type%>&cp=<%=cp%>" method="post" 
+         <form action="<%=request.getContextPath()%>/qna/insert.do?type=<%=type%>&cp=<%=cp%>" method="post" 
               enctype="multipart/form-data" role="form" onsubmit="return validate();">
 
             <div class="form-inline mb-2">
