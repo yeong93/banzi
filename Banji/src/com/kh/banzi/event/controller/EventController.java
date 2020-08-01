@@ -40,15 +40,13 @@ public class EventController extends HttpServlet {
 		try {
 			
 			EventService eService = new EventService();
-			
-			int eventType = Integer.parseInt(request.getParameter("type"));
-			String currentPage = request.getParameter("cp");
-			System.out.println(eventType);
-			
+
 //--------------------------------- 진행중인 이벤트 ------------------------------------
 			if(command.equals("/eventList.do")) {
 				errorMsg = "진행중인 이벤트 목록 조회";
 				
+				int eventType = Integer.parseInt(request.getParameter("type"));
+				String currentPage = request.getParameter("cp");
 		
 				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
 				List<Event> eList = eService.eventList(pInfo, eventType); 
@@ -64,12 +62,61 @@ public class EventController extends HttpServlet {
 				view.forward(request, response);
 				
 				
-				
-				
 //--------------------------------- 종료된 이벤트 ------------------------------------
-//--------------------------------- 이벤트 당첨자 ------------------------------------
-			}
+			}else if(command.equals("/pastList.do")) {
+				errorMsg = "종료된 이벤트 목록 조회";
+				
+				int eventType = Integer.parseInt(request.getParameter("type"));
+				String currentPage = request.getParameter("cp");
+		
+				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
+				List<Event> eList = eService.eventList(pInfo, eventType); 
+				List<Attachment> fList = eService.fileList(pInfo, eventType);
+				
+				
+				path = "/WEB-INF/views/event/pastList.jsp";
 			
+				request.setAttribute("pInfo", pInfo); 
+				request.setAttribute("eList", eList);
+				request.setAttribute("fList", fList);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+				
+//--------------------------------- 이벤트 당첨자 ------------------------------------
+			}else if(command.equals("/winnerList.do")) {
+				errorMsg = "당첨자 조회";
+				
+				int eventType = Integer.parseInt(request.getParameter("type"));
+				String currentPage = request.getParameter("cp");
+				
+				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
+				List<Event> eList = eService.eventList(pInfo, eventType); 
+				List<Attachment> fList = eService.fileList(pInfo, eventType);
+				
+				
+				path = "/WEB-INF/views/event/winnerList.jsp";
+			
+				request.setAttribute("pInfo", pInfo); 
+				request.setAttribute("eList", eList);
+				request.setAttribute("fList", fList);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+//--------------------------------- 이벤트 게시글 삽입 ------------------------------------				
+			}else if(command.equals("/insertEventForm.do")) {
+				
+				path = "/WEB-INF/views/event/insertEvent.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+			}else if(command.equals("/insertEvent.do")) {
+				errorMsg = "이벤트 게시글 삽입";
+				
+				int maxSize = 1024 * 1024 * 10;
+				String root = request.getSession().getServletContext().getRealPath("/");
+				String filePath = root + "resources\\img";
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
