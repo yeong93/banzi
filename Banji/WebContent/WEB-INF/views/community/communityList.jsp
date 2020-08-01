@@ -24,12 +24,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>게시판</title>
     <style>
        *{
       font-family: "InfinitySans-RegularA1";
       }
+       h1{
+        font-family: 'Roboto', sans-serif;
+        font-weight:bold;
+        text-align:center;
+       }
     	.pagination {
             justify-content: center;
         }
@@ -49,9 +55,10 @@
           text-align : center;
         }
         .container{
-          padding-top:157px;
+          padding-top:200px;
         }
         table th{
+          background-color:#FFBA00;
           font-weight:bold;
         }
         table td{
@@ -68,6 +75,7 @@
 		<%@ include file="../common/header.jsp"%>
 
 		<div class="container">
+		<h1>자유게시판</h1>
 	        <div class="my">
 	            <table class="table table-hover table-striped" id="list-table">
 	                <thead>

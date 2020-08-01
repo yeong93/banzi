@@ -23,9 +23,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>게시판</title>
    <style>
+       h1{
+        font-family: 'Roboto', sans-serif;
+        text-align:center;
+       }
        *{
          font-family: "InfinitySans-RegularA1";
        }
@@ -49,8 +54,9 @@
         }
         .container{
           padding-top:100px;
-        }
+        } 
         table th{
+          background-color:#FFBA00;
           font-weight:bold;
         }
         table td{
@@ -83,6 +89,9 @@
          font-weight:200;
          font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
         }
+        .p1{
+         font-size:1.3em;
+        }
   </style>
   
 </head>
@@ -91,6 +100,7 @@
   <div class="container">
 
     <div class="container">
+      <h1>Q N A</h1>
           <div class="my">
               <table class="table table-hover table-striped" id="list-table">
                    <thead>
@@ -135,13 +145,13 @@
                <% if(currentPage > 10) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?&cp=1">&lt;&lt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?&cp=1">&lt;&lt;</a>
                     </li>
                  
                     <!--  이전 순번의 페이징 바로 이동[<] -->
                     <li>
                        <a class = "page-link"
-                       href = "<%=request.getContextPath()%>/community/list.do?cp=<%=prev%>">&lt;</a>
+                       href = "<%=request.getContextPath()%>/qna/list.do?cp=<%=prev%>">&lt;</a>
                     </li>
                     <%}%>
                     <!--  10개의 페이지 목록 -->
@@ -154,7 +164,7 @@
                     <%} else{%>
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=p%>"><%=p %></a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=p%>"><%=p %></a>
                     
                     <%} %>
                     
@@ -165,13 +175,13 @@
                        <!-- 다음 페이지[>] -->
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=next%>">&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=next%>">&gt;</a>
                     </li>
                     
                     <!--  마지막 페이지로 이동[>>] -->
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
                     </li>
                     
                     <%} %>
@@ -248,11 +258,18 @@
     		  $("#exampleModalLabel").text(map.qna.title);
     		  $("#content").text(map.qna.content);
      		  if(map.rList.length != 0){
+ 	           $hr = $("<hr>");
+             $p1 = $("<p>").addClass("p1").text("댓글");
+             $("#reply").append($hr,$p1);
      			  for(var i = 0; i < map.rList.length; i++){
-    			   $hr = $("<hr>");
+     				  if(i > 0){
+     					  $hr2 = $("<hr>");     					  
+  		          $("#reply").append($hr2);
+     				  }
+    			   $p1 = $("<p>").text("댓글");
     			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
-    			   $p1 = $("<p>").addClass("reply_content").text(map.rList[i].content);
-    			   $("#reply").append($hr,$div, $p1);
+    			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
+    			   $("#reply").append($div, $p2);
      			  }
     		  }  
     	  }, error : function(){

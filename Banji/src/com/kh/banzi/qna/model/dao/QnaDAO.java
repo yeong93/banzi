@@ -120,7 +120,7 @@ public class QnaDAO {
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, boardNo);
             rset = pstmt.executeQuery();
-            if(rset.next()) {
+            while(rset.next()) {
                 reply = new Reply(rset.getString("USER_NAME"),
                         rset.getString("CONTENT"),
                         rset.getTimestamp("REG_DATE"));
