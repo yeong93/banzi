@@ -46,8 +46,7 @@ h1.type1 {height:80px; text-align:center; font-size:34px; line-height:30px; font
 .eventList li .thumb .end .btn {position:relative; width:130px; padding:0; margin:0 auto;}
 .eventList li .ing {font-size:17px; color:#313131;}
 .eventList li .tit {overflow:hidden; height:60px; margin-top:5px; font-size:24px; line-height:30px; color:#232323; word-break:keep-all;}
-.eventList li .date {height:16px; padding-left:23px; margin-top:15px; color:#747474; line-height:16px; 
-background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
+.eventList li .date {height:16px; padding-left:23px; margin-top:15px; color:#747474; line-height:16px; background: url(../img/event/event_date.png) no-repeat 0 50%;}
 .eventList li.none {width:1200px !important; margin-left:39px !important; background:none !important;}
 
 /*winnerList */
@@ -58,14 +57,14 @@ background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
 .winnerList tbody td.tit {padding-left:40px; padding-right:20px; text-align:left;}
 .winnerList tbody td img.vm {margin:-1px 0 0 6px;}
 .winnerList tbody td a:hover, .winnerList tbody td a:focus {font-family:nGothicB; color:#232323;}
-.winnerList tbody td .date {padding-left:21px; background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
+.winnerList tbody td .date {padding-left:21px; background:url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView {border-top:3px solid #FFCE54;}
 .winnerView .head {position:relative; padding:28px 320px 28px 20px; border-bottom:1px solid #e5e5e5;}
 .winnerView .head h3 {font-family:nGothicB; color:#232323; font-size:15px; line-height:24px;}
 .winnerView .head .info {position:absolute; right:20px; top:28px; font-size:14px; line-height:24px;}
-.winnerView .head .date {position:relative; padding-left:18px; padding-right:16px; margin-right:11px; background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
+.winnerView .head .date {position:relative; padding-left:18px; padding-right:16px; margin-right:11px; background: url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView .head .date:after {content:""; position:absolute; right:0; top:50%; width:1px; height:12px; margin-top:-6px; background:#e1e1e1;}
-.winnerView .head .hit {padding-left:18px; background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
+.winnerView .head .hit {padding-left:18px; background:url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView .content {min-height:200px; padding:40px 30px; font-size:14px; line-height:24px;}
 .winnerView .content img {max-width:1140px;}
 

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -87,8 +88,8 @@ public class EventDAO {
 						rset.getString("USER_ID"),
 						rset.getString("EVENT_TITLE"),
 						rset.getString("EVENT_CONTENT"), 
-						rset.getDate("EVENT_START_DT"),
-						rset.getDate("EVENT_END_DT")
+						rset.getTimestamp("EVENT_START_DT"),
+						rset.getTimestamp("EVENT_END_DT")
 						);
 				eList.add(e);
 			}
@@ -137,5 +138,183 @@ public class EventDAO {
 		}
 		return fList;
 	}
+
+
+	/** 글 번호
+	 * @param conn
+	 * @return eventNo
+	 * @throws Exception
+	 */
+	public int selectNextNo(Connection conn) throws Exception{
+	
+		Statement stmt = null;
+		ResultSet rset = null;
+		int eventNo = 0;
+		
+		String query = prop.getProperty("selectNextNo");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				eventNo = rset.getInt(1);
+			}
+			
+		} finally {
+			rset.close();
+			stmt.close();
+		}
+		return eventNo;
+	}
+
+
+	/** 글 삽입
+	 * @param conn
+	 * @param event
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertEvent(Connection conn, Event event) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertEvent");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, event.getEventNo());
+			pstmt.setString(2, event.getEventWriter());
+			pstmt.setString(3, event.getEventTitle());
+			pstmt.setString(4, event.getEventContent());
+			pstmt.setTimestamp(5, event.getStartDay());
+			pstmt.setTimestamp(6, event.getEndDay());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	/** 파일 삽입
+	 * @param conn
+	 * @param at
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertAttachment(Connection conn, Attachment at) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, at.getFileOriginName());
+			pstmt.setString(2, at.getFileChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getFileLevel());
+			pstmt.setInt(5, at.getParentBoardNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	/** 글 상세 조회
+	 * @param conn
+	 * @param eventNo
+	 * @param eventType 
+	 * @return event
+	 * @throws Exception
+	 */
+	public Event selectEvent(Connection conn, int eventNo) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Event event = null;
+		
+		String query = prop.getProperty("selectEvent");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, eventNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				event = new Event(
+						rset.getInt("BOARD_NO"), 
+						rset.getString("USER_ID"), 
+						rset.getString("EVENT_TITLE"), 
+						rset.getString("EVENT_CONTENT"),
+						rset.getTimestamp("EVENT_CREATE_DT"),
+						rset.getTimestamp("EVENT_MODIFY_DT"),
+						rset.getTimestamp("EVENT_START_DT"), 
+						rset.getTimestamp("EVENT_END_DT"));
+			}
+			
+		} finally {
+			rset.close();
+			pstmt.close();
+		}
+		return event;
+	}
+
+
+	/** 파일 상세 조회
+	 * @param conn
+	 * @param eventNo
+	 * @param eventType 
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectFiles(Connection conn, int eventNo) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Attachment> fList = null;
+		Attachment at = null;
+		
+		String query = prop.getProperty("selectFiles");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, eventNo);
+			
+			fList = new ArrayList<Attachment>();
+			rset = pstmt.executeQuery();
+
+				while(rset.next()) {
+						at = new Attachment(
+								rset.getInt("FILE_NO"),
+								rset.getString("FILE_CHANGE_NAME"), 
+								rset.getString("FILE_PATH"),
+								rset.getInt("FILE_LEVEL"));
+						fList.add(at);
+						}
+			}finally{
+				rset.close();
+				pstmt.close();
+			}
+		
+		return fList;
+	}
+	
+
+
+
 
 }

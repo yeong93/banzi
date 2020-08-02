@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.event.model.vo.Event"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kh.banzi.event.model.vo.PageInfo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 
 <%
 	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
@@ -17,8 +18,8 @@
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType();
 
-	int prev = (currentPage - 1)/10 * 10;
-	int next = (currentPage + 9)/10 * 10 + 1;
+	int prev = (currentPage - 1)/6 * 10;
+	int next = (currentPage + 5)/6 * 10 + 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +66,7 @@
 						
 								
 								<li>
-									<a href = "<%=request.getContextPath()%>/event/eventList.do?cp=<%=currentPage%>&no=<%=e.getEventNo()%>" > 
+									<a href = "<%=request.getContextPath()%>/event/eventView.do?cp=<%=currentPage%>&no=<%=e.getEventNo()%>" > 
 									
 										<p class="thumb">
 												<% 
@@ -87,22 +88,24 @@
 										</p>
 										<p class="ing" id="<%=e.getEventNo()%>">진행중</p>
 										<p class="tit"><%=e.getEventContent()%></p>
-										<p class="date"><%=e.getStartDay() %> ~ <%=e.getEndDay()%></p>
+										<% 
+											String start = new SimpleDateFormat("yyyy-MM-dd").format(e.getStartDay());
+											String end = new SimpleDateFormat("yyyy-MM-dd").format(e.getEndDay());
+										%>
+										<p class="date"><%=start%> ~ <%=end%></p>
 									</a>
 								</li>
 						<% } %>
 						
 					<% } %>
-				<li class="btnArea"></li>
-				<li class="btnArea"></li>			
-				<li class="container-login100-form-btn btnArea" >
-					<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
-							<button type="button" class="login100-form-btn" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
-					<% } %>
-				</li>
-			
+
 			</ul>
-		
+			
+			<div class="container-login100-form-btn btnArea" >
+				<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
+						<button type="button" class="login100-form-btn" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
+				<% } %>
+			</div>
 
 			
 			<!-- -------------------------------- 페이징 바 -------------------------------- -->

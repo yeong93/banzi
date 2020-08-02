@@ -1,6 +1,11 @@
 package com.kh.banzi.event.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,10 +15,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.naming.java.javaURLContextFactory;
+
 import com.kh.banzi.common.Attachment;
+import com.kh.banzi.common.MyFileRenamePolicy;
 import com.kh.banzi.event.model.service.EventService;
 import com.kh.banzi.event.model.vo.Event;
 import com.kh.banzi.event.model.vo.PageInfo;
+import com.kh.banzi.user.model.vo.User;
+import com.oreilly.servlet.MultipartRequest;
 
 @WebServlet("/event/*")
 public class EventController extends HttpServlet {
@@ -94,7 +104,6 @@ public class EventController extends HttpServlet {
 				List<Event> eList = eService.eventList(pInfo, eventType); 
 				List<Attachment> fList = eService.fileList(pInfo, eventType);
 				
-				
 				path = "/WEB-INF/views/event/winnerList.jsp";
 			
 				request.setAttribute("pInfo", pInfo); 
@@ -113,16 +122,113 @@ public class EventController extends HttpServlet {
 			}else if(command.equals("/insertEvent.do")) {
 				errorMsg = "이벤트 게시글 삽입";
 				
+				int eventType = Integer.parseInt(request.getParameter("type"));
+				
 				int maxSize = 1024 * 1024 * 10;
 				String root = request.getSession().getServletContext().getRealPath("/");
 				String filePath = root + "resources\\img";
+				MultipartRequest mRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+				
+				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
+				String eventTitle = mRequest.getParameter("title");
+				String eventContent = mRequest.getParameter("content");
+				String getStartDay = mRequest.getParameter("startDay");
+				String getEndDay = mRequest.getParameter("endDay");
+				
+				int index = getStartDay.indexOf("T");
+				
+				String startDate = getStartDay.substring(0, index);
+				String startTime = getStartDay.substring(index+1);
+				String start = startDate + " " + startTime + ":00.0";
+				java.sql.Timestamp startDay = java.sql.Timestamp.valueOf(start);	
+				
+				String endDate = getEndDay.substring(0, index);
+				String endTime = getEndDay.substring(index+1);
+				String end = endDate + " " + endTime + ":00.0";
+				java.sql.Timestamp endDay = java.sql.Timestamp.valueOf(end);
+				
+				Event event = new Event(userId, eventTitle, eventContent, startDay, endDay);
+				List<Attachment> fList = new ArrayList<Attachment>();
+				Enumeration<String> files = mRequest.getFileNames();
+				
+				Attachment temp = null;
+				while(files.hasMoreElements()) {
+					String name = files.nextElement();
+					
+					if(mRequest.getFilesystemName(name) != null) {
+						temp = new Attachment();
+						temp.setFileOriginName(mRequest.getOriginalFileName(name));
+						temp.setFileChangeName(mRequest.getFilesystemName(name));
+						
+
+						int fileLevel = 0;
+						switch(name) {
+						case "img1" : fileLevel = 0; break;
+						case "img2" : fileLevel = 1; break;
+						}
+						temp.setFileLevel(fileLevel);
+						temp.setFilePath(filePath);
+						
+						fList.add(temp);
+					}
+				}
+				int result = eService.insertEvent(event, fList);
+				
+				if(result >0) {
+					status = "success";
+					msg = "게시글이 등록되었습니다.";
+					path = "view.do?type="+eventType+"&cp=1&no="+result;
+					
+				}else {
+					status = "error";
+					msg = "게시글 등록 실패";
+					path = request.getHeader("referer");
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
+				
+//--------------------------------- 이벤트 게시글 상세 조회 ------------------------------------				
+			}else if(command.equals("/eventView.do")) {	
+				errorMsg = "이벤트 게시글 상세 조회";
+				
+				int eventNo = Integer.parseInt(request.getParameter("no"));
+				
+				Event event = eService.selectEvent(eventNo);
+				if(event != null) {
+					List<Attachment> fList = eService.selectFiles(eventNo);
+					
+					if(!fList.isEmpty()) {
+						request.setAttribute("fList", fList);
+					}
+					path = "/WEB-INF/views/event/eventView.jsp";
+					request.setAttribute("event", event);
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+					
+				}else {
+					status = "error";
+					msg = "게시글 조회 실패";
+					request.getSession().setAttribute("status", status);
+					request.getSession().setAttribute("msg", msg);
+					response.sendRedirect(request.getHeader("referer"));
+				}
+				
+//--------------------------------- 이벤트 게시글 수정 ------------------------------------				
+			}else if(command.equals("/eventUpdate.do")) {
+				errorMsg = "이벤트 게시글 수정";
+				
+//--------------------------------- 이벤트 게시글 삭제 ------------------------------------				
+			}else if(command.equals("/eventDelete.do")) {
+				errorMsg = "이벤트 게시글 삭제";
+				
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 			path = "/WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("errorMsf", errorMsg + " 과정에서 오류가 발생했습니다.");
+			request.setAttribute("errorMsg", errorMsg + " 과정에서 오류가 발생했습니다.");
 			view = request.getRequestDispatcher(path);
 			view.forward(request, response);
 		}
