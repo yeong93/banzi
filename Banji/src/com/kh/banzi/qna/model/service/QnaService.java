@@ -133,5 +133,12 @@ public class QnaService {
         return result;
     }
 
+    public List<Attachment> selectFiles(int boardNo) throws Exception{
+        Connection conn = getConnection();
+        List<Attachment> fList = dao.selectFiles(conn, boardNo);
+        
+        return fList;
+    }
+
 
 }

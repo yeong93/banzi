@@ -253,10 +253,14 @@
     	  dataType : "JSON",
     	  success : function(map){
     		  console.log(map);
-    		  console.log(map.rList.length)
+    		  console.log(map.rList.length);
+    		  console.log(map.fList.length);
     		  $("#reply").text("");
     		  $("#exampleModalLabel").text(map.qna.title);
     		  $("#content").text(map.qna.content);
+    		  if(map.fList.length != 0){
+    			  $pic = $("")
+    		  }
      		  if(map.rList.length != 0){
  	           $hr = $("<hr>");
              $p1 = $("<p>").addClass("p1").text("댓글");
@@ -271,7 +275,7 @@
     			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
     			   $("#reply").append($div, $p2);
      			  }
-    		  }  
+    		  }
     	  }, error : function(){
     		  console.log("ajax 통신 실패");
     	  }

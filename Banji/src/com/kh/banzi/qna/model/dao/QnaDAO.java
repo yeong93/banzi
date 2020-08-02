@@ -199,4 +199,34 @@ public class QnaDAO {
         return result;
     }
 
+    public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        List<Attachment> fList = null;
+        String query = prop.getProperty("selectFiles");
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            
+            fList = new ArrayList<Attachment>();
+            Attachment file = null;
+            while(rset.next()) {
+                  file = new Attachment();
+                  file.setFileNo(rset.getInt("FILE_NO"));
+                  file.setFileChangeName(rset.getString("FILE_CHANGE_NAME"));
+                  file.setFilePath(rset.getString("FILE_PATH"));
+                  file.setFileLevel(rset.getInt("FILE_LEVEL"));
+                  
+                  fList.add(file);
+               }
+            
+         }finally {
+            rset.close();
+            pstmt.close();
+         }
+        return fList;
+    }
+
 }
