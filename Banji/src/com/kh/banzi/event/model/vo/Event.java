@@ -8,7 +8,6 @@ public class Event {
 	private String eventWriter;
 	private String eventTitle;
 	private String eventContent;
-	private String eventFull;
 	private Timestamp createDay;
 	private Timestamp modifyDay;
 	private Timestamp startDay;
@@ -24,7 +23,7 @@ public class Event {
 	}
 
 
-	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, String eventFull,
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent,
 			Timestamp createDay, Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus,
 			int boardType) {
 		super();
@@ -32,7 +31,6 @@ public class Event {
 		this.eventWriter = eventWriter;
 		this.eventTitle = eventTitle;
 		this.eventContent = eventContent;
-		this.eventFull = eventFull;
 		this.createDay = createDay;
 		this.modifyDay = modifyDay;
 		this.startDay = startDay;
@@ -40,10 +38,6 @@ public class Event {
 		this.eventStatus = eventStatus;
 		this.boardType = boardType;
 	}
-
-
-
-
 
 
 
@@ -68,9 +62,18 @@ public class Event {
 	}
 
 
-
-	
-
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp createDay,
+			Timestamp modifyDay, Timestamp startDay, Timestamp endDay) {
+		super();
+		this.eventNo = eventNo;
+		this.eventWriter = eventWriter;
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.createDay = createDay;
+		this.modifyDay = modifyDay;
+		this.startDay = startDay;
+		this.endDay = endDay;
+	}
 
 
 	public int getEventNo() {
@@ -147,28 +150,7 @@ public class Event {
 		this.eventContent = eventContent;
 	}
 
-
-
-
-
-
-
-	public String getEventFull() {
-		return eventFull;
-	}
-
-
-
-
-
-
-
-	public void setEventFull(String eventFull) {
-		this.eventFull = eventFull;
-	}
-
-
-
+	
 
 
 
@@ -296,7 +278,7 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [eventNo=" + eventNo + ", eventWriter=" + eventWriter + ", eventTitle=" + eventTitle
-				+ ", eventContent=" + eventContent + ", eventFull=" + eventFull + ", createDay=" + createDay
+				+ ", eventContent=" + eventContent + ", createDay=" + createDay
 				+ ", modifyDay=" + modifyDay + ", startDay=" + startDay + ", endDay=" + endDay + ", eventStatus="
 				+ eventStatus + ", boardType=" + boardType + "]";
 	}

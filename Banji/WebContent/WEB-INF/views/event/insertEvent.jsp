@@ -7,7 +7,7 @@
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
 	
-	SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
+	SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ("yyyy.MM.dd", Locale.KOREA );
 	Date currentTime = new Date ();
 	String today = mSimpleDateFormat.format(currentTime);
 %>   
@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트 글작성</title>
+<title>Event</title>
 <!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
@@ -31,7 +31,7 @@
 			
 			<ul class="eventList mx-auto">
 				
-				<form action="<%=request.getContextPath()%>/event/insert.do?type=1&cp=<%=cp%>" method="post" 
+				<form action="<%=request.getContextPath()%>/event/insertEvent.do?type=1&cp=<%=cp%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 				  
 				  <table class="mx-auto table">

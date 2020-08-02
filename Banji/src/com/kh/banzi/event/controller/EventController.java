@@ -104,7 +104,6 @@ public class EventController extends HttpServlet {
 				List<Event> eList = eService.eventList(pInfo, eventType); 
 				List<Attachment> fList = eService.fileList(pInfo, eventType);
 				
-				
 				path = "/WEB-INF/views/event/winnerList.jsp";
 			
 				request.setAttribute("pInfo", pInfo); 
@@ -114,13 +113,13 @@ public class EventController extends HttpServlet {
 				view.forward(request, response);
 				
 //--------------------------------- 이벤트 게시글 삽입 ------------------------------------				
-			}else if(command.equals("/insertForm.do")) {
+			}else if(command.equals("/insertEventForm.do")) {
 				
 				path = "/WEB-INF/views/event/insertEvent.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
-			}else if(command.equals("/insert.do")) {
+			}else if(command.equals("/insertEvent.do")) {
 				errorMsg = "이벤트 게시글 삽입";
 				
 				int eventType = Integer.parseInt(request.getParameter("type"));
@@ -190,7 +189,8 @@ public class EventController extends HttpServlet {
 				response.sendRedirect(path);
 				
 //--------------------------------- 이벤트 게시글 상세 조회 ------------------------------------				
-			}else if(command.equals("/viewdo")) {	
+			}else if(command.equals("/eventView.do")) {	
+				errorMsg = "이벤트 게시글 상세 조회";
 				
 				int eventNo = Integer.parseInt(request.getParameter("no"));
 				
@@ -205,6 +205,7 @@ public class EventController extends HttpServlet {
 					request.setAttribute("event", event);
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
+					
 				}else {
 					status = "error";
 					msg = "게시글 조회 실패";
@@ -213,13 +214,21 @@ public class EventController extends HttpServlet {
 					response.sendRedirect(request.getHeader("referer"));
 				}
 				
+//--------------------------------- 이벤트 게시글 수정 ------------------------------------				
+			}else if(command.equals("/eventUpdate.do")) {
+				errorMsg = "이벤트 게시글 수정";
+				
+//--------------------------------- 이벤트 게시글 삭제 ------------------------------------				
+			}else if(command.equals("/eventDelete.do")) {
+				errorMsg = "이벤트 게시글 삭제";
+				
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 			path = "/WEB-INF/views/common/errorPage.jsp";
-			request.setAttribute("errorMsf", errorMsg + " 과정에서 오류가 발생했습니다.");
+			request.setAttribute("errorMsg", errorMsg + " 과정에서 오류가 발생했습니다.");
 			view = request.getRequestDispatcher(path);
 			view.forward(request, response);
 		}
