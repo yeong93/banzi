@@ -1,16 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.kh.banzi.review.model.vo.Attachment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.banzi.review.model.vo.PageInfo"%>
 <%@page import="com.kh.banzi.review.model.vo.Review"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <% 
  	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
  	List<Review> rList = (List<Review>)request.getAttribute("rList");
  	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type");
-	
+
 	int currentPage = pInfo.getCurrentPage();
 	int listCount = pInfo.getListCount();
 	int maxPage = pInfo.getMaxPage();
@@ -26,33 +25,22 @@
 <html lang="ko">
 <head>  
     <meta charset="UTF-8">
-    
      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<title></title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>사용후기</title>
 <style>
-	        /* 여기어때 잘난체 */
-        @font-face {
-            font-family: "yg-jalnan";
-            src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff") format("woff");
-            font-weight: normal;
-            font-style: normal;
-        }
-
         @font-face {
             font-family: 'KyoboHand';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
-
         @font-face { 
             font-family: 'IBMPlexSansKR-Light';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
             font-weight: normal; 
             font-style: normal; 
         }
-
         @font-face { 
             font-family: 'GmarketSansMedium'; 
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -60,7 +48,6 @@
             font-style: normal; 
         }
 
-        
         body { margin: 0; padding: 0;}
         .empty { width: 100%; height: 200px;}
 
@@ -116,7 +103,6 @@
             top: 0; bottom: 0; left: 0; right: 0;
         }
 
-
         /* review-box */
         .container {
             position: relative;
@@ -161,8 +147,8 @@
         }
 
         .circle-img>img {
-            margin: 4px 0px 0px 6px;
-            width: 80%;
+            margin: 4px 0px 0px 7px;
+            width: 75%;
         }
 
         .review-title {
@@ -200,11 +186,18 @@
         .review-box-inside {
             width: 64px;
             height: 64px;
-            display: inline-block;
             margin: 7px 4px 3px 4px;
             border: 0.5px solid rgb(150, 150, 150);
             border-radius: 2px;
+            display: inline-flex;
+            
         }
+        
+        .review-box-inside  img{
+        	width: 100%;
+        	height: 100%;
+        	 display: inline-flex;
+        } 
 
         .review-box-bottom {
             height: 50%;
@@ -218,49 +211,12 @@
             font-size: 14px;
         }
 
-        /* button */
+        /* 카테고리 button */
         #btn {
             background-color: #ffce54;
             border: none;
             float: right;
-        }
-
-        /* modal*/
-        
-        .modal-header {
-            padding-bottom: 4px;
-        }
-
-        .modal-title {
-            width: 80%;
-            height: 100%;
-        }
-
-        .modal-writer {
-            width: 20%;
-            height: 100%;
-            text-align: right;
-            display: inline-block;
-        }
-
-        .reply-writer {
-            display: inline-block;
-            width: 12%;
-        }
-
-        .reply-content {
-            /* margin-left: 5%; */
-            width: 85%;
-            display: inline-block;
-        }
-
-        .reply-input {
-            float: left;
-            width: 85%;
-        }
-
-        .modal-footer {
-            display: inline-block;
+            margin-right: 240px;
         }
 		
 		/* 페이징바 */
@@ -279,7 +235,31 @@
         	width: 50px;
         	height: 50px;
         }
-      
+      	
+      	/* 평가 별*/
+      	.reviewStar .rating {
+      		color: #bababa;
+      	}
+      	
+        .button-area {
+            height: 0px;
+            width: 65%;
+            margin: auto;
+        }
+        
+        .button-area .btn{
+        	width: 80px;
+		    height: 38px;
+		    padding: 0px;
+		    border-radius: 10px;
+		    font-size: 18px;
+		    
+		    font-family: 'GmarketSansMedium'; 
+        }
+        
+        .for-hidden{
+       	 margin:0px;
+        }
 </style>
 </head>
 
@@ -287,23 +267,20 @@
 	<%@ include file="../common/header.jsp"%>
 
 	<p class="empty"></p>
-
-    <!-- title-->
     <div class="review-1">사용후기</div>
     <p class="line-height"></p>
 
     <!-- 버튼부분 -->
     <div class="review-button-area">
-        <div class="review-button"><a>병 원</a></div>
-        <div class="review-button"><a>사 료</a></div>
-        <div class="review-button"><a>간 식</a></div>
-        <div class="review-button"><a>용 품</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&categoty=">병 원</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&categoty=">사 료</a></div>
+        <div class="review-button"><a >간 식</a></div>
+        <div class="review-button"><a >용 품</a></div>
     </div>
 
 	<%if(rList.isEmpty()){ %>
-    	<table><tr><td colspan="6">존재하는 게시글이 없습니다.</td></tr></table>
+    	<table><tr><td colspan="6" align="center">존재하는 게시글이 없습니다.</td></tr></table>
   	<% }else{ %>
-   	
    	
     <!-- 1 -->
 	<%int num=0; %>
@@ -312,25 +289,18 @@
 	    	<%for(int j=0; j<3; j++){ %>
    		
         <!--review box 1-1-->
-        <div class="review-box" data-target="#myModal" data-toggle="modal">
+        <div class="review-box">
+	    <p class="for-hidden" id="<%=rList.get(num).getReviewBoardNo() %>">
             <div class="review-box-top">
+            	<% if(rList.get(num).getReviewBoardNo() %2 == 0){ %>
                 <div class="circle-img"><img src="<%=request.getContextPath()%>/resources/img/개아이콘.png"></div>
-                
+                <%}else{ %>
+                <div class="circle-img"><img src="<%=request.getContextPath()%>/resources/img/개아이콘2.png"></div>
+                <%} %>
                 <div class="review-title">
-                    <div class="review-title-name"><%=rList.get(num).getReviewWriterNo()%>님</div>
+                    <div class="review-title-name"><%=rList.get(num).getUserName()%>님</div>
                     
                     <div class="review-title-heart">
-                    
-                    <!-- 
-                       <div class="ratingbox clearfix">
-                           <input type="radio" name="rating" id="rating-1" value="1"/><label for="rating-1" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-2" value="2"/><label for="rating-2" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-3" value="3"/><label for="rating-3" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-4" value="4"/><label for="rating-4" class="fa fa-heart">♥</label>
-                           <input type="radio" name="rating" id="rating-5" value="5"/><label for="rating-5" class="fa fa-heart">♥</label>
-                        </div>
-                     -->
-                     
                     <div class="reviewStar">
 						<div class="rating" data-rate="<%=rList.get(num).getReviewRating()%>">
 							<i class="fas fa-star"></i>
@@ -340,24 +310,47 @@
 							<i class="fas fa-star"></i>	
 						</div>
 					</div>
-                     
-                     
                     </div>
                 </div>
             </div> <!-- review_top end -->
-
+			
+			
             <div class="review-box-center">
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
-                <div class="review-box-inside"></div>
+            <!-- 이미지 미리보기 3개 -->
+           		<% 
+           			String path = request.getContextPath() + "/resources/uploadImages/";
+           			String[] img = new String[3];
+           			for(Attachment at : fList ) {
+           			if(at.getParentBoardNo() == rList.get(num).getReviewBoardNo()){
+           				switch(at.getFileLevel()){
+           				case 0 : img[0] = path + at.getFileChangeName(); break;
+           				case 1 : img[1] = path + at.getFileChangeName(); break;
+           				case 2 : img[2] = path + at.getFileChangeName(); break;
+           				}
+           			}
+           			
+           		}%>
+                <div class="review-box-inside">
+                	<% if(img[0] != null) {%>
+                		<img src = "<%=img[0] %>">
+                	<% } %>
+                </div>
+                <div class="review-box-inside">
+                	<% if(img[1] != null) {%>
+                		<img src = "<%=img[1] %>">
+                	<% } %>
+                </div>
+                <div class="review-box-inside">
+                	<% if(img[2] != null) {%>
+                		<img src = "<%=img[2] %>">
+                	<% } %>
+                </div>
             </div>
             
-		
             <div class="review-box-bottom">
-                <p>
-                	<%=rList.get(num).getReviewContent() %>
-                </p>
+                <p><%=rList.get(num).getReviewContent() %></p>
             </div>
+    	</p> <!-- 연결위한 div end -->
         </div> <!-- review-box end -->
 		<%num++; } %>
     	</div> <!-- container end -->
@@ -365,149 +358,69 @@
       <%} %>
 
   
+		<% if(loginUser != null){ %>
+   			 <div class="button-area">
+		        <button type="button" class="btn btn-info btn-lg" id="btn" onclick="location.href='writeReviewForm.do?type=<%=type%>';">글쓰기</button>
+            </div>
+		<%} %>
 	
-	
-	<!-- 페이징바 -->
+			<!-- 페이징바 -->
 	        <div style="clear:both">
 	        	<ul class="pagination">
 	        		<%if(currentPage>10){ %>
-	        			<!-- 맨 처음 페이지로 이동[<<] -->
 	        			<li>
-	        				<a class="page-link" 
-	        					href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=1">&lt;&lt;</a>
+	        				<a class="page-link"  href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=1">&lt;&lt;</a>
 	        			</li>
-	        			
-	        			<!-- 이전 순번의 페이징바로  이동[<] -->
 	        			<li>
-	        			<a class="page-link"
-	        				href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=prev%>">&lt;</a>
+	        			<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=prev%>">&lt;</a>
 	        			</li>
 	        			<%} %>
-	        			
-	        			<!-- 10개의 페이지 목록 -->
+
 	        			<%for(int p=startPage; p<endPage; p++){ %>
 	        				<%if(p == currentPage){ %>
 	        					<li><a class="page-link"><%=p%></a></li>
 	        				<%}else{ %>
 	        					<li>
-	        						<a class="page-link"
-	        						href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=p%>"><%=p %></a>
+	        						<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=p%>"><%=p %></a>
 	        					</li>
+	        					
 	        				<%} %>
 	        			<%} %>
-	        			<!-- if(currentPage+9)/10*10+1; < 전체 페이지중 제일 마지막 페이지 -->
+	        			
 	        			<%if(next <maxPage){ %>
-	        				<!-- 다음 페이징바[>] -->
 	        				<li>
-	        					<a class="page-link"
-	        						href="<%=request.getContextPath()%>/review/list.do?type=<%=boardType%>&cp=<%=next%>">&gt;</a>
+	        					<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=next%>">&gt;</a>
 	        				</li>
-	        				
-	        				<!-- 마지막 페이지로 이동[>>] -->
 	        				<li>
-	        					<a class="page-link"
-	        						href="<%=request.getContextPath()%>/reviewlist.do?type=<%=boardType%>&cp=<%=maxPage%>">&gt;&gt;</a>
+	        					<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=maxPage%>">&gt;&gt;</a>
 	        				</li>
 	        			<%} %>
-	        			
-	        			
-	        			 <% if(loginUser != null){ %>
-        <button type="button" class="btn btn-info btn-lg" id="btn"
-            onclick="location.href='writeReviewForm.do?type=<%=type%>';">글쓰기</button>
-    <%} %>
 	        	</ul>
-	        	
-	        	
-	        
-	        </div>
-
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">글제목</h4>
-                    <p class="modal-writer">글쓴이</p>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <img width="100px" height="100px" src="98_세미프로젝트/2931786.jpg">
-                    <img width="100px" height="100px" src="98_세미프로젝트/2931786.jpg">
-                    <img width="100px" height="100px" src="98_세미프로젝트/2931786.jpg">
-                    <br><br>
-
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                    </svg>
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                    </svg>
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                    </svg>
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                    </svg>
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                    </svg>
-                    <p>
-                        내용 section
-                    </p>
-                    <hr>
-                    <p class="reply-writer">홍길동</p>
-                    <p class="reply-content">좋은 정보 감사합니다.</p> <br>
-                    <p class="reply-writer">홍길동</p>
-                    <p class="reply-content">도움이 되는 글입니다. 덕분에 좋은 정보 얻어가요~</p>
-                </div>
-                <div class="modal-footer">
-                    <input type="text" class="reply-input">
-                    <button type="button">write</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
+	        </div> <!-- 페이징바 end -->
 
 	<%@ include file="../common/footer.jsp"%>
 </body>
+
 <script>
-
-//하트 체크 (아직 fix못시킴)
-// $(function() {$
-	// ("#rating-" +
-	//<= rList.get()
-	// .getReviewRating()%>)
-	// .prop("checked", true);});
-
-$(function(){
-    var rating = $('.reviewStar .rating');
-
-    rating.each(function(){
-        var targetScore = $(this).attr('data-rate');
-        console.log(targetScore);
-        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
-    });
-});
-	// targetScore값이 변경값
+	// 평가 등급 (+targetScore값이 변경값)
+	$(function(){
+	    var rating = $('.reviewStar .rating');
+	    rating.each(function(){
+	        var targetScore = $(this).attr('data-rate');
+	        console.log(targetScore);
+	        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
+	    });
+	});
 	
-
-	
-
+	// 페이지 이전
+	$(".review-box").on("click", function(){
+	    var boardNo = $(this).children().attr("id");
+        
+        // boardType이 안보내지면 null뜸 why?
+        location.href = "<%=request.getContextPath()%>/review/detailReview.do?type=<%=boardType%>&no=" + boardNo;
+     }).on("mouseenter", function(){
+   	  $(this).parent().css("cursor", "pointer");
+     });
 
 </script>
 </html>
