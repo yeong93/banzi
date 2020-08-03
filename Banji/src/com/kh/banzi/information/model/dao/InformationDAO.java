@@ -135,12 +135,12 @@ public class InformationDAO {
 		int result = 0;
 		
 		String query = prop.getProperty("insertInformation");
+		// insertInformation
+		// INSERT INTO INFORMATION_BOARD(INFORMATION_BOARD_NO, INFORMATION_BOARD_TITLE, 
+		// INFORMATION_BOARD_CONTENT, INFORMATION_BOARD_WRITER,INFORMATION_CATEGORY, BOARD_TYPE)
+		// VALUES (?, ?, ?, (SELECT USER_NO FROM USER_TBL WHERE USER_ID=?), ?, ?)
 		try {
 			pstmt = conn.prepareStatement(query);
-			// insertInformation
-			// INSERT INTO INFORMATION_BOARD(INFORMATION_BOARD_NO, INFORMATION_BOARD_TITLE, 
-			// INFORMATION_BOARD_CONTENT, INFORMATION_BOARD_WRITER,INFORMATION_CATEGORY, BOARD_TYPE)
-			// VALUES (?, ?, ?, (SELECT USER_NO FROM USER_TBL WHERE USER_ID=?), ?, ?)
 			
 			pstmt.setInt(1, information.getInfoBoardNo());
 			pstmt.setString(2, information.getInfoBoardTitle());
@@ -148,7 +148,7 @@ public class InformationDAO {
 			pstmt.setString(4, information.getUserId());
 			pstmt.setInt(5, information.getBoardType());
 			pstmt.setInt(6, Integer.parseInt(information.getCategoryName()));
-			System.out.println(information);
+
 			result = pstmt.executeUpdate();
 			
 		}finally {
@@ -361,9 +361,36 @@ public class InformationDAO {
 			pstmt.setString(2, information.getInfoBoardContent());
 			pstmt.setInt(3, Integer.parseInt(information.getCategoryName()));
 			pstmt.setInt(4, information.getInfoBoardNo());
-			
 			result = pstmt.executeUpdate();
 			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
+	/** 파일 정보를 수정하는 DAO
+	 * @param conn
+	 * @param newFile
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateAttachment(Connection conn, Attachment newFile) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateAttachment");
+//		UPDATE ATTACHMENT SET FILE_ORIGIN_NAME =?, FILE_CHANGE_NAME=?, 
+//		FILE_PATH= ? WHERE FILE_NO=?
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, newFile.getFileOriginName());
+			pstmt.setString(2, newFile.getFileChangeName());
+			pstmt.setString(3, newFile.getFilePath());
+			pstmt.setInt(4, newFile.getFileNo());
+
+			result = pstmt.executeUpdate();
+
 		}finally {
 			pstmt.close();
 		}
