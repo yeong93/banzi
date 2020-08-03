@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	Review review = (Review)request.getAttribute("review");
+	System.out.println("jsppppp"+review);
 	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
@@ -109,7 +110,7 @@
 			<label>평가</label><br>
 				
 		        <div class="make_star">
-		            <div class="rating" data-rate="targetNum" >
+		            <div class="rating" >
 		                <i class="fas fa-star"></i>
 		                <i class="fas fa-star"></i>
 		                <i class="fas fa-star"></i>
@@ -119,6 +120,7 @@
 		        </div>
 		        
 		        <input type="hidden" id="rating" name="rating" value="0">
+		        <input type="hidden" id="rating-hidden" name="rating" data-rate="<%=review.getReviewRating() %>">
 			</div>
 
 			<label>이미지</label>
@@ -147,8 +149,9 @@
 			<button type="submit" class="btn btn-info">등록하기</button>
 		
 		</div>
-
-
+		
+		
+		<input type="hidden" id="rating"  value="0">
 		<!-- 숨긴 input태그 -->
 		<div id="fileArea">
 			<!--  multiple 속성
@@ -172,21 +175,6 @@
 				+ (month < 10 ? "0"+month : month) + "-"
 				+ today.getDate();
 		$("#today").html(str);
-
-		// 페이지 열자마자 실행되는 함수
-		$(function() {
-			$("#fileArea").hide();
-
-			$("#contentImgArea1").click(function() {
-				$("#img1").click();
-			});
-			$("#contentImgArea2").click(function() {
-				$("#img2").click();
-			});
-			$("#contentImgArea3").click(function() {
-				$("#img3").click();
-			});
-		});
 		
 		// 유효성 검사 
 		function validate() {
@@ -201,9 +189,60 @@
 				$("#content").focus();
 				return false;
 			}
-			
-
 		}
+		
+		// 카테고리 초기값 지정 option(6개)=배열(반복접근) index=순서인덱스, item=현재 접근중인 요소
+		$("#category > option").each(function(index, item){
+			if($(item).val() == "<%=review.getReviewCategory()%>"){
+				$(item).prop("selected","true");
+			}
+		});
+		
+		// 이미지 배치
+		$(function(){
+			
+			<% 
+				String src = null;
+				if(fList != null){
+				for(Attachment at : fList){																	// 현재접근한 변경이름
+					src = request.getContextPath()+"/resources/uploadImages/"+at.getFileChangeName();
+			%>
+					var imgId;
+					switch (<%=at.getFileLevel()%>) {
+				    case 0: imgId = "#contentImg1"; break;
+				    case 1: imgId = "#contentImg2"; break;
+				    case 2: imgId = "#contentImg3"; break;
+			 		}
+					
+					if(imgId != undefined){
+						$(imgId).attr("src", "<%=src%>")
+					}
+			<% } }%>
+			
+		});
+
+		// 페이지 열자마자 실행되는 함수
+		$(function() {
+			$("#fileArea").hide();
+
+			$("#contentImgArea1").click(function() {
+				$("#img1").click();
+			});
+			$("#contentImgArea2").click(function() {
+				$("#img2").click();
+			});
+			$("#contentImgArea3").click(function() {
+				$("#img3").click();
+			});
+			
+			  $(".boardImg").on("click",function(){
+		    	  var index =  $(this).children("img").prop("id") + 1;
+		        console.log(index);
+		        $("#img" + index).click();
+		      });
+		});
+		
+		
 
 
 		 
@@ -243,9 +282,8 @@
 	    }
 		
 	    
-	    // 별점용 -> 실행하자마자 action 쿼리스트링으로 보냄
+	    // 별점용 -> 체크시 값 이동
 	    $(function(){
-		
 		    $('.make_star svg').click(function(){
 		        var targetNum = $(this).index()+1;
 		        $('.make_star svg').css({color:'#000'});
@@ -255,8 +293,16 @@
 		      	$("#rating").val(targetNum);
 		    })
 		});
+		
 	    
-	    
+	    // 가져온 별을 체크해야함...    
+	    $(function(){
+	    	var targetScore = $("#rating-hidden").attr('data-rate');
+	    	console.log(targetScore);
+	    	$(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
+	    });
+    
+    
 	</script>
 </body>
 

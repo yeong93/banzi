@@ -312,6 +312,134 @@ public class EventDAO {
 		
 		return fList;
 	}
+
+
+	/** 수정 화면 구성
+	 * @param conn
+	 * @param eventNo
+	 * @return event
+	 * @throws Exception
+	 */
+	public Event eventUpdateView(Connection conn, int eventNo) throws Exception{
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Event event = null;
+		
+		String query = prop.getProperty("eventUpdateView");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+					
+			pstmt.setInt(1, eventNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				event = new Event(
+						eventNo, 
+						rset.getString("EVENT_TITLE"), 
+						rset.getString("EVENT_CONTENT"), 
+						rset.getTimestamp("EVENT_START_DT"),
+						rset.getTimestamp("EVENT_END_DT"));
+			}
+		} finally {
+			rset.close();
+			pstmt.close();
+		}
+		return event;
+	}
+
+
+	/** 게시글 수정
+	 * @param conn
+	 * @param event
+	 * @return result
+	 * @throws Exception
+	 */
+	public int eventUpdate(Connection conn, Event event) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("eventUpdate");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, event.getEventTitle());
+			pstmt.setString(2, event.getEventContent());
+			pstmt.setTimestamp(3, event.getStartDay());
+			pstmt.setTimestamp(4, event.getEndDay());
+			pstmt.setInt(5, event.getEventNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	/** 파일 수정
+	 * @param conn
+	 * @param newFile
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateAttachment(Connection conn, Attachment newFile) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, newFile.getFileOriginName());
+			pstmt.setString(2, newFile.getFileChangeName());
+			pstmt.setString(3, newFile.getFilePath());
+			pstmt.setInt(4, newFile.getFileNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	/** 게시글 삭제
+	 * @param conn
+	 * @param eventNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int eventDelete(Connection conn, int eventNo) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("eventDelete");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, eventNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	
 	
 
 

@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정보 게시판 글 수정하기</title>
+<title>정보 게시판 - 수정하기</title>
 <style>
     *{
     font-family: "InfinitySans-RegularA1";
@@ -28,6 +28,17 @@
     .boardImg{
     	cursor : pointer;
     }
+	#wrapper{
+	width : 100%;
+	height : 100%;
+	position : relative;
+	}
+	#wrapper div{
+	margin : 0 auto;'
+	left : 50%;
+	top : 50%;
+	padding : 10px;
+	}
 </style>
 </head>
 <body>
@@ -67,30 +78,25 @@
 				</div> -->
 
 				<hr>
-
-				<div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label">썸네일</label>
+				<div id = "wrapper">
+				<div>
 					<div class="boardImg" id="titleImgArea">
-						<img id="titleImg" width="200" height="200">
+						<img id="titleImg" width="700" height="300">
 					</div>
 				</div>
-
-				<div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label">업로드<br>이미지</label>
-					<div class="mr-2 boardImg" id="contentImgArea1">
-						<img id="contentImg1" width="150" height="150">
+				<div>
+					<label class="input-group-addon mr-3 insert-label"></label>
+					<div id="contentImgArea1">
+						<img id="contentImg1" width="700" height="300">
 					</div>
-
-					<div class="mr-2 boardImg" id="contentImgArea2">
-						<img id="contentImg2" width="150" height="150">
+					<div id="contentImgArea2">
+						<img id="contentImg2" width="700" height="300">
 					</div>
-
-					<div class="mr-2 boardImg" id="contentImgArea3">
-						<img id="contentImg3" width="150" height="150">
+					<div id="contentImgArea3">
+						<img id="contentImg3" width="700" height="300">
 					</div>
 				</div>
-
-
+				</div>
 				<!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
 					<input type="file" id="img1" name="img1" onchange="LoadImg(this,1)"> 

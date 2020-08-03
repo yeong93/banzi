@@ -74,7 +74,19 @@ public class Event {
 		this.startDay = startDay;
 		this.endDay = endDay;
 	}
+	
 
+
+	public Event(int eventNo, String eventTitle, String eventContent, Timestamp startDay, Timestamp endDay) {
+		super();
+		this.eventNo = eventNo;
+		this.eventTitle = eventTitle;
+		this.eventContent = eventContent;
+		this.startDay = startDay;
+		this.endDay = endDay;
+	}
+
+	
 
 	public int getEventNo() {
 		return eventNo;

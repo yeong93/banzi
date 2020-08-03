@@ -12,11 +12,13 @@ public class PageInfo {
 	private int endPage;	   // 페이징바 끝 페이지 번호
 	
 	private int boardType; // 게시글 타입
+	private String category;
 	
-	public PageInfo(int currentPage, int listCount, int boardType) {
+	public PageInfo(int currentPage, int listCount, int boardType, String category) {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		this.boardType = boardType;
+		this.category = category;
 		
 		// makePageInfo() 메소드를 통해 계산 수행
 		makePageInfo();

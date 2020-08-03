@@ -48,15 +48,13 @@ public class EventController extends HttpServlet {
 		String errorMsg = null;
 
 		try {
-			
 			EventService eService = new EventService();
+			int eventType = Integer.parseInt(request.getParameter("type"));
+			String currentPage = request.getParameter("cp");
 
 //--------------------------------- 진행중인 이벤트 ------------------------------------
 			if(command.equals("/eventList.do")) {
 				errorMsg = "진행중인 이벤트 목록 조회";
-				
-				int eventType = Integer.parseInt(request.getParameter("type"));
-				String currentPage = request.getParameter("cp");
 		
 				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
 				List<Event> eList = eService.eventList(pInfo, eventType); 
@@ -75,9 +73,6 @@ public class EventController extends HttpServlet {
 //--------------------------------- 종료된 이벤트 ------------------------------------
 			}else if(command.equals("/pastList.do")) {
 				errorMsg = "종료된 이벤트 목록 조회";
-				
-				int eventType = Integer.parseInt(request.getParameter("type"));
-				String currentPage = request.getParameter("cp");
 		
 				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
 				List<Event> eList = eService.eventList(pInfo, eventType); 
@@ -96,9 +91,6 @@ public class EventController extends HttpServlet {
 //--------------------------------- 이벤트 당첨자 ------------------------------------
 			}else if(command.equals("/winnerList.do")) {
 				errorMsg = "당첨자 조회";
-				
-				int eventType = Integer.parseInt(request.getParameter("type"));
-				String currentPage = request.getParameter("cp");
 				
 				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
 				List<Event> eList = eService.eventList(pInfo, eventType); 
@@ -121,12 +113,10 @@ public class EventController extends HttpServlet {
 				
 			}else if(command.equals("/insertEvent.do")) {
 				errorMsg = "이벤트 게시글 삽입";
-				
-				int eventType = Integer.parseInt(request.getParameter("type"));
-				
+								
 				int maxSize = 1024 * 1024 * 10;
 				String root = request.getSession().getServletContext().getRealPath("/");
-				String filePath = root + "resources\\img";
+				String filePath = root + "resources\\uploadImages\\";
 				MultipartRequest mRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 				
 				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
@@ -148,6 +138,7 @@ public class EventController extends HttpServlet {
 				java.sql.Timestamp endDay = java.sql.Timestamp.valueOf(end);
 				
 				Event event = new Event(userId, eventTitle, eventContent, startDay, endDay);
+				
 				List<Attachment> fList = new ArrayList<Attachment>();
 				Enumeration<String> files = mRequest.getFileNames();
 				
@@ -177,7 +168,7 @@ public class EventController extends HttpServlet {
 				if(result >0) {
 					status = "success";
 					msg = "게시글이 등록되었습니다.";
-					path = "view.do?type="+eventType+"&cp=1&no="+result;
+					path = "eventView.do?type="+eventType+"&cp=1&no="+result;
 					
 				}else {
 					status = "error";
@@ -215,12 +206,116 @@ public class EventController extends HttpServlet {
 				}
 				
 //--------------------------------- 이벤트 게시글 수정 ------------------------------------				
+			}else if(command.equals("/eventUpdateForm.do")) {
+				errorMsg = "이벤트 게시글 수정";
+				
+				int eventNo = Integer.parseInt(request.getParameter("no"));
+	
+				Event event = eService.eventUpdateView(eventNo);
+				
+				if(event != null) {
+					List<Attachment> fList = eService.selectFiles(eventNo);
+					
+					if(!fList.isEmpty()) {
+						request.setAttribute("fList", fList);
+					}
+					path = "/WEB-INF/views/event/eventUpdate.jsp";
+					request.setAttribute("event", event);
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}
+				
 			}else if(command.equals("/eventUpdate.do")) {
 				errorMsg = "이벤트 게시글 수정";
 				
+				int maxSize = 1024 * 1024 * 10;
+				String root = request.getSession().getServletContext().getRealPath("/");
+				String filePath = root + "resources\\uploadImages\\";
+				MultipartRequest mRequest  
+				= new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+
+				int eventNo = Integer.parseInt(mRequest.getParameter("no"));
+				String eventTitle = mRequest.getParameter("title");
+				String eventContent = mRequest.getParameter("content");
+				String getStartDay = mRequest.getParameter("startDay");
+				String getEndDay = mRequest.getParameter("endDay");
+				
+				int index = getStartDay.indexOf("T");
+				
+				String startDate = getStartDay.substring(0, index);
+				String startTime = getStartDay.substring(index+1);
+				String start = startDate + " " + startTime + ":00.0";
+				java.sql.Timestamp startDay = java.sql.Timestamp.valueOf(start);	
+				
+				String endDate = getEndDay.substring(0, index);
+				String endTime = getEndDay.substring(index+1);
+				String end = endDate + " " + endTime + ":00.0";
+				java.sql.Timestamp endDay = java.sql.Timestamp.valueOf(end);
+				
+				Event event = new Event(eventNo, eventTitle, eventContent, startDay, endDay);
+				
+				List<Attachment> fList = new ArrayList<Attachment>();
+				Enumeration<String> files = mRequest.getFileNames();
+				
+				Attachment temp = null;
+				while(files.hasMoreElements()) {
+					String name = files.nextElement();
+					
+					if(mRequest.getFilesystemName(name) != null) {
+						
+						temp = new Attachment();
+						temp.setFileOriginName(mRequest.getOriginalFileName(name));
+						temp.setFileChangeName(mRequest.getFilesystemName(name));
+						
+		                 int fileLevel = 0;
+		                 switch(name) {
+		                 case "img1" : fileLevel = 0; break;
+		                 case "img2" : fileLevel = 1; break;
+
+		                 }
+		                 
+		                 temp.setFileLevel(fileLevel);
+		                 temp.setFilePath(filePath);
+		                 
+		                 fList.add(temp);
+					}
+				}
+				int result = eService.eventUpdate(event, fList);
+				
+				if(result > 0) {
+					status = "success";
+					msg = "게시글 수정 성공";
+					path = "eventView.do?type="+eventType+"&cp="+currentPage+"&no="+result;
+				}else {
+					status = "error";
+					msg = "게시글 수정 실패";
+					path = request.getHeader("referer");
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
+				
+			
 //--------------------------------- 이벤트 게시글 삭제 ------------------------------------				
 			}else if(command.equals("/eventDelete.do")) {
 				errorMsg = "이벤트 게시글 삭제";
+				
+				int eventNo = Integer.parseInt(request.getParameter("no"));
+				
+				int result = eService.eventDelete(eventNo);
+				
+				if(result > 0) {
+					status = "success";
+					msg = "게시글 삭제 성공";
+					path = "eventList.do?type=" + eventType;
+				}else {
+					status = "error";
+					msg = "게시글 삭제 실패";
+					path = request.getHeader("referer");
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				response.sendRedirect(path);
 				
 			}
 

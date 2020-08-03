@@ -23,31 +23,33 @@ public class InformationService {
 	/** 페이징 처리 정보 생성 Service
 	 * @param currentPage
 	 * @param boardType
+	 * @param category 
 	 * @return pInfo
 	 * @throws Exception
 	 */
-	public PageInfo getPageInfo(String currentPage, int boardType) throws Exception{
+	public PageInfo getPageInfo(String currentPage, int boardType, String category) throws Exception{
 		Connection conn = getConnection();
 		
 		int cp = currentPage == null ? 1 : Integer.parseInt(currentPage);
 		
 		// DB에서 전체 게시글 수 조회
-		int listCount = dao.getListCount(conn, boardType);
+		int listCount = dao.getListCount(conn, boardType,category);
 		conn.close();
 		
-		return new PageInfo(cp, listCount, boardType);
+		return new PageInfo(cp, listCount, boardType,category);
 	}
 
 
 	/** 게시글 목록 조회 Service
 	 * @param pInfo
+	 * @param category 
 	 * @return bList
 	 * @throws Exception
 	 */
-	public List<Information> selectList(PageInfo pInfo) throws Exception{
+	public List<Information> selectList(PageInfo pInfo, String category) throws Exception{
 		Connection conn = getConnection();
 		
-		List<Information> bList = dao.selectList(conn, pInfo);
+		List<Information> bList = dao.selectList(conn, pInfo, category);
 		conn.close();
 		
 		return bList;

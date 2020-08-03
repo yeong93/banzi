@@ -7,12 +7,13 @@
 	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String cp = request.getParameter("cp");
 	String type = request.getParameter("type");
+	String category = request.getParameter("category");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글</title>
+<title>정보 게시글 조회</title>
 <style>
 	#board-area{ margin-bottom:100px;}
 	#board-content{ padding-bottom:150px;}
@@ -153,7 +154,7 @@
 					<a href="updateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1" id="updateBtn">수정</a>
 					<% } %>
 					
-					<a href="list.do?type=<%=type%>&cp=<%=cp%>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
+					<a href="list.do?type=<%=type%>&cp=<%=cp%>&category=<%=category %>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
 				</div>
 			</div>
 	</section>

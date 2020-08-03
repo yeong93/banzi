@@ -145,7 +145,6 @@ public class ReviewService {
 		 */
 		public Review detailReview(int boardNo) throws Exception{
 			Connection conn = getConnection();
-			System.out.println("service"+boardNo);
 			Review review = dao.detailReview(conn, boardNo);
 			
 			 if(review != null) {
@@ -196,10 +195,10 @@ public class ReviewService {
 		 */
 		public Review updateReview(int reviewNo) throws Exception{
 			Connection conn = getConnection();
-			Review review =dao.updateReview(conn, reviewNo);
+			Review review =dao.updateReview(conn, reviewNo); 
 			// review.setReviewContent(review.getReviewContent().replace("<br>", "\r\n")); 
 			conn.close();
-			return review;
+			return review; 
 		}
 
 		/** 리뷰'글' 수정 
@@ -275,5 +274,18 @@ public class ReviewService {
 		    conn.close();
 
 		    return result;
+		}
+
+		public List<Review> selectCategotyList(PageInfo pInfo, int category) throws Exception{
+			Connection conn = getConnection();
+			List<Review> rList = dao.selectCategoryReview(conn, pInfo, category);
+			for(Review r : rList) {
+				if(r.getReviewContent().length() > 200) {
+					r.setReviewContent(r.getReviewContent().substring(0, 196) + "...");
+				}
+			}
+			
+			conn.close();
+			return rList;
 		}
 }

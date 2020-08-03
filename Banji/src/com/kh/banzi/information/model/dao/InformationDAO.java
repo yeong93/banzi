@@ -25,19 +25,21 @@ public class InformationDAO {
 	/** 전체 게시글 수 조회 DAO
 	 * @param conn
 	 * @param boardType
+	 * @param category 
 	 * @return listCount
 	 * @throws Exception
 	 */
-	public int getListCount(Connection conn, int boardType) throws Exception{
+	public int getListCount(Connection conn, int boardType, String category) throws Exception{
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
 		String query = prop.getProperty("getListCount");
-		// SELECT COUNT(*) FROM V_INFORMATION_LIST WHERE BOARD_TYPE=? AND INFORMATION_BOARD_STATUS='Y'
+		// SELECT COUNT(*) FROM V_INFORMATION_LIST WHERE BOARD_TYPE=? AND INFORMATION_BOARD_STATUS='Y' AND CATEGORY_NO=?
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, boardType);
+			pstmt.setString(2, category);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -56,10 +58,11 @@ public class InformationDAO {
 	/** 게시글 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo
+	 * @param category 
 	 * @return bList
 	 * @throws Exception
 	 */
-	public List<Information> selectList(Connection conn, PageInfo pInfo) throws Exception{
+	public List<Information> selectList(Connection conn, PageInfo pInfo, String category) throws Exception{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Information> bList = null;
@@ -68,10 +71,12 @@ public class InformationDAO {
 		try {
 			int startRow = (pInfo.getCurrentPage()-1) * pInfo.getLimit() + 1;
 			int endRow = startRow + pInfo.getLimit() - 1;
+			
 			pstmt = conn.prepareStatement(query);
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			

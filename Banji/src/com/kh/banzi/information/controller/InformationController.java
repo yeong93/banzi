@@ -64,10 +64,11 @@ public class InformationController extends HttpServlet {
 			
 			if(command.equals("/list.do")) {
 				ErrorMsg = "정보 게시판 목록 조회";
+				String category = request.getParameter("category");
+
+				PageInfo pInfo = service.getPageInfo(currentPage, boardType,category);
 				
-				PageInfo pInfo = service.getPageInfo(currentPage, boardType);
-				
-				List<Information> bList = service.selectList(pInfo);
+				List<Information> bList = service.selectList(pInfo, category);
 				
 				path = "/WEB-INF/views/information/informationList.jsp";
 				request.setAttribute("pInfo", pInfo);
