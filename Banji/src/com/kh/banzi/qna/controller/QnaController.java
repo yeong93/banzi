@@ -70,12 +70,18 @@ public class QnaController extends HttpServlet {
                 
                 List<Reply> rList = qService.selectReply(boardNo);
                 List<Attachment> fList = qService.selectFiles(boardNo);
+                String userGrade = "";
+                if(request.getSession().getAttribute("loginUser") != null) {
+                    userGrade = ((User)request.getSession().getAttribute("loginUser")).getUserGrade();
+                }
                 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
                 
                 Map<String, Object> map = new HashMap<>();
                 map.put("qna", qna);
                 map.put("rList", rList);
                 map.put("fList", fList);
+                map.put("userGrade", userGrade);
+                
                 gson.toJson(map, response.getWriter());
             } else if (command.equals("/insertForm.do")) {
                 path = "/WEB-INF/views/qna/qnaInsert.jsp";

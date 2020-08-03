@@ -92,6 +92,66 @@
         .p1{
          font-size:1.3em;
         }
+        #content img{
+        width:100%;
+        heught:auto;
+        }
+        
+        <!-- btn -->
+        .replyWrite>table {
+  width: 90%;
+  margin-top : 100px;
+}
+
+#replyContentArea {
+  width: 90%;
+}
+
+#replyContentArea>textarea {
+  resize: none;
+  width: 100%;
+  text-align:left;
+}
+
+#replyBtnArea {
+  width: 100px;
+  text-align: center;
+}
+
+.rWriter {
+  display : inline-block;
+  margin-right: 30px;
+  vertical-align: top;
+}
+
+.rDate {
+  display : inline-block;
+  font-size: 0.5em;
+  color: gray;
+}
+
+#replyListArea {
+  list-style-type: none;
+}
+
+.rContent, .btnArea{
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.rContent {
+  height: 100%;
+  width : 84.5%;
+}
+
+.btnArea {
+  height: 100%;
+  width : 15%;
+  text-align: right;
+}
+.replyWrite{
+padding-top:40px;
+}
   </style>
   
 </head>
@@ -257,25 +317,45 @@
     		  console.log(map.fList.length);
     		  $("#reply").text("");
     		  $("#exampleModalLabel").text(map.qna.title);
-    		  $("#content").text(map.qna.content);
+    		  $("#content").html(map.qna.content);
     		  if(map.fList.length != 0){
-    			  $pic = $("")
+    			  var src;
+    			  var flag = true;
+    			  for(var i = 0; i < map.fList.length; i++){
+    				  console.log(i);
+    				  console.log(map.fList.fileLevel);
+    				  console.log(map.fList[i].fileChangeName);
+ 						  src ="/banzi/resources/uploadImages/"+map.fList[i].fileChangeName;
+ 						  $("#content").append("<img src="+src+">");
+    			  }
+    			  
     		  }
      		  if(map.rList.length != 0){
  	           $hr = $("<hr>");
              $p1 = $("<p>").addClass("p1").text("댓글");
-             $("#reply").append($hr,$p1);
+             $("#content").append($hr,$p1);
      			  for(var i = 0; i < map.rList.length; i++){
      				  if(i > 0){
      					  $hr2 = $("<hr>");     					  
-  		          $("#reply").append($hr2);
+  		          $("#content").append($hr2);
      				  }
     			   $p1 = $("<p>").text("댓글");
     			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
     			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
-    			   $("#reply").append($div, $p2);
+    			   $("#content").append($div, $p2);
      			  }
     		  }
+     		  if(map.userGrade != "user" && map.userGrade != ""){
+     			  $div = $("<div>").addClass("replyWrite");
+     			  $table = $("<table align='center'>");
+     			  $tr =$("<tr>");
+     			  $td = $("<td id=replyContentArea>")
+     			  $textArea = $("<textArea rows='4' id='replyContent'>");
+     			  $td2 = $("<td id='replyBtnArea'>");
+     			  $btn = $("<button class='btn btn-primary' id='addReply'>").html("답변<br>등록");
+     			  $div.append($table.append($tr.append($td.append($textArea), $td2.append($btn))));
+     			  $("#content").append($div);
+     		  }
     	  }, error : function(){
     		  console.log("ajax 통신 실패");
     	  }
