@@ -17,7 +17,7 @@ public class introduceServlet extends HttpServlet {
 		String path = "/WEB-INF/views/review/introduce.jsp";
 		RequestDispatcher view = request.getRequestDispatcher(path);
 		view.forward(request, response);
-	}
+	} 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

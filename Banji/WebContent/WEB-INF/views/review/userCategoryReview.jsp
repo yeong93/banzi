@@ -9,7 +9,8 @@
  	List<Review> rList = (List<Review>)request.getAttribute("rList");
  	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type");
-
+	
+	
 	int currentPage = pInfo.getCurrentPage();
 	int listCount = pInfo.getListCount();
 	int maxPage = pInfo.getMaxPage();
@@ -85,13 +86,9 @@
             background-color: #ffce54;
             color: white;
             margin: 20px 16px 20px 16px;
+            text-decoration: none;
         }
-
-        .review-button:hover {
-            background-color: rgb(250, 156, 88);
-            cursor: pointer;
-        }
-
+    
         .review-button>a {
             position: absolute;
             color: white;
@@ -101,6 +98,14 @@
             text-align: center;
             margin: auto;
             top: 0; bottom: 0; left: 0; right: 0;
+            text-decoration:none;
+        }
+        
+        .review-button:hover {
+            background-color: rgb(250, 156, 88);
+            cursor: pointer;
+            text-decoration:none;
+            color: white;
         }
 
         /* review-box */
@@ -265,7 +270,7 @@
 
 <body>
 	<%@ include file="../common/header.jsp"%>
-
+	
 	<p class="empty"></p>
     <div class="review-1">사용후기</div>
     <p class="line-height"></p>
@@ -281,7 +286,7 @@
 	<%if(rList.isEmpty()){ %>
     	<table><tr><td colspan="6" align="center">존재하는 게시글이 없습니다.</td></tr></table>
   	<% }else{ %>
-   	
+   		
     <!-- 1 -->
 	<%int num=0; %>
 	   	<%for(int i=0; i<3; i++){ %>
@@ -397,11 +402,12 @@
 	        			<%} %>
 	        	</ul>
 	        </div> <!-- 페이징바 end -->
-
 	<%@ include file="../common/footer.jsp"%>
 </body>
 
 <script>
+		
+
 	// 평가 등급 (+targetScore값이 변경값)
 	$(function(){
 	    var rating = $('.reviewStar .rating');
@@ -419,7 +425,6 @@
         // boardType이 안보내지면 null뜸 why?
         location.href = "<%=request.getContextPath()%>/review/detailReview.do?type=<%=boardType%>&no=" + boardNo;
      }).on("mouseenter", function(){
-   	  $(this).parent().css("cursor", "pointer");
      });
 
 </script>
