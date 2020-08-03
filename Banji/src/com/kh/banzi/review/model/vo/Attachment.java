@@ -12,13 +12,13 @@ public class Attachment {
 
 	public Attachment() {}
 
-	
-	public Attachment(int fileNo, int parentBoardNo, String fileChangeName, String filePath) {
+	public Attachment(int fileNo, int parentBoardNo, String fileChangeName, String filePath, int fileLevel) {
 		super();
 		this.fileNo = fileNo;
 		this.parentBoardNo = parentBoardNo;
 		this.fileChangeName = fileChangeName;
 		this.filePath = filePath;
+		this.fileLevel = fileLevel;
 	}
 
 	public Attachment(int fileNo, int parentBoardNo, String fileOriginName, String fileChangeName, String filePath,

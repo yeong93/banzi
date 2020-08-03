@@ -191,12 +191,12 @@ color: white;
             <a class="nav-link" href="<%=request.getContextPath()%>/information/list.do?type=2" role="button" aria-haspopup="true" aria-expanded="false">정보</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link" href="<%=request.getContextPath()%>/community/list.do" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/qna/list.do" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="community/notice.do">공지사항</a>
               <a class="dropdown-item" href="<%=request.getContextPath()%>/community/list.do">자유 게시판</a>
               <a class="dropdown-item" href="<%=request.getContextPath()%>/qna/list.do">Q&A</a>
-              <a class="dropdown-item" href="<%=request.getContextPath()%>/review/review.do?type=3">사용 후기</a>
+              <a class="dropdown-item" href="<%=request.getContextPath()%>/review/review.do?type=6">사용 후기</a>
             </div>
           </li>
           <li class="nav-item dropdown">

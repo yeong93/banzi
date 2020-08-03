@@ -1,5 +1,10 @@
+<%@page import="com.kh.banzi.review.model.vo.Attachment"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kh.banzi.review.model.vo.Review"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	Review review = (Review)request.getAttribute("review");
+	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
 %>
@@ -59,7 +64,6 @@
 	
 	h3 {font-family: 'GmarketSansMedium';}
 	
-	
 	/* 이미지 업로드 부분*/
 	.boardImg { cursor: pointer; }
 </style>
@@ -73,13 +77,12 @@
 	<div class="container">
 		<h3>글쓰기</h3>
 		<hr>
-		
-		<form action="insertReview.do?type=<%=type%>" method="post"
+		<form action="<%=request.getContextPath()%>/review/updateReviewForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=review.getReviewBoardNo()%>" method="post"
 			 enctype="multipart/form-data" role="form" onsubmit="return validate();">
 			<div class="form-group">
 				<label for="exampleFormControlInput1">제목</label> 
 				<input type="text" class="form-control" id="title" name="title"
-					placeholder="제목을 작성해주세요." >
+					placeholder="제목을 작성해주세요." value="<%=review.getReviewTitle()%>">
 			</div>
 			
 			<div class="form-group">
@@ -136,7 +139,7 @@
 			</div>
 
 			<label for="exampleFormControlTextarea1">내용</label>
-			<textarea class="form-control" id="content" name="content" rows="10" style="resize: none;"></textarea>
+			<textarea class="form-control" id="content" name="content" rows="10" style="resize: none;"><%=review.getReviewContent() %></textarea>
 			
 			<br>
 			<button type="button" class="btn btn-secondary">목록으로</button>
@@ -198,12 +201,10 @@
 				$("#content").focus();
 				return false;
 			}
-			// 별 체크 검사
-			//if($(".rating i").prop("checked",true) <0){
-				//alert("체크하세요");
-				//return false;
-		//	}
+			
+
 		}
+
 
 		 
 	    // 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
@@ -254,6 +255,7 @@
 		      	$("#rating").val(targetNum);
 		    })
 		});
+	    
 	    
 	</script>
 </body>

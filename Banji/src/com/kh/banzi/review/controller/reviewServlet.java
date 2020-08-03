@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.banzi.common.MyFileRenamePolicy;
+import com.kh.banzi.information.model.vo.Information;
 import com.kh.banzi.review.model.service.ReviewService;
 import com.kh.banzi.review.model.vo.Attachment;
 import com.kh.banzi.review.model.vo.PageInfo;
@@ -37,7 +38,6 @@ public class reviewServlet extends HttpServlet {
 		String text = null;
 		String errorMsg = null;
 		
-		System.out.println("command : " + command);
 		
 		try {
 			ReviewService reviewService = new ReviewService();
@@ -50,19 +50,15 @@ public class reviewServlet extends HttpServlet {
 				errorMsg = "리뷰 목록 조회";
 				
 				PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
-				
 				List<Review> rList = reviewService.selectList(pInfo);
 				
-				// 이름 얻어오기 
 				
-				
-				
-//				List<Attachment> fList = reviewService.selectFileList(pInfo);
+				List<Attachment> fList = reviewService.selectFileList(pInfo);
 				
 				path = "/WEB-INF/views/review/userReview.jsp";
 				request.setAttribute("pInfo", pInfo);
 				request.setAttribute("rList", rList);
-//				request.setAttribute("fList", fList);
+				request.setAttribute("fList", fList);
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -77,8 +73,7 @@ public class reviewServlet extends HttpServlet {
 				
 			// 리뷰 등록 (글 + 파일)
 			}else if(command.equals("/insertReview.do")) {
-				
-				int maxSize = 1024 * 1024 * 10; // 10MB
+				int maxSize = 1024 *1024 *10;
 				String root = request.getSession().getServletContext().getRealPath("/");
 				String filePath = root + "resources\\uploadImages";
 				
@@ -88,34 +83,26 @@ public class reviewServlet extends HttpServlet {
 				String reviewTitle = mRequest.getParameter("title");
 				int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
 				String reviewContent = mRequest.getParameter("content");
-				
 				int reviewRating =  Integer.parseInt(mRequest.getParameter("rating"));
-				System.out.println("reviewRating : " + reviewRating);
-				
 				String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
 				
 				Review review = new Review(userId, reviewTitle, reviewContent, reviewRating, reviewCategory, boardType);
-				System.out.println("review -c : " + review);
+				
 				List<Attachment> fList = new ArrayList<Attachment>();
 				Enumeration<String> files = mRequest.getFileNames();
 				
 				Attachment temp = null; // 임시 참조 변수
-				
 				while(files.hasMoreElements()) {
-					
 					String name = files.nextElement();
 			
 					if(mRequest.getFilesystemName(name) != null) {
-						
 						temp = new Attachment();
-						
 						temp.setFileOriginName(mRequest.getOriginalFileName(name));
 						temp.setFileChangeName(mRequest.getFilesystemName(name));
 						
 						// name 속성에 따라 파일 레벨 지정
 						// img1 -> 0(썸네일), img2->1, img3->2, img4->3
 						int fileLevel = 0;
-						
 						switch(name) {
 						case "img1" : fileLevel = 0; break;
 						case "img2" : fileLevel = 1; break;
@@ -123,15 +110,12 @@ public class reviewServlet extends HttpServlet {
 						}
 						
 						temp.setFileLevel(fileLevel);
-						
-						// 파일이 저장되어있는 경로 추가
 						temp.setFilePath(filePath);
-						
 						fList.add(temp);
 						// 파일 얻어오기 끝
 					}
 				}
-				
+				//
 				int result = reviewService.insertReview(review, fList, boardType);
 				
 				if(result>0) {
@@ -148,9 +132,137 @@ public class reviewServlet extends HttpServlet {
 				request.getSession().setAttribute("status", status);
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
-				
 			}
 			
+			
+			// 게시글 상세조회 Controller
+			else if(command.equals("/detailReview.do")) {
+				int boardNo = Integer.parseInt(request.getParameter("no"));
+				// 1. 게시글 조회
+				Review review = reviewService.detailReview(boardNo);
+				
+				System.out.println("게시글 상세조회 review"+review);
+				if(review!= null) {
+					List<Attachment> fList = reviewService.selectFiles(boardNo);
+	  
+					if(!fList.isEmpty()) request.setAttribute("fList", fList);
+					
+					path = "/WEB-INF/views/review/userReviewDetail.jsp";
+					request.setAttribute("review", review);
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				
+				}else {
+					status = "error";
+	                msg = "게시글 조회 실패";
+	                request.getSession().setAttribute("status", status);
+	                request.getSession().setAttribute("msg", msg);
+	                response.sendRedirect(request.getHeader("referer"));
+				}
+			
+				// 리뷰 삭제
+				}else if(command.equals("/delete.do")) {
+					errorMsg = "리뷰 삭제";
+					int reviewNo = Integer.parseInt(request.getParameter("no"));
+					
+					int result = reviewService.deleteReview(reviewNo);
+					
+					 if(result>0) {
+						 status = "success";
+						 msg = "리뷰 삭제 성공";
+						 path = "review.do?type=" + boardType;
+					 }else {
+						 status = "error";
+						 msg="리뷰 삭제 실패";
+						 path = request.getHeader("referer");
+					 }
+					
+					 request.getSession().setAttribute("status", status);
+					 request.getSession().setAttribute("msg", msg);
+					 response.sendRedirect(path);
+					 
+				// 리뷰 수정 화면 위임
+				}else if(command.equals("/updateReview.do")) {
+					int reviewNo = Integer.parseInt(request.getParameter("no"));
+					Review review = reviewService.updateReview(reviewNo);
+					
+					if(review != null) {
+						List<Attachment> fList = reviewService.selectFiles(reviewNo);
+						
+						if(!fList.isEmpty()) {
+							request.setAttribute("fList", fList);
+						}
+						
+						path="/WEB-INF/views/review/reviewUpdateForm.jsp";
+						request.setAttribute("review", review);
+						view = request.getRequestDispatcher(path);
+						view.forward(request, response);
+					}
+					
+				// --- 여기까지 완성
+				// 리뷰 수정 ing -> 평가 가져온게 잘못된듯.
+				}else if(command.equals("/updateReviewForm.do")) {
+					System.out.println("OK");
+					
+					int maxSize = 1024 *1024 *10;
+					String root = request.getSession().getServletContext().getRealPath("/");
+					String filePath = root + "resources\\uploadImages";
+					MultipartRequest mRequest
+					= new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+					
+					String reviewTitle = mRequest.getParameter("title");
+					int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
+					String reviewContent = mRequest.getParameter("content");
+					int reviewRating =  Integer.parseInt(mRequest.getParameter("rating"));
+					int reviewNo = Integer.parseInt(request.getParameter("no"));
+					
+					Review review = new Review(reviewNo, reviewTitle, reviewContent, reviewRating, reviewCategory);
+					System.out.println("리뷰 수정 왔니?");
+					
+					List<Attachment> fList = new ArrayList<Attachment>();
+					
+					Enumeration<String> files = mRequest.getFileNames();
+					Attachment temp = null;
+					while(files.hasMoreElements()) {
+						String name = files.nextElement();
+						
+						if(mRequest.getFilesystemName(name) != null) {
+							temp= new Attachment();
+							
+							temp.setFileOriginName(mRequest.getOriginalFileName(name));
+							temp.setFileChangeName(mRequest.getFilesystemName(name));
+							
+			                 int fileLevel = 0;
+			                 switch(name) {
+			                 case "img1" : fileLevel = 1; break;
+			                 case "img2" : fileLevel = 2; break;
+			                 case "img3" : fileLevel = 3; break;
+			                 }
+			                 
+			                 temp.setFileLevel(fileLevel);
+//			                 temp.setFilePath(filePath);
+			                 fList.add(temp);
+						}
+					}
+					
+					int result = reviewService.updateReview(review, fList);
+					
+					if(result>0) {
+						status = "success";
+						msg = "게시글 수정 성공";
+						path = "review.do?type="+boardType + "&cp=" + currentPage +"&no=" + result;
+					}else {
+						status = "error";
+						msg = "게시글 수정 실패";
+						path = request.getHeader("referer");
+					}
+					
+					request.getSession().setAttribute("status", status);
+					request.getSession().setAttribute("msg", msg);
+					response.sendRedirect(path);
+					
+				}
+	
 			
 		}catch (Exception e) {
 			e.printStackTrace();
