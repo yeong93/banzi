@@ -140,5 +140,21 @@ public class QnaService {
         return fList;
     }
 
+    public int inserReply(Reply reply) throws Exception{
+        Connection conn= getConnection();
+        int result = dao.insertReply(conn, reply);
+        
+        if(result > 0)
+            result = dao.increaseView(conn, reply);
+        
+        if (result > 0)
+            conn.commit();
+        else
+            conn.rollback();
+        conn.close();
+        
+        return result;
+    }
+
 
 }

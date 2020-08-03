@@ -13,6 +13,16 @@ public class Reply {
         // TODO Auto-generated constructor stub
     }
     
+    
+
+    public Reply(String regWriter, String content, int boardNo) {
+        super();
+        this.regWriter = regWriter;
+        this.content = content;
+        this.boardNo = boardNo;
+    }
+
+
 
     public Reply(String regWriter, String content, Timestamp regDate) {
         super();
