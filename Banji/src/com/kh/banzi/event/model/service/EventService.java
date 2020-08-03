@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.banzi.common.Attachment;
@@ -166,6 +167,108 @@ public class EventService {
 		
 		conn.close();
 		return fList;
+	}
+
+	/** 수정 화면 구성
+	 * @param eventNo
+	 * @return event
+	 * @throws Exception
+	 */
+	public Event eventUpdateView(int eventNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		Event event = dao.eventUpdateView(conn, eventNo);
+		event.setEventContent(event.getEventContent().replace("<br>", "\r\n"));
+		
+		conn.close();
+		return event;
+	}
+
+	/** 게시글 수정
+	 * @param event
+	 * @param fList
+	 * @return result
+	 * @throws Exception
+	 */
+	public int eventUpdate(Event event, List<Attachment> fList) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = 0;
+		
+		event.setEventContent(replaceParameter(event.getEventContent())); 
+		event.setEventContent(event.getEventContent().replace("\r\n", "<br>")); 
+		
+		result = dao.eventUpdate(conn, event);
+		
+		List<Attachment> deleteFiles = new ArrayList<Attachment>();
+		
+		if(result > 0 && !fList.isEmpty()) {
+			
+			result = 0; 
+			List<Attachment> oldList = dao.selectFiles(conn, event.getEventNo());
+			
+			boolean flag = false;
+			for(Attachment newFile : fList) {
+				flag = false; 
+				for(Attachment oldFile : oldList) {
+					
+					if(newFile.getFileLevel() == oldFile.getFileLevel()) {
+						flag = true;
+						deleteFiles.add(oldFile);
+						newFile.setFileNo(oldFile.getFileNo()); 
+					}
+				}
+				newFile.setParentBoardNo(event.getEventNo());
+				
+				if(flag) { 
+					result = dao.updateAttachment(conn, newFile);
+				}else { 
+					result = dao.insertAttachment(conn, newFile);
+				}
+				if(result == 0) break;
+			}
+		}
+		
+		List<Attachment> tempList = null;
+		if(result > 0) {
+			result = event.getEventNo();
+			conn.commit();
+			tempList = deleteFiles;
+		}else {
+			conn.rollback();
+			tempList = fList;
+		}
+		
+		for(Attachment at : tempList) {
+			String fileName = at.getFileChangeName();
+			String filePath = at.getFilePath();
+			
+			File deleteFile = new File(filePath+fileName);
+			deleteFile.delete();
+		}
+		
+		conn.close();
+		return result;
+	}
+
+	/** 게시글 삭제
+	 * @param eventNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int eventDelete(int eventNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = dao.eventDelete(conn, eventNo);
+		
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		conn.close();
+		return result;
 	}
 
 }

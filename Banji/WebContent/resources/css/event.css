@@ -16,6 +16,8 @@
 
 #title, #content{width: 97%}
 #title{border: none; border-bottom:1px solid rgb(195, 195, 195); text-align: left !important;}
+.eventBtn{width: 30px !important;}
+#mypage a{text-decoration: none;}
 
 
 .paging {margin:40px 0; text-align:center;}

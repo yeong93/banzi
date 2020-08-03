@@ -87,21 +87,45 @@ public class LoginServlet extends HttpServlet {
 				
 			// ------------------------ 로그아웃 ------------------------
 			}else if(command.equals("/logout.do")) {
+				errorMsg = "로그아웃";
+				
 				request.getSession().invalidate();
 				response.sendRedirect(request.getContextPath());
 				
 				
-			// ------------------------ 아이디 찾기, 비밀번호 찾기 ------------------------
-			}else if(command.equals("/searchIdForm.do")) {
-				path = "/WEB-INF/views/user/searchId.jsp";
+			// ------------------------ 비밀번호 찾기 ------------------------
+			}else if(command.equals("/searchForm.do")) {
+				
+				path = "/WEB-INF/views/user/search.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
-			}else if(command.equals("/searchPwdForm.do")) {
-				path = "/WEB-INF/views/user/searchPwd.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
+			}else if(command.equals("/search.do")) {
+				errorMsg = "비밀번호 변경";
 				
+				String userId = request.getParameter("userId");
+				String userQuestion = request.getParameter("userQuestion");
+				String userAnswer = request.getParameter("userAnswer");
+				String userPwd = request.getParameter("userPwd");
+				
+				User user = new User(userId, userQuestion, userAnswer);
+				user.setUserPwd(userPwd);
+				
+				int result = uService.search(user);
+				if(result > 0) {
+					status = "success";
+					msg = "비밀번호 변경 성공";
+					text = "비밀번호가 변경 되었습니다";
+				}else {
+					status = "error";
+					msg="비밀번호 변경 실패";
+					text="아이디, 보안질문, 보안답변을 확인해주세요.";
+
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				request.getSession().setAttribute("text", text);
+				response.sendRedirect(request.getContextPath());
 			}
 
 		} catch (Exception e) {

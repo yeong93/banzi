@@ -10,6 +10,7 @@
 	PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
 	List<Event> eList = (List<Event>)request.getAttribute("eList");
 	List<Attachment> fList = (List<Attachment>) request.getAttribute("fList");
+	String eventType = request.getParameter("type"); 
 
 	int currentPage = pInfo.getCurrentPage();
 	int listCount = pInfo.getListCount();
@@ -20,6 +21,7 @@
 
 	int prev = (currentPage - 1)/6 * 10;
 	int next = (currentPage + 5)/6 * 10 + 1;
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -63,10 +65,15 @@
 					<% }else{ %>
 					
 						<% for(Event e: eList){ %>
-						
-								
 								<li>
-									<a href = "<%=request.getContextPath()%>/event/eventView.do?cp=<%=currentPage%>&no=<%=e.getEventNo()%>" > 
+									<%-- "<%=request.getContextPath()%>/event/eventView.do?type=<%=eventType%>&cp=<%=currentPage%>&no=<%=eventNo%>"; --%>
+									<% 
+										String viewUrl =  request.getContextPath() + "/event/eventView.do?type=" + eventType
+																		+ "&cp=" + currentPage + "&no=" + e.getEventNo();
+									%>
+									
+								
+									<a id="view" href="<%=viewUrl%>"> 
 									
 										<p class="thumb">
 												<% 
@@ -101,9 +108,9 @@
 
 			</ul>
 			
-			<div class="container-login100-form-btn btnArea" >
+			<div class=" text-center">
 				<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
-						<button type="button" class="login100-form-btn" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
+						<button type="button" class="btn btn btn-primary btn-warning" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
 				<% } %>
 			</div>
 
@@ -120,7 +127,7 @@
 					 <% if(p == currentPage){ %>
 					 		<li><strong><%=p%></strong></li>
 						<% }else{ %>
-							<li><a href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=p%>"><%=p%></a></li>
+							<li><a id="now" href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=p%>"><%=p%></a></li>
 						<% } %>
 					<% } %>
 		
@@ -140,7 +147,8 @@
 
 
 	<script>
-	$("#detail").on("mouseenter",function(){
+	$("#view").on("mouseenter",function(){
+		
 		$(this).parent().css("cursor", "pointer");
 	});
 	

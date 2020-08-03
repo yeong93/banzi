@@ -128,5 +128,34 @@ public class UserDAO {
 
 
 	}
+
+	/** 비밀번호 찾기
+	 * @param conn
+	 * @param user
+	 * @return userPwd
+	 * @throws Exception
+	 */
+	public int search(Connection conn, User user) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchPwd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, user.getUserPwd());
+			pstmt.setString(2, user.getUserId());
+			pstmt.setString(3, user.getUserQuestion());
+			pstmt.setString(4, user.getUserAnswer());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
 	
 }
