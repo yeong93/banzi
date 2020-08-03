@@ -208,6 +208,7 @@ public class InformationService {
 		information.setInfoBoardContent(replaceParameter(information.getInfoBoardContent()));
 		information.setInfoBoardContent(information.getInfoBoardContent().replace("\r\n", "<br>"));
 		
+		// 게시글을 수정하는 DAO를 호출
 		result = dao.updateInformation(conn, information);
 		
 		List<Attachment> deleteFiles = new ArrayList<Attachment>();
@@ -215,10 +216,55 @@ public class InformationService {
 		if(result >0 && !fList.isEmpty()) {
 			result = 0; // result 재사용
 			
+			// 기존 해당 게시글에 포함되었던 파일 정보를 DB로부터 얻어옴.
 			List<Attachment> oldList =  dao.selectFiles(conn, information.getInfoBoardNo());
+			boolean flag = false;
 			
+			for(Attachment newFile : fList) {
+				// 새로운 파일의 목록의 요소(newFile)에 순차적으로 접근
+				flag = false; // flag 초기화
+				
+				for(Attachment oldFile : oldList) {
+					// 기존 파일 목록의 요소(oldFile)에 순차적으로 접근
+					if(newFile.getFileLevel() == oldFile.getFileLevel()) {
+						flag = true;
+						deleteFiles.add(oldFile);
+						newFile.setFileNo(oldFile.getFileNo());
+					}
+				}
+				newFile.setParentBoardNo(information.getInfoBoardNo());
+				// flag 상태에 따라 알맞은 dao 호출
+				if(flag) { // update 상황(파일이 겹침)
+					result = dao.updateAttachment(conn, newFile);
+				}else { // insert 상황(파일이 겹치지 않음)
+					result = dao.insertAttachment(conn, newFile);
+				}
+				// result == 0이라는 것은, update나 insert가 실패했음을 뜻함
+				if(result == 0); break;
+			}
 		}
+		// 트랜잭션 처리 + 삭제 처리
+		List<Attachment> tempList = null;
 		
+		// service의 모든 동작이 성공적으로 진행된 경우 deleteFiles에 담긴 기존 파일을 삭제해야 되고,
+		// service 동작 중 오류 또는 실패 발생시 fList에 담긴 새로운 파일을 삭제해야 함.
+		if(result > 0) {
+			// 수정 완료 후 해당 게시글 상세보기를 위해 result에 글 번호를 저장하여 반환
+			result = information.getInfoBoardNo();
+			conn.commit();
+			tempList = deleteFiles;
+		}else {
+			conn.rollback();
+			tempList = fList;
+		}
+		// 서버에 저장된 파일 삭제
+		for(Attachment at : tempList) {
+			String filePath = at.getFilePath();
+			String fileName = at.getFileChangeName();
+			
+			File deleteFile = new File(filePath + fileName);
+		}
+		conn.close();
 		
 		return result;
 	}

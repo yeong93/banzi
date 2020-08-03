@@ -103,8 +103,8 @@
 					<div>
 						<label for="content">내용</label>
 					</div>
-					<textarea class="form-control" id="content" name="content"
-						rows="10" style="resize: none;"><%=information.getInfoBoardTitle()%></textarea>
+					<textarea class="form-control" id="content2" name="content"
+						rows="10" style="resize: none;"><%=information.getInfoBoardContent()%></textarea>
 				</div>
 
 
@@ -138,9 +138,9 @@
 				return false;
 			}
 
-			if ($("#content").val().trim().length == 0) {
+			if ($("#content2").val().trim().length == 0) {
 				alert("내용을 입력해 주세요.");
-				$("#content").focus();
+				$("#content2").focus();
 				return false;
 			}
 		}

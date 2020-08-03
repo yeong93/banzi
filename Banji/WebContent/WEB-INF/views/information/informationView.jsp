@@ -22,11 +22,8 @@
 	}
 
 	.boardImg{
-		width : 100%;
-		height: 100%;
-		
-		max-width : 300px;
-		max-height: 300px;
+		width : 700px;
+		height: 200px;
 		
 		margin : auto;
 	}
