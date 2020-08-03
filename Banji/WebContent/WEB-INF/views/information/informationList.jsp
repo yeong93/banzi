@@ -12,6 +12,7 @@
 	int startPage = pInfo.getStartPage();
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType(); // boardType=2
+	String category = request.getParameter("category");
 
 	// 이전 페이지
 	int prev = (currentPage-1)/10 * 10; // < 버튼
@@ -70,12 +71,26 @@
        <div class="form-group">
        <div id="selectArea" class="mx-auto">
         <label for="inputQuestion" class="col-lg-2 control-label"></label>
-            <select class="form-control" id="question" name="question" >
+            <select class="form-control" id="category" name="category" >
                 <option value="1">음식</option>
                 <option value="2">견종백과</option>
                 <option value="3">건강상식</option>
                 <option value="4">교육/훈련</option>
             </select>
+		<script>
+			$(function () {
+				$("#category").change(function() {
+					var click = $("#category option:selected").val();
+					location.href="<%=request.getContextPath()%>/information/list.do?type=2&category="+click;
+				});
+				
+				$("#category > option").each(function(index, item){
+					if($(item).val() == <%=request.getParameter("category")%>){
+						$(item).prop("selected", true);
+					}
+				})
+			});
+		</script>
         </div>
     </div>
 		<div class="container">
@@ -124,11 +139,11 @@
 	        		<% if(currentPage > 10) { %>
 	        			<!-- 맨 처음 페이지로 이동[<<] -->
 	        			<li>	        														<!-- & : 파라미터 이어서 추가 -->
-	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=1">&lt;&lt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=1&category=<%=category %>">&lt;&lt;</a>
 	        			</li>
 	        			<!-- 이전 순번의 페이징바로 이동[<] -->
 	        			<li>
-	        			<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=prev%>">&lt;</a>
+	        			<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=prev%>&category=<%=category %>">&lt;</a>
 	        			<% } %>
 	        			<!--  10개의 페이지 목록 -->
 	        			<% for(int p = startPage; p<=endPage; p++)  {%>
@@ -138,19 +153,19 @@
 	        				<li><a class="page-link"><%=p%></a></li>
 	        				<% }else { %>
 	        					<li>
-	        					<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=p%>"><%=p %></a>
+	        					<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=p%>&category=<%=category %>"><%=p %></a>
 	        					</li>
 	        				<% } %>
 	        			<% } %>
 	        			<% if((next < maxPage))  { %>
 	        			<!-- 다음 페이징바[>] -->
 	        			<li>
-	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=next %>">&gt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=next %>&category=<%=category %>">&gt;</a>
 	        			</li>
 
 	        			<!--  마지막 페이지로 이동 [>>] -->
 	        			<li>
-	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=maxPage %>">&gt;&gt;</a>
+	        				<a class="page-link" href="<%=request.getContextPath()%>/information/list.do?type=<%=boardType%>&cp=<%=maxPage %>&category=<%=category %>">&gt;&gt;</a>
 	        			</li>		
 	        		<% } %>
 	        	</ul>
@@ -170,6 +185,7 @@
 			// cursor를 pointer로 변경시킴
 			$(this).parent().css("cursor" , "pointer");
 		});
+	
 		
 		</script>
 	  </section>
@@ -182,8 +198,6 @@
 	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 	    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
 	  </script>
-	  <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	
-		
+	  <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정보 게시판 글 수정하기</title>
+<title>정보 게시판 - 수정하기</title>
 <style>
     *{
     font-family: "InfinitySans-RegularA1";
@@ -69,14 +69,14 @@
 				<hr>
 
 				<div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label">썸네일</label>
+					<label class="input-group-addon mr-3 insert-label"></label>
 					<div class="boardImg" id="titleImgArea">
 						<img id="titleImg" width="200" height="200">
 					</div>
 				</div>
 
 				<div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label">업로드<br>이미지</label>
+					<label class="input-group-addon mr-3 insert-label"></label>
 					<div class="mr-2 boardImg" id="contentImgArea1">
 						<img id="contentImg1" width="150" height="150">
 					</div>
