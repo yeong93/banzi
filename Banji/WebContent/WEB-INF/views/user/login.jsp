@@ -40,6 +40,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/login.css">
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <style>
 #search-id {
 	line-height: 2.3em !important;
@@ -86,7 +87,7 @@
                                 <label class="label-checkbox100" for="saveId">아이디 기억하기</label>
                             </div>
                             <div id="search-area">
-                                <a href="#modal-container-1" data-toggle="modal" class="search" name="search-pwd">비밀번호 찾기&nbsp;&nbsp;</a>
+                                <a href="<%=request.getContextPath()%>/userLogin/searchForm.do"  class="search" name="search-pwd">비밀번호 변경</a>
                             </div>
 
                         </div>
@@ -103,33 +104,8 @@
     </div>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     
-		<!-- ---------------------------------- modal 1 -------------------------------------------- --> 
-   
-   <div class="modal fade" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title login100-form-title" id="myModalLabel">비밀번호 찾기</h5>
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">                  
-					<form class="form-signin" method="POST" action="<%=request.getContextPath()%>/member/login.do"
-						onsubmit="return idSearch();">
-						
-						
-							
-						<button class="login100-form-btn" type="submit">SEARCH</button><br>
-						<button type="button" class="login100-form-btn btn-secondary" onclick="location.href='<%=request.getContextPath()%>/user/signUpAssign1.do'">회원가입</button>
-					</form>
-				</div>
-		
-			</div>
-		</div>
-	</div>
 
-    <script>
+	<script>
     	function fnLogin(){
     		if(loginValidate()){
     			$.ajax({
@@ -137,7 +113,6 @@
     				data: {"userId":$("#userId").val(),
     					   "userPwd":$("#userPwd").val()},
     				type: "POST",
-    				//dataType: "JSON",
     				success: function(fail){
     					if(fail == 1){
     						swal({
@@ -156,43 +131,52 @@
     						}
     						
     						location.href = "<%=request.getHeader("referer")%>";
-    					}
-    				}, error : function(){
-    					console.log("ajax 통신 실패")
-    				}
-    			});
-    		}
-    		
-    		return false;
-    	}
-    	
-        function loginValidate() {
-			
-					if($("#userId").val().trim() == ""){
-						alert("아이디를 입력해 주세요.");
-						$("#userId").focus();
-						return false;
-					}
-					if($("#userPwd").val().trim() == ""){
-						alert("비밀번호를 입력해 주세요.");
-						$("#userPwd").focus();
-						return false; 
-					}
-					return true;	
-			
+								}
+							},
+							error : function() {
+								console.log("ajax 통신 실패")
+							}
+						});
+			}
+
+			return false;
 		}
-        
 
-					function setCookie (name, value, exp) {
-						var date = new Date();
-						date.setTime(date.getTime() + exp*24*60*60*1000);
-						document.cookie = name + '=' + value + ';expires='	+ date.toUTCString() + ';path=/';
-					};
-				</script>
+		function loginValidate() {
 
-	
+			if ($("#userId").val().trim() == "") {
+				swal({
+				    icon: "info", 
+				    title: "아이디를 입력해 주세요."
+				});
+				$("#userId").focus();
+				return false;
+			}
+			if ($("#userPwd").val().trim() == "") {
+				swal({
+				    icon: "info", 
+				    title: "비밀번호를 입력해주세요."
+				});
+				$("#userPwd").focus();
+				return false;
+			}
+			return true;
 
-<script
+		}
+
+		function setCookie(name, value, exp) {
+			var date = new Date();
+			date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+			document.cookie = name + '=' + value + ';expires='
+					+ date.toUTCString() + ';path=/';
+		};
+
+
+	</script>
+
+
+
+	<script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>

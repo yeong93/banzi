@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
 
+<html>
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
 <!-- mypage CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 
-</head> 
+</head>
 
 <body id="mypage">
 
@@ -17,42 +18,55 @@
 
 	<section id="content">
 	
-		<div class="container-fluid mt-5">
-			<div class="row">
+		<!-- -------------------------------- 메인 -------------------------------- -->
+		<div class="container-fluid mt-5 " class="event">
+		
+			<h1 class="type1">마이 페이지</h1>
 
-				<div class="col-md-3">
-						<h3 id="title">회원정보 수정</h3>
-						
-						<div class="col-sm-10 mt-5 mx-auto" id="myPage-aside">
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a></li>
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a></li>
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a></li>
-							</ul>
-						</div>
-				</div>
+			<!-- -------------------------------- 메뉴 -------------------------------- -->
+			<ul class="tabType1">
+				<li class="on"><a href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a></li>
+				<li><a href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a></li>
+				<li><a href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a></li>
+			</ul>
+			
+			<%
+				String answer = loginUser.getUserAnswer(); 
+				String email = loginUser.getUserEmail();
 				
-				<div class="col-md-9">
-					<div class="col-sm-8">
+				if(answer == null){
+					answer = "";
+				}
+				if(email == null){
+					email = "";
+				}
+			%>
+			
+				<div class="col-md-9 mx-auto">
+					<div class="col-sm-8 mx-auto">
 					
 						<div class="bg-white shadow-sm container p-5">
 							<form method="POST" action="changeUser.do" onsubmit="return validate();" class="form-horizontal"
 								role="form">
 
 								<!-- 아이디 -->
-								<div class="row mb-5 ml-3 mr-3">
-									<div class="col-md-12">
-										<input type="text" class="form-control readonly" id="id"
-											name="id" value="<%=loginUser.getUserId()%>" readonly>
-									</div>
+									<div class="row mb-5 ml-4 mr-4">
+									<fieldset class="col-md-12">
+										<legend class="col-md-3 mb-4">아이디</legend>
+										<div class="col-md-12 mb-5">
+											 <input type="text" class="form-control readonly" id="id" name="id" value="<%=loginUser.getUserId()%>" readonly>
+										</div>
+									</fieldset>
 								</div>
 
 								<!-- 이름 -->
-								<div class="row mb-5 ml-3 mr-3">
-									<div class="col-md-12">
-										<input type="text" class="form-control readonly" id="name"
-											name="name" value="<%=loginUser.getUserName()%>" readonly>
-									</div>
+									<div class="row mb-5 ml-4 mr-4">
+									<fieldset class="col-md-12">
+										<legend class="col-md-3 mb-4">이름</legend>
+										<div class="col-md-12 mb-5">
+											<input type="text" class="form-control readonly" id="name" name="name" value="<%=loginUser.getUserName()%>" readonly>
+										</div>
+									</fieldset>
 								</div>
 
 								<!-- 보안질문 -->
@@ -67,7 +81,7 @@
 											</select>
 										</div>
 										<div class="col-md-12 mb-5">
-											<input type="text" class="form-control input" id="answer" name="answer" value="<%=loginUser.getUserAnswer()%>">
+											<input type="text" class="form-control input" id="answer" name="answer" value="<%=answer%>">
 										</div>
 									</fieldset>
 								</div>
@@ -81,12 +95,14 @@
 								</script>
 
 								<!-- 이메일 -->
-								<div class="row mb-5 ml-3 mr-3">
-									<div class="col-md-12">
-										<input type="email" class="form-control input" id="email" name="email" value="<%=loginUser.getUserEmail()%>">
-									</div>
+								<div class="row mb-5 ml-4 mr-4">
+									<fieldset class="col-md-12">
+										<legend class="col-md-3 mb-4">이메일</legend>
+										<div class="col-md-12 mb-5">
+											 <input type="email" class="form-control input" id="email" name="email" value="<%=email%>">
+										</div>
+									</fieldset>
 								</div>
-
 								
 								<hr>
 								<br>
@@ -100,7 +116,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</section>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	<script>

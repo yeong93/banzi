@@ -8,7 +8,7 @@
 	String cp = request.getParameter("cp");
 	
 	SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ("yyyy.MM.dd", Locale.KOREA );
-	Date currentTime = new Date ();
+	Date currentTime = new Date();
 	String today = mSimpleDateFormat.format(currentTime);
 %>   
 <!DOCTYPE html>

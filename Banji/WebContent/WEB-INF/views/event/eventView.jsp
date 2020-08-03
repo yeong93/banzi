@@ -96,11 +96,13 @@
 						<button type="submit" class="btn btn-primary btn-warning" id="delBtn"
 						onclick="location.href='eventDelete.do?no=<%=event.getEventNo()%>';">글 삭제</button>
 						<button type="button" class="btn btn-primary btn-warning" id="upBtn"
-						onclick="location.href='eventUpdate.do?cp=<%=cp%>&no=<%=event.getEventNo()%>';">글 수정</button>
+						onclick="location.href='eventUpdateForm.do?cp=<%=cp%>&no=<%=event.getEventNo()%>';">글 수정</button>
 					<% } %>
 					
 					<a href="eventList.do?&cp=<%=cp%>" class="btn btn-primary btn-warning float-right" id="listBtn">목록으로</a>
 				</div>
+				
+				</form>
 				
 			</ul>
 			

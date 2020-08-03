@@ -63,6 +63,25 @@ public class UserSerivce {
 	}
 
 
+	/** 비밀번호 찾기 Service
+	 * @param user
+	 * @return userPwd
+	 * @throws Exception
+	 */
+	public int search(User user) throws Exception{
+		 
+		Connection conn = getConnection();
+		
+		int result = dao.search(conn, user);
+		
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		conn.close();
+		return result;
+	}
+
+
 	
 	
 }
