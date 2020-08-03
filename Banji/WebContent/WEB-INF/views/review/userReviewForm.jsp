@@ -155,7 +155,7 @@
 			<input type="file" id="img2" name="img2" onchange="LoadImg(this,2)">
 			<input type="file" id="img3" name="img3" onchange="LoadImg(this,3)">
 		</div>
-
+			
 		</form>
 	</div>
 
@@ -198,33 +198,17 @@
 				$("#content").focus();
 				return false;
 			}
-			// 별 체크 검사
-			//if($(".rating i").prop("checked",true) <0){
-				//alert("체크하세요");
-				//return false;
-		//	}
 		}
 
 		 
-	    // 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
 	    function LoadImg(value, num) {
 	      if (value.files && value.files[0]) {
-	    	  // value.files : 현재 요소에 파일이 업로드 되어 있는가? -> T/F
-	    		// value.files[0] : mutiple 속성 사용으로 인해 여러 파일이 업로드 되었을 때 첫 번째 파일이 존재하는가? 
 	        
     		var reader = new FileReader();
-	        // 자바스크립트 FileReader
-        	// 웹 애플리케이션이 비동기적으로 데이터를 읽기 위하여 읽을 파일을 가리키는 File 혹은 Blob객체를 이용해 파일의 내용을 읽고 사용자의 컴퓨터에 저장하는 것을 가능하게 해주는 객체
 					
-        	// FileReader.onload
-			// load 이벤트의 핸들러. 이 이벤트는 읽기 동작이 성공적으로 완료 되었을 때마다 발생합니다.
-	        reader.onload = function (e) { // e :다 읽은 것
-	        	//console.log(e.target.result);
-	        	// e.target.result
-	        	// -> 파일 읽기 동작을 성공한 객체에(fileTag) 올라간 결과(이미지 또는 파일)
+	        reader.onload = function (e) { 
 	        	
 	          switch (num) {
-	          // num은 input태그에서 두번째 매개변수임.
 	            case 1:
 	              $("#contentImg1").attr("src", e.target.result);
 	              break;
@@ -236,20 +220,18 @@
 	              break;
 	          }
 	        }
-
 	        reader.readAsDataURL(value.files[0]);
 	      }
 	    }
 		
 	    
-	    // 별점용 -> 실행하자마자 action 쿼리스트링으로 보냄
+	    // 별점용
 	    $(function(){
-		
 		    $('.make_star svg').click(function(){
 		        var targetNum = $(this).index()+1;
 		        $('.make_star svg').css({color:'#000'});
 		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#F05522'});
-		        console.log(targetNum);
+		        // console.log(targetNum);
 		        
 		      	$("#rating").val(targetNum);
 		    })
