@@ -2,7 +2,7 @@
 
 .event {width: 100%; padding-top:50px;}
 .event *{font-family: "InfinitySans-RegularA1"; box-sizing: content-box;}
-.event input{height:20px; padding:4px 10px; margin:0; border:1px solid #d4d4d4; line-height:20px; background:#fff;}
+.event input{height:20px; padding:4px 10px; margin:0; line-height:20px; background:#fff;}
 .event input:disabled {background-color:#ececec;}
 .event a:link		{ color:#585858; text-decoration:none;}
 .event a:visited	{ color:#585858; text-decoration:none;}
@@ -12,6 +12,11 @@
 .event ::selection {background: #FFCE54;}
 .event .scr {overflow-y:auto;}
 .event li{list-style-type: none;}
+
+
+#title, #content{width: 97%}
+#title{border: none; border-bottom:1px solid rgb(195, 195, 195); text-align: left !important;}
+
 
 .paging {margin:40px 0; text-align:center;}
 .paging li {display:inline-block; margin:0 9px; font-size:16px; line-height:28px;}
@@ -41,8 +46,7 @@ h1.type1 {height:80px; text-align:center; font-size:34px; line-height:30px; font
 .eventList li .thumb .end .btn {position:relative; width:130px; padding:0; margin:0 auto;}
 .eventList li .ing {font-size:17px; color:#313131;}
 .eventList li .tit {overflow:hidden; height:60px; margin-top:5px; font-size:24px; line-height:30px; color:#232323; word-break:keep-all;}
-.eventList li .date {height:16px; padding-left:23px; margin-top:15px; color:#747474; line-height:16px; 
-background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
+.eventList li .date {height:16px; padding-left:23px; margin-top:15px; color:#747474; line-height:16px; background: url(../img/event/event_date.png) no-repeat 0 50%;}
 .eventList li.none {width:1200px !important; margin-left:39px !important; background:none !important;}
 
 /*winnerList */
@@ -53,18 +57,56 @@ background:url(../img/banzi/event_date.png) no-repeat 0 50%;}
 .winnerList tbody td.tit {padding-left:40px; padding-right:20px; text-align:left;}
 .winnerList tbody td img.vm {margin:-1px 0 0 6px;}
 .winnerList tbody td a:hover, .winnerList tbody td a:focus {font-family:nGothicB; color:#232323;}
-.winnerList tbody td .date {padding-left:21px; background:url(/image/common/ico_date.png) no-repeat 0 50%;}
+.winnerList tbody td .date {padding-left:21px; background:url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView {border-top:3px solid #FFCE54;}
 .winnerView .head {position:relative; padding:28px 320px 28px 20px; border-bottom:1px solid #e5e5e5;}
 .winnerView .head h3 {font-family:nGothicB; color:#232323; font-size:15px; line-height:24px;}
 .winnerView .head .info {position:absolute; right:20px; top:28px; font-size:14px; line-height:24px;}
-.winnerView .head .date {position:relative; padding-left:18px; padding-right:16px; margin-right:11px; background:url(/image/common/ico_date.png) no-repeat 0 50%;}
+.winnerView .head .date {position:relative; padding-left:18px; padding-right:16px; margin-right:11px; background: url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView .head .date:after {content:""; position:absolute; right:0; top:50%; width:1px; height:12px; margin-top:-6px; background:#e1e1e1;}
-.winnerView .head .hit {padding-left:18px; background:url(/image/common/ico_hit.png) no-repeat 0 50%;}
+.winnerView .head .hit {padding-left:18px; background:url(../img/event/event_date.png) no-repeat 0 50%;}
 .winnerView .content {min-height:200px; padding:40px 30px; font-size:14px; line-height:24px;}
 .winnerView .content img {max-width:1140px;}
 
 
+/*[ Button ]*/
+.container-login100-form-btn {
+	width: 100%;
+	height: 40px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.login100-form-btn {
+	font-family: "yg-jalnan";
+	font-size: large;
+	color: #fff;
+	line-height: 1.2;
+	text-transform: uppercase;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 40px;
+	background-color: #ffce54;
+	border-radius: 3px;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	transition: all 0.4s;
+}
+
+.login100-form-btn:hover {
+	background-color: #f1be3c;
+}
 
 
 

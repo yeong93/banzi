@@ -161,7 +161,7 @@ public class CommunityService {
         return fList;
     }
 
-    /** 게시글 목록 조회
+    /** 게시글 파일 조회
      * @param boardNo
      * @return
      * @throws Exception

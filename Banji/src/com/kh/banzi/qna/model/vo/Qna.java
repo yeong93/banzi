@@ -29,6 +29,16 @@ public class Qna {
 
 
 
+    public Qna(String regWriter, String title, String content, int boardType) {
+        super();
+        this.regWriter = regWriter;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+    }
+
+
+
     public Qna(int boardNo, String regWriter, String title, String content, Date regDate, int boardType, int replyCount) {
         super();
         this.boardNo = boardNo;

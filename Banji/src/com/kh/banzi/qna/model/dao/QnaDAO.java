@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.qna.model.vo.Qna;
@@ -119,8 +120,8 @@ public class QnaDAO {
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, boardNo);
             rset = pstmt.executeQuery();
-            if(rset.next()) {
-                reply = new Reply(rset.getString("USER_ID"),
+            while(rset.next()) {
+                reply = new Reply(rset.getString("USER_NAME"),
                         rset.getString("CONTENT"),
                         rset.getTimestamp("REG_DATE"));
                 rList.add(reply);
@@ -131,5 +132,101 @@ public class QnaDAO {
         return rList;
     }
 
+    /** 다음 게시글 번호 반환 
+     * @param conn
+     * @return boardNo
+     */
+    public int selecNextNo(Connection conn) throws Exception{
+        Statement stmt = null;
+        ResultSet rset = null;
+        int boardNo = 0;
+        
+        String query = prop.getProperty("selectNextNo");
+        try {
+            stmt = conn.createStatement();
+            rset = stmt.executeQuery(query);
+            
+            if(rset.next())
+                boardNo = rset.getInt(1);
+        }finally {
+            rset.close();
+            stmt.close();
+        }
+        return boardNo;    
+        
+    }
+
+    public int insertQna(Connection conn, Qna qna) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        
+        String query = prop.getProperty("insertQna");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           
+           pstmt.setInt(1, qna.getBoardNo());
+           pstmt.setString(2, qna.getRegWriter());
+           pstmt.setString(3, qna.getTitle());
+           pstmt.setString(4, qna.getContent());
+           
+
+           result = pstmt.executeUpdate();
+        }finally {
+           pstmt.close();
+        }
+        return result;
+    }
+
+    public int insertAttachment(Connection conn, Attachment at) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("insertAttachment");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, at.getFileOriginName());
+            pstmt.setString(2, at.getFileChangeName());
+            pstmt.setString(3, at.getFilePath());
+            pstmt.setInt(4, at.getFileLevel());
+            pstmt.setInt(5, at.getParentBoardNo());
+            pstmt.setInt(6, at.getParentBoardType());
+            
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result;
+    }
+
+    public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        List<Attachment> fList = null;
+        String query = prop.getProperty("selectFiles");
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            
+            fList = new ArrayList<Attachment>();
+            Attachment file = null;
+            while(rset.next()) {
+                  file = new Attachment();
+                  file.setFileNo(rset.getInt("FILE_NO"));
+                  file.setFileChangeName(rset.getString("FILE_CHANGE_NAME"));
+                  file.setFilePath(rset.getString("FILE_PATH"));
+                  file.setFileLevel(rset.getInt("FILE_LEVEL"));
+                  
+                  fList.add(file);
+               }
+            
+         }finally {
+            rset.close();
+            pstmt.close();
+         }
+        return fList;
+    }
 
 }
