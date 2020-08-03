@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글</title>
+<title>정보 게시글 조회</title>
 <style>
 	#board-area{ margin-bottom:100px;}
 	#board-content{ padding-bottom:150px;}
