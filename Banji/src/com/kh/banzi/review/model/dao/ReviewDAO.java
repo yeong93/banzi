@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -36,7 +37,6 @@ public class ReviewDAO {
 		PreparedStatement pstmt =null;
 		ResultSet rset = null;
 		int listCount = 0;
-		
 		String query = prop.getProperty("getListCount"); 
 		
 		try {
@@ -66,12 +66,10 @@ public class ReviewDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Review> list = null;
-		
 		String query = prop.getProperty("selectList");
 		
 		try {
 			int startRow = (pInfo.getCurrentPage()-1)*pInfo.getLimit()+1;
-			
 			int endRow = startRow + pInfo.getLimit()-1;
 			
 			pstmt = conn.prepareStatement(query);
@@ -92,7 +90,8 @@ public class ReviewDAO {
 													rset.getInt("REVIEW_CATEGORY"),
 													rset.getString("REVIEW_STATUS"),
 													rset.getInt("READ_COUNT"),
-													rset.getInt("BOARD_TYPE")
+													rset.getInt("BOARD_TYPE"),
+													rset.getString("USER_NAME")
 													);
 				
 				list.add(review);
@@ -114,7 +113,6 @@ public class ReviewDAO {
 		Statement stmt = null;
 		ResultSet rset = null; 
 		int boardNo = 0;
-		
 		String query = prop.getProperty("selectNextNo");
 		try {
 			stmt = conn.createStatement();
@@ -141,9 +139,8 @@ public class ReviewDAO {
 	public int insertReview(Connection conn, Review review) throws Exception{
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
 		String query = prop.getProperty("insertReview");
-		System.out.println("review : " + review);
+//		System.out.println("review : " + review);
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, review.getReviewBoardNo());
@@ -153,10 +150,8 @@ public class ReviewDAO {
 			pstmt.setInt(5, review.getReviewRating());
 			pstmt.setInt(6, review.getReviewCategory());
 			pstmt.setInt(7, review.getBoardType());
-		
 			result = pstmt.executeUpdate();
 			
-			System.out.println(result);
 		}finally {
 			pstmt.close();
 		}
@@ -165,7 +160,7 @@ public class ReviewDAO {
 	}
 
 
-	/** 게시글 파일 삽입 DAO
+	/** 파일 등록 DAO
 	 * @param conn
 	 * @param at
 	 * @return result
@@ -174,12 +169,10 @@ public class ReviewDAO {
 	public int insertAttachment(Connection conn, Attachment at) throws Exception{
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
 		String query = prop.getProperty("insertAttachment");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setString(1, at.getFileOriginName());
 			pstmt.setString(2, at.getFileChangeName());
 			pstmt.setString(3, at.getFilePath());
@@ -188,7 +181,6 @@ public class ReviewDAO {
 			pstmt.setInt(6, at.getParentBoardType());
 			
 			result = pstmt.executeUpdate();
-			
 			
 		}finally {
 			pstmt.close();
@@ -226,15 +218,13 @@ public class ReviewDAO {
 			Attachment at = null;
 			while(rset.next()) {
 				at = new Attachment(rset.getInt("FILE_NO"), 
-						rset.getInt("PARENT_BOARD_NO"),
+						rset.getInt("BOARD_NO"),
 						rset.getString("FILE_CHANGE_NAME"), 
-						rset.getString("FILE_PATH")
+						rset.getString("FILE_PATH"),
+						rset.getInt("FILE_LEVEL")
 						);
-				
 				fList.add(at);
 			}
-			
-			
 			
 		}finally {
 			rset.close();
@@ -245,6 +235,192 @@ public class ReviewDAO {
 	}
 
 
+	public Review detailReview(Connection conn, int boardNo) throws Exception{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Review review = null;
+		String query = prop.getProperty("detailReview");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				review = new Review(
+						rset.getInt("REVIEW_BOARD_NO"),
+						rset.getString("USER_NAME"),
+	                    rset.getString("REVIEW_TITLE"),
+	                    rset.getString("REVIEW_CONTENT"),
+	                    rset.getDate("REVIEW_CREATE_DATE"),
+	                    rset.getInt("REVIEW_CATEGORY"),
+	                    rset.getInt("READ_COUNT"),
+	                    rset.getString("USER_ID")
+	                    );
+				
+			}
+			System.out.println(review);
+		}finally {
+			rset.close();
+			pstmt.close();
+		} 
 
-	
+		return review;
+	}
+
+
+	/** count용 Service
+	 * @param conn
+	 * @param boardNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int increaseView(Connection conn, int boardNo) throws Exception{
+		 PreparedStatement pstmt = null;
+		 int result = 0;
+        
+		 String query = prop.getProperty("increaseReadCount");
+		 try {
+			 pstmt = conn.prepareStatement(query);
+			 pstmt.setInt(1, boardNo);
+			 result = pstmt.executeUpdate();
+		 }finally {
+			 pstmt.close();
+		 }
+        return result;
+	}
+
+
+	public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+		PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        List<Attachment> fList = null;
+        String query = prop.getProperty("selectFiles");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           pstmt.setInt(1, boardNo);
+           
+           rset = pstmt.executeQuery();
+           
+           fList = new ArrayList<Attachment>();
+           Attachment file = null;
+           while(rset.next()) {
+                 file = new Attachment();
+                 file.setFileNo(rset.getInt("FILE_NO"));
+                 file.setFileChangeName(rset.getString("FILE_CHANGE_NAME"));
+                 file.setFilePath(rset.getString("FILE_PATH"));
+                 file.setFileLevel(rset.getInt("FILE_LEVEL"));
+                 
+                 fList.add(file);
+              }
+           
+        }finally {
+           rset.close();
+           pstmt.close();
+        }
+        
+        return fList;
+
+	}
+
+
+	public int deleteReview(Connection conn, int reviewNo) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("deleteReview");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reviewNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	}
+
+
+	public Review updateReview(Connection conn, int reviewNo) throws Exception{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Review review = null;
+		String query = prop.getProperty("updateReview");
+		
+		try {
+			pstmt =conn.prepareStatement(query);
+			pstmt.setInt(1, reviewNo);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				review = new Review(reviewNo,
+						rset.getString("REVIEW_TITLE"), 
+						rset.getString("REVIEW_CONTENT"),
+						rset.getInt("REVIEW_CATEGORY")
+						);
+			}
+			System.out.println("dao"+review);
+		}finally {
+			rset.close();
+			pstmt.close();
+		}
+		return review;
+	}
+
+
+	/** 게시'글'만 수정
+	 * @param conn
+	 * @param review
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReview(Connection conn, Review review) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateView");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, review.getReviewTitle());
+			pstmt.setString(2, review.getReviewContent());
+			pstmt.setInt(3, review.getReviewCategory());
+			pstmt.setInt(4, review.getReviewBoardNo());
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+
+	/** 리뷰 파일 수정 DAO
+	 * @param conn
+	 * @param newFile
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateAttachment(Connection conn, Attachment newFile) throws Exception{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateAttachment");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, newFile.getFileOriginName());
+			pstmt.setString(2, newFile.getFileChangeName());
+			pstmt.setString(3, newFile.getFilePath());
+			pstmt.setInt(4, newFile.getFileNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+
+	}
+
 }
