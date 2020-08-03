@@ -281,6 +281,7 @@ padding-top:40px;
 			      <div id="content" class="modal-body" style="word-break:break-all;">
 			        ...
 			      </div>
+			      <input type="hidden">
 			      <div id="reply" class="modal-body">
 			       <hr>
 			       댓글
@@ -302,8 +303,13 @@ padding-top:40px;
     
     //------------------------------------------------------------------------------------------------------------
     // 검색
-    
-    
+<%
+    User tempUser = (User)session.getAttribute("loginUser");
+%>
+var loginMemberId;
+<% if(tempUser != null){%>
+userId = "<%=tempUser.getUserId()%>";
+<%}%>
     // -- QNA글 보기
     $(document).on("click","#list-table td",function(e){
         var boardNo = $(this).parent().attr("id");
@@ -312,12 +318,10 @@ padding-top:40px;
     	  type : "GET",
     	  dataType : "JSON",
     	  success : function(map){
-    		  console.log(map);
-    		  console.log(map.rList.length);
-    		  console.log(map.fList.length);
     		  $("#reply").text("");
     		  $("#exampleModalLabel").text(map.qna.title);
     		  $("#content").html(map.qna.content);
+    		  $("[type='hidden']").attr('class', boardNo);
     		  if(map.fList.length != 0){
     			  var src;
     			  var flag = true;
@@ -352,7 +356,7 @@ padding-top:40px;
      			  $td = $("<td id=replyContentArea>")
      			  $textArea = $("<textArea rows='4' id='replyContent'>");
      			  $td2 = $("<td id='replyBtnArea'>");
-     			  $btn = $("<button class='btn btn-primary' id='addReply'>").html("답변<br>등록");
+     			  $btn = $("<button class='btn btn-primary' id='addReply'>").attr("onclick", "insert();").html("답변<br>등록");
      			  $div.append($table.append($tr.append($td.append($textArea), $td2.append($btn))));
      			  $("#content").append($div);
      		  }
@@ -366,8 +370,87 @@ padding-top:40px;
     $("#list-table td").on("click",function(e){
         e.preventDefault();
         $('#exampleModal').modal("show");
-    })
+    });
     
+    function insert(){
+    	var replyContent = $("#replyContent").val();
+    	if(replyContent.trim().length == 0){
+    		alert("답변 작성 후 클릭해 주세요");
+    	  $("#replyContent").focus();
+    	}else{
+    		url = "<%=request.getContextPath()%>/qna/insertReply.do";
+    		var boardNo = $("[type='hidden']").attr("class");
+    		
+    		$.ajax({
+    			url : url,
+    			type : "POST",
+    			data : {"userId" : userId, "boardNo" : boardNo , "replyContent" : replyContent},
+    			
+    			success : function(result){
+    				alert(result);
+		        $("#replyContent").val("");
+		        reload(boardNo);
+    			}, error : function(){
+    				console.log("ajax 통신 실패");
+    			}
+    		}); 		
+    	}
+    };
+    
+    function reload(boardNo){
+      $.ajax({
+        url : "<%=request.getContextPath()%>/qna/view.do?cp=<%=currentPage%>&no="+boardNo,
+        type : "GET",
+        dataType : "JSON",
+        success : function(map){
+          $("#reply").text("");
+          $("#exampleModalLabel").text(map.qna.title);
+          $("#content").html(map.qna.content);
+          $("[type='hidden']").attr('class', boardNo);
+          if(map.fList.length != 0){
+            var src;
+            var flag = true;
+            for(var i = 0; i < map.fList.length; i++){
+              console.log(i);
+              console.log(map.fList.fileLevel);
+              console.log(map.fList[i].fileChangeName);
+              src ="/banzi/resources/uploadImages/"+map.fList[i].fileChangeName;
+              $("#content").append("<img src="+src+">");
+            }
+            
+          }
+          if(map.rList.length != 0){
+             $hr = $("<hr>");
+             $p1 = $("<p>").addClass("p1").text("댓글");
+             $("#content").append($hr,$p1);
+            for(var i = 0; i < map.rList.length; i++){
+              if(i > 0){
+                $hr2 = $("<hr>");                 
+                $("#content").append($hr2);
+              }
+             $p1 = $("<p>").text("댓글");
+             $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
+             $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
+             $("#content").append($div, $p2);
+            }
+          }
+          if(map.userGrade != "user" && map.userGrade != ""){
+            $div = $("<div>").addClass("replyWrite");
+            $table = $("<table align='center'>");
+            $tr =$("<tr>");
+            $td = $("<td id=replyContentArea>")
+            $textArea = $("<textArea rows='4' id='replyContent'>");
+            $td2 = $("<td id='replyBtnArea'>");
+            $btn = $("<button class='btn btn-primary' id='addReply'>").attr("onclick", "insert();").html("답변<br>등록");
+            $div.append($table.append($tr.append($td.append($textArea), $td2.append($btn))));
+            $("#content").append($div);
+          }
+        }, error : function(){
+          console.log("ajax 통신 실패");
+        }
+        
+      });
+    };
   </script>
   
   

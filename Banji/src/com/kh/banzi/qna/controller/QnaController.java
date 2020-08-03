@@ -150,6 +150,19 @@ public class QnaController extends HttpServlet {
                 request.getSession().setAttribute("status", status);
                 request.getSession().setAttribute("msg", msg);
                 response.sendRedirect(path);
+            } else if (command.equals("/insertReply.do")) {
+                
+                int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+                String regWriter = request.getParameter("userId");
+                String content = request.getParameter("replyContent");
+                
+                Reply reply = new Reply(regWriter, content, boardNo);
+                int result = qService.inserReply(reply);
+                
+                if (result > 0)
+                    response.getWriter().print("댓글 삽입 성공");
+                else
+                    response.getWriter().print("댓글 삽입 실패");
             }
         }catch (Exception e) {
             e.printStackTrace();

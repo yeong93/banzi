@@ -229,4 +229,42 @@ public class QnaDAO {
         return fList;
     }
 
+    public int insertReply(Connection conn, Reply reply) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("insertReply");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, reply.getRegWriter());
+            pstmt.setString(2, reply.getContent());
+            pstmt.setInt(3, reply.getBoardNo());
+            
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result;
+    }
+ 
+    /** QNA 댓글 개수 증가
+     * @param conn
+     * @param reply
+     * @return result
+     * @throws Exception
+     */
+    public int increaseView(Connection conn, Reply reply) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("increaseView");
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, reply.getBoardNo());
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result; 
+    }
+
 }
