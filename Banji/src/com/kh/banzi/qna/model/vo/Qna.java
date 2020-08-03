@@ -36,6 +36,17 @@ public class Qna {
         this.content = content;
         this.boardType = boardType;
     }
+    
+    
+
+
+    public Qna(int boardNo, String title, String content, int boardType) {
+        super();
+        this.boardNo = boardNo;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+    }
 
 
 

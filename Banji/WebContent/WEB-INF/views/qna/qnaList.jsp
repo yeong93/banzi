@@ -152,6 +152,14 @@
 .replyWrite{
 padding-top:40px;
 }
+#info{
+height:50px;
+padding:15px;
+border-bottom : 2px solid #a6a6a9;
+}
+.date{
+float:right;
+}
   </style>
   
 </head>
@@ -272,11 +280,13 @@ padding-top:40px;
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-lg modal-dialog-scrollable">
 			    <div class="modal-content">
-			      <div class="modal-header">
+			      <div class="modal-header" style="border-bottom : 2px solid #a6a6a9;">
 			        <h5 class="modal-title" id="exampleModalLabel"></h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
+			      </div>
+			      <div id="info">
 			      </div>
 			      <div id="content" class="modal-body" style="word-break:break-all;">
 			        ...
@@ -287,15 +297,16 @@ padding-top:40px;
 			       댓글
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ok();">Close</button>
+			        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ok();">확인</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateQna();">수정</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
 	    <%@ include file="../common/footer.jsp"%>
 	  </div>
-  
+    
   <script>
     //------------------------------------------------------------------------------------------------------------
     // 게시글 상세보기 기능 (jquery를 통해 작업)
@@ -309,6 +320,9 @@ padding-top:40px;
 var loginMemberId;
 <% if(tempUser != null){%>
 userId = "<%=tempUser.getUserId()%>";
+userNick = "<%=tempUser.getUserName()%>";
+<%} else {%>
+userNick = "";
 <%}%>
     // -- QNA글 보기
     $(document).on("click","#list-table td",function(e){
@@ -320,17 +334,18 @@ userId = "<%=tempUser.getUserId()%>";
     	  success : function(map){
     		  $("#reply").text("");
     		  $("#exampleModalLabel").text(map.qna.title);
+    		  $("#info").attr("class",map.qna.regWriter).text("작성자 : " + map.qna.regWriter);
+    		  $("#info").append("<span class='date'> 작성일 :" + map.qna.regDate);
     		  $("#content").html(map.qna.content);
     		  $("[type='hidden']").attr('class', boardNo);
     		  if(map.fList.length != 0){
     			  var src;
     			  var flag = true;
     			  for(var i = 0; i < map.fList.length; i++){
-    				  console.log(i);
-    				  console.log(map.fList.fileLevel);
-    				  console.log(map.fList[i].fileChangeName);
- 						  src ="/banzi/resources/uploadImages/"+map.fList[i].fileChangeName;
+ 						  src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
  						  $("#content").append("<img src="+src+">");
+ 						  console.log(src);
+ 						  src = "";
     			  }
     			  
     		  }
@@ -346,7 +361,12 @@ userId = "<%=tempUser.getUserId()%>";
     			   $p1 = $("<p>").text("댓글");
     			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
     			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
-    			   $("#content").append($div, $p2);
+             $("#content").append($div, $p2);
+    			   if(userNick != "" && userNick == map.rList[i].regWriter){
+ 			         var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+")");
+ 			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+")");
+ 			         $("#content").append($showUpdate, $deleteReply);
+    			   }
      			  }
     		  }
      		  if(map.userGrade != "user" && map.userGrade != ""){
@@ -414,7 +434,7 @@ userId = "<%=tempUser.getUserId()%>";
               console.log(i);
               console.log(map.fList.fileLevel);
               console.log(map.fList[i].fileChangeName);
-              src ="/banzi/resources/uploadImages/"+map.fList[i].fileChangeName;
+              src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
               $("#content").append("<img src="+src+">");
             }
             
@@ -431,7 +451,13 @@ userId = "<%=tempUser.getUserId()%>";
              $p1 = $("<p>").text("댓글");
              $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
              $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
-             $("#content").append($div, $p2);
+             if(userNick == map.rList[i].regWriter){
+                 var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+")");
+                 var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+")");
+                 $("#content").append($div, $p2, $showUpdate, $deleteReply);
+              }else{
+            	   $("#content").append($div, $p2);
+              }
             }
           }
           if(map.userGrade != "user" && map.userGrade != ""){
@@ -450,6 +476,32 @@ userId = "<%=tempUser.getUserId()%>";
         }
         
       });
+    };
+    function updateQna(){
+    	var boardNo = $("[type='hidden']").attr("class");
+    	location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
+    };
+    function ok(){
+    	location.reload();
+    }
+    
+    // 댓글 수정
+    function showDeleteReply(replyNo){
+   	 if(confirm("해당 댓글을 삭제하시겠습니까?")){
+      var boardNo = $("[type='hidden']").attr("class");
+      console.log("댓"+replyNo);
+    	$.ajax({
+    	 url : "<%=request.getContextPath()%>/qna/deleteReply.do",
+    	 data : {"replyNo" : replyNo},
+    	 success : function(result){
+    		 alert(result);
+    		 reload(boardNo);
+    	 }, error :  function(){
+    		 console.log("ajax 통신 실패");
+    	 }
+    		
+    	});
+   	 }    	
     };
   </script>
   

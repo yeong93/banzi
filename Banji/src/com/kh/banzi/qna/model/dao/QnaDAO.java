@@ -16,6 +16,10 @@ import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.qna.model.vo.Qna;
 
+/**
+ * @author user1
+ *
+ */
 public class QnaDAO {
     
     private Properties prop;
@@ -121,7 +125,9 @@ public class QnaDAO {
             pstmt.setInt(1, boardNo);
             rset = pstmt.executeQuery();
             while(rset.next()) {
-                reply = new Reply(rset.getString("USER_NAME"),
+                reply = new Reply(
+                        rset.getInt("REPLY_NO"),
+                        rset.getString("USER_NAME"),
                         rset.getString("CONTENT"),
                         rset.getTimestamp("REG_DATE"));
                 rList.add(reply);
@@ -190,7 +196,6 @@ public class QnaDAO {
             pstmt.setString(3, at.getFilePath());
             pstmt.setInt(4, at.getFileLevel());
             pstmt.setInt(5, at.getParentBoardNo());
-            pstmt.setInt(6, at.getParentBoardType());
             
             result = pstmt.executeUpdate();
         }finally {
@@ -265,6 +270,94 @@ public class QnaDAO {
             pstmt.close();
         }
         return result; 
+    }
+
+    public Qna updateView(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Qna qna = null;
+        String query = prop.getProperty("updateView");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            
+            if (rset.next()) {
+                qna = new Qna(boardNo, 
+                              rset.getString("TITLE"),
+                              rset.getString("CONTENT"),
+                              rset.getInt("BOARD_TYPE"));
+            }
+        }finally {
+            rset.close();
+            pstmt.close();
+        }
+        return qna;
+    }
+
+    /** QNA 수정
+     * @param conn 
+     * @param qna
+     * @return result
+     * @throws Exception
+     */
+    public int updateBoard(Connection conn, Qna qna) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query =prop.getProperty("updateQna");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           pstmt.setString(1, qna.getTitle());
+           pstmt.setString(2, qna.getContent());
+           pstmt.setInt(3, qna.getBoardNo());
+           
+           result = pstmt.executeUpdate();
+
+        }finally {
+           pstmt.close();
+        }
+        
+        return result;
+    }
+
+    public int updateAttachment(Connection conn, Attachment newFile) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("updateAttachment");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           
+           pstmt.setString(1, newFile.getFileOriginName());
+           pstmt.setString(2, newFile.getFileChangeName());
+           pstmt.setString(3, newFile.getFilePath());
+           pstmt.setInt(4, newFile.getFileNo());
+           
+           result = pstmt.executeUpdate();
+        }finally {
+           pstmt.close();
+        }
+        
+        return result;
+    }
+
+    public int deleteReply(Connection conn, int replyNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("deleteReply");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            
+            pstmt.setInt(1, replyNo);
+            result = pstmt.executeUpdate();
+        }finally{
+            pstmt.close();
+        }
+        return result;
     }
 
 }
