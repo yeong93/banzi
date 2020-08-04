@@ -9,6 +9,7 @@
 
 <!-- mypage CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 
 </head>
 
@@ -18,23 +19,20 @@
 
 	<section id="content">
 	
-		<div class="container-fluid mt-5">
-			<div class="row">
+		<!-- -------------------------------- 메인 -------------------------------- -->
+		<div class="container-fluid mt-5 " class="event">
+		
+			<h1 class="type1">마이 페이지</h1>
 
-				<div class="col-md-3">
-						<h3 id="title">비밀번호 수정</h3>
-						
-						<div class="col-sm-10 mt-5 mx-auto" id="myPage-aside">
-							<ul class="list-group">
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a></li>
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a></li>
-								<li class="list-group-item list-group-item-action"><a href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a></li>
-							</ul>
-						</div>
-				</div>
-				
-				<div class="col-md-9">
-					<div class="col-sm-8">
+			<!-- -------------------------------- 메뉴 -------------------------------- -->
+			<ul class="tabType1">
+				<li><a href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a></li>
+				<li class="on"><a href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a></li>
+				<li><a href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a></li>
+			</ul>
+			
+				<div class="col-md-9 mx-auto">
+					<div class="col-sm-8 mx-auto">
 					
 						<div class="bg-white shadow-sm container p-5">
 							<form method="POST" action="changePwd.do" onsubmit="return validate();" class="form-horizontal"

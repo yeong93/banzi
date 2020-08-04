@@ -140,7 +140,7 @@ public class ReviewDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertReview");
-//		System.out.println("review : " + review);
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, review.getReviewBoardNo());
@@ -259,7 +259,7 @@ public class ReviewDAO {
 	                    );
 				
 			}
-			System.out.println(review);
+			
 		}finally {
 			rset.close();
 			pstmt.close();
@@ -348,7 +348,7 @@ public class ReviewDAO {
 		ResultSet rset = null;
 		Review review = null;
 		String query = prop.getProperty("updateReview");
-		
+		 
 		try {
 			pstmt =conn.prepareStatement(query);
 			pstmt.setInt(1, reviewNo);
@@ -358,10 +358,11 @@ public class ReviewDAO {
 				review = new Review(reviewNo,
 						rset.getString("REVIEW_TITLE"), 
 						rset.getString("REVIEW_CONTENT"),
+						rset.getInt("REVIEW_RATING"),
 						rset.getInt("REVIEW_CATEGORY")
 						);
 			}
-			System.out.println("dao"+review);
+			System.out.println("디에이이이오"+review);
 		}finally {
 			rset.close();
 			pstmt.close();
@@ -421,6 +422,50 @@ public class ReviewDAO {
 		
 		return result;
 
+	}
+
+
+	public List<Review> selectCategoryReview(Connection conn, PageInfo pInfo, int category) throws Exception{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Review> list = null;
+		String query = prop.getProperty("selectCategoryList");
+		
+		try {
+			int startRow = (pInfo.getCurrentPage()-1)*pInfo.getLimit()+1;
+			int endRow = startRow + pInfo.getLimit()-1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, pInfo.getBoardType());
+			pstmt.setInt(2, category);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Review>();
+			
+			while(rset.next()) {
+				Review review = new Review(rset.getInt("REVIEW_BOARD_NO"),
+													rset.getInt("REVIEW_WRITER_NO"),
+													rset.getString("REVIEW_TITLE"),
+													rset.getString("REVIEW_CONTENT"),
+													rset.getDate("REVIEW_CREATE_DATE"),
+													rset.getInt("REVIEW_RATING"),
+													rset.getInt("REVIEW_CATEGORY"),
+													rset.getString("REVIEW_STATUS"),
+													rset.getInt("READ_COUNT"),
+													rset.getInt("BOARD_TYPE"),
+													rset.getString("USER_NAME")
+													);
+				
+				list.add(review);
+				
+			}
+		}finally {
+			rset.close();
+			pstmt.close();
+		}
+		return list;
 	}
 
 }

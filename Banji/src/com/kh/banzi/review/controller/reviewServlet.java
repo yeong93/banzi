@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.banzi.common.MyFileRenamePolicy;
-import com.kh.banzi.information.model.vo.Information;
 import com.kh.banzi.review.model.service.ReviewService;
 import com.kh.banzi.review.model.vo.Attachment;
 import com.kh.banzi.review.model.vo.PageInfo;
@@ -195,6 +194,7 @@ public class reviewServlet extends HttpServlet {
 						
 						path="/WEB-INF/views/review/reviewUpdateForm.jsp";
 						request.setAttribute("review", review);
+						System.out.println("확인"+review);
 						view = request.getRequestDispatcher(path);
 						view.forward(request, response);
 					}
@@ -202,7 +202,7 @@ public class reviewServlet extends HttpServlet {
 				// --- 여기까지 완성
 				// 리뷰 수정 ing -> 평가 가져온게 잘못된듯.
 				}else if(command.equals("/updateReviewForm.do")) {
-					System.out.println("OK");
+					 System.out.println("OK");
 					
 					int maxSize = 1024 *1024 *10;
 					String root = request.getSession().getServletContext().getRealPath("/");
@@ -217,7 +217,7 @@ public class reviewServlet extends HttpServlet {
 					int reviewNo = Integer.parseInt(request.getParameter("no"));
 					
 					Review review = new Review(reviewNo, reviewTitle, reviewContent, reviewRating, reviewCategory);
-					System.out.println("리뷰 수정 왔니?");
+					System.out.println("리이뷰"+review);
 					
 					List<Attachment> fList = new ArrayList<Attachment>();
 					
@@ -240,7 +240,7 @@ public class reviewServlet extends HttpServlet {
 			                 }
 			                 
 			                 temp.setFileLevel(fileLevel);
-//			                 temp.setFilePath(filePath);
+			                 temp.setFilePath(filePath);
 			                 fList.add(temp);
 						}
 					}
@@ -261,6 +261,24 @@ public class reviewServlet extends HttpServlet {
 					request.getSession().setAttribute("msg", msg);
 					response.sendRedirect(path);
 					
+				// 카테고리 분류 화면 이동	
+				}else if(command.equals("/reviewCategory.do")) {
+					errorMsg = "리뷰 목록 조회";
+					
+					PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
+					
+					int category = Integer.parseInt(request.getParameter("category"));
+					List<Review> rList = reviewService.selectCategotyList(pInfo,category);
+					
+					List<Attachment> fList = reviewService.selectFileList(pInfo);
+					path = "/WEB-INF/views/review/userCategoryReview.jsp";
+					
+					request.setAttribute("pInfo", pInfo);
+					request.setAttribute("rList", rList);
+					request.setAttribute("fList", fList);
+					
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
 				}
 	
 			

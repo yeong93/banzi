@@ -30,6 +30,13 @@ public class Reply {
         this.content = content;
         this.regDate = regDate;
     }
+    public Reply(int replyNo,String regWriter, String content, Timestamp regDate) {
+        super();
+        this.replyNo = replyNo;
+        this.regWriter = regWriter;
+        this.content = content;
+        this.regDate = regDate;
+    }
 
 
     public Reply(int replyNo, String regWriter, String content, Timestamp regDate, int boardNo) {

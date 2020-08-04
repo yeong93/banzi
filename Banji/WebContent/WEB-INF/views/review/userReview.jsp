@@ -272,10 +272,10 @@
 
     <!-- 버튼부분 -->
     <div class="review-button-area">
-        <div class="review-button"><a href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&categoty=">병 원</a></div>
-        <div class="review-button"><a href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&categoty=">사 료</a></div>
-        <div class="review-button"><a >간 식</a></div>
-        <div class="review-button"><a >용 품</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=1">병 원</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=2">사 료</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=3">간 식</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=4">용 품</a></div>
     </div>
 
 	<%if(rList.isEmpty()){ %>
