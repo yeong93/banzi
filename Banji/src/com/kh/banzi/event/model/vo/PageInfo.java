@@ -160,12 +160,10 @@ public class PageInfo {
 		// endPage : 페이징바 끝 페이지 번호
 		// 페이징바의 크기가 10인 경우
 		// 10, 20, 30, 40, ...
-		if(endPage > maxPage) {
+		endPage = startPage + pagingBarSize - 1;
+		if(endPage >= maxPage) {
 			// endPage가 maxPage보다 클 경우
 			endPage = maxPage;
-		}else {
-			endPage = startPage + pagingBarSize - 1;
-			
 		}
 	}
 	

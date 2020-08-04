@@ -84,10 +84,11 @@ public class EventDAO {
 			Event e = null;
 			while(rset.next()) {
 				e = new Event(
-						rset.getInt("RNUM"), 
+						rset.getInt("BOARD_NO"), 
 						rset.getString("USER_ID"),
 						rset.getString("EVENT_TITLE"),
 						rset.getString("EVENT_CONTENT"), 
+						rset.getTimestamp("EVENT_CREATE_DT"),
 						rset.getTimestamp("EVENT_START_DT"),
 						rset.getTimestamp("EVENT_END_DT")
 						);
@@ -126,9 +127,9 @@ public class EventDAO {
 			while(rset.next()) {
 				at = new Attachment(
 						rset.getInt("FILE_NO"), 
-						rset.getString("FILE_CHANGE_NAME"), 
-						rset.getString("FILE_PATH"), 
-						rset.getInt("FILE_LEVEL"));
+						rset.getInt("BOARD_NO"), 
+						rset.getString("FILE_CHANGE_NAME"),
+						rset.getString("FILE_PATH"));
 				fList.add(at);
 			}
 			
@@ -437,12 +438,6 @@ public class EventDAO {
 		}
 		return result;
 	}
-
-
-	
-	
-
-
 
 
 }

@@ -12,9 +12,10 @@
 	String cp = request.getParameter("cp");
 	String type = request.getParameter("type");
 	
-	SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ("yyyy.MM.dd", Locale.KOREA );
 	Date currentTime = new Date();
-	String today = mSimpleDateFormat.format(currentTime);
+	String modify = new SimpleDateFormat("yyyy-MM-dd hh:mm").format(currentTime);
+	String start = new SimpleDateFormat("yyyy-MM-dd hh:mm").format(event.getStartDay());
+	String end = new SimpleDateFormat("yyyy-MM-dd hh:mm").format(event.getEndDay());
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,9 @@
 <!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
-
+<style>
+	.boardImg{width: 374px !important; height: 308px !important;}
+</style>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
@@ -34,9 +37,8 @@
 		<!-- -------------------------------- 메인 -------------------------------- -->
 		<div id="container" class="event">
 			
-			<ul class="eventList mx-auto">
-			
-				<form action="<%=request.getContextPath()%>/event/eventUpdate.do?type=<%=type%>&cp=<%=cp%>" method="post" 
+				<form class="eventList mx-auto"
+				  action="<%=request.getContextPath()%>/event/eventUpdate.do?type=<%=type%>&cp=<%=cp%>&no=<%=event.getEventNo()%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 				  
 				  <table class="mx-auto table">
@@ -53,17 +55,17 @@
 				  	
 				  	<tr>
 				  		<td><p>수정일</p></td>
-				  		<td><%=today%></td>
+				  		<td><%=modify%></td>
 				  	</tr>
 				  	
 				  	<tr>
 				  		<td><p>이벤트 시작일</p></td>
-				  		<td><input type="datetime-local" id="startDay" name="startDay" val="<%=event.getStartDay()%>"></td>
+				  		<td>변경전: <%=start%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;변경후: <input type="datetime-local" id="startDay" name="startDay"></td>
 				  	</tr>
 				  	
 				  	<tr>
 				  		<td><p>이벤트 종료일</p></td>
-				  		<td><input type="datetime-local" id="endDay" name="endDay" val="<%=event.getEndDay()%>"></td>
+				  		<td>변경전: <%=end%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;변경후: <input type="datetime-local" id="endDay" name="endDay"></td>
 				  	</tr>
 				  	
 				  	<tr>
@@ -79,7 +81,7 @@
 				  		<td><p>메인 이미지</p></td>
 				  		<td>
 							<div class="mr-2 boardImg" id="contentImgArea1">
-								<img id="contentImg1" width="1000" height="500">
+								<img id="contentImg1" width="374" height="308">
 							</div>
 				  		</td>
 				  	</tr>
@@ -108,7 +110,7 @@
 					<a href="eventList.do?type=<%=type%>&cp=<%=cp%>" class="btn btn-primary btn-warning float-right" id="listBtn">목록으로</a>
 				</div>
 				
-			</ul>
+			</form>
 			
 		</div>
 		<!-- //container -->
@@ -156,6 +158,30 @@
 				return false;
 			}
 		}
+		
+		$(function(){
+			
+			<% 
+				String src = null;
+				if(fList != null){
+					for(Attachment at : fList){
+						src = request.getContextPath()
+								+"/resources/uploadImages/"
+								+at.getFileChangeName();
+				%>
+						var imgId;
+						switch (<%=at.getFileLevel()%>) {
+					    case 0: imgId = "#titleImg"; break;
+					    case 1: imgId = "#contentImg1"; break;
+				 		}
+						
+						if(imgId != undefined){
+							$(imgId).attr("src", "<%=src%>")
+						}
+			<% 	} 
+				} %>
+			
+		});
 		
 		$(function () {
 	       $("#fileArea").hide(); 

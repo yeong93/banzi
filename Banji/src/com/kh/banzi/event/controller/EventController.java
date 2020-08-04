@@ -87,23 +87,6 @@ public class EventController extends HttpServlet {
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
-				
-//--------------------------------- 이벤트 당첨자 ------------------------------------
-			}else if(command.equals("/winnerList.do")) {
-				errorMsg = "당첨자 조회";
-				
-				PageInfo pInfo = EventService.getPageInfo(currentPage, eventType);
-				List<Event> eList = eService.eventList(pInfo, eventType); 
-				List<Attachment> fList = eService.fileList(pInfo, eventType);
-				
-				path = "/WEB-INF/views/event/winnerList.jsp";
-			
-				request.setAttribute("pInfo", pInfo); 
-				request.setAttribute("eList", eList);
-				request.setAttribute("fList", fList);
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-				
 //--------------------------------- 이벤트 게시글 삽입 ------------------------------------				
 			}else if(command.equals("/insertEventForm.do")) {
 				
@@ -307,7 +290,11 @@ public class EventController extends HttpServlet {
 				if(result > 0) {
 					status = "success";
 					msg = "게시글 삭제 성공";
-					path = "eventList.do?type=" + eventType;
+					if(eventType == 1) {
+						path = "eventList.do?type=" + eventType;
+					}else {
+						path = "pastList.do?type=" + eventType;
+					}
 				}else {
 					status = "error";
 					msg = "게시글 삭제 실패";
@@ -316,7 +303,7 @@ public class EventController extends HttpServlet {
 				request.getSession().setAttribute("status", status);
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
-				
+
 			}
 
 		} catch (Exception e) {

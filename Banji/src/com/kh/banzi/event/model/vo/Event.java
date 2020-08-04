@@ -41,12 +41,14 @@ public class Event {
 
 
 
-	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp startDay, Timestamp endDay) {
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp createDay,
+			Timestamp startDay, Timestamp endDay) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
 		this.eventTitle = eventTitle;
 		this.eventContent = eventContent;
+		this.createDay = createDay;
 		this.startDay = startDay;
 		this.endDay = endDay;
 	}

@@ -87,10 +87,11 @@
                                 <label class="label-checkbox100" for="saveId">아이디 기억하기</label>
                             </div>
                             <div id="search-area">
-                                <a href="<%=request.getContextPath()%>/userLogin/searchForm.do"  class="search" name="search-pwd">비밀번호 변경</a>
+                                <a href="<%=request.getContextPath()%>/userLogin/searchForm.do"  class="search float-right" name="search-pwd">비밀번호 변경</a>
                             </div>
 
                         </div>
+                            
 
                     </div>
 

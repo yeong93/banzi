@@ -19,7 +19,6 @@
 .eventBtn{width: 30px !important;}
 #mypage a{text-decoration: none;}
 
-
 .paging {margin:40px 0; text-align:center;}
 .paging li {display:inline-block; margin:0 9px; font-size:16px; line-height:28px;}
 .paging li strong {color:#3A3847 ;}
@@ -39,7 +38,7 @@ h1.type1 {height:80px; text-align:center; font-size:34px; line-height:30px; font
 .eventList {overflow:hidden; width:1236px;}
 .eventList li {position:relative; float:left; width:318px; height:495px; padding:0 28px; margin:40px 0 0 36px; border:1px solid #ddd; background:#fff;}
 .eventList li a {display:block;}
-.eventList li >a:hover:after, .eventList li >a:focus:after {content:""; position:absolute; left:-1px; top:-1px; width:372px; height:493px; border:2px solid #FFCE54;}
+.eventList li >a:hover:after, .eventList li >a:focus:after {content:""; position:absolute; left:-1px; top:-1px; width:374px; height:493px; border:2px solid #FFCE54;}
 .eventList li .thumb {position:relative; width:374px; height:307px; margin:0 -28px 30px;}
 .eventList li .thumb .end {position:absolute; left:0; top:0; width:100%; height:100%; text-align:center;}
 .eventList li .thumb .end:before {content:""; position:absolute; left:0; top:0; width:100%; height:100%; background:rgb(150, 146, 146); opacity:.8; filter:alpha(opacity=80);}
