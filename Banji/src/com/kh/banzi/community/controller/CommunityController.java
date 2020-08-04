@@ -77,7 +77,7 @@ public class CommunityController extends HttpServlet {
 
                 // 2. 게시글 조회 성공 시 이미지 조회
                 if(community != null) {
-                    List<Attachment> fList = cService.selectFiles(boardNo);
+                    List<Attachment> fList = cService.selectFiles(boardNo, community.getBoardType());
 
                     if(!fList.isEmpty()) 
                         request.setAttribute("fList", fList);
@@ -191,7 +191,7 @@ public class CommunityController extends HttpServlet {
                 community.setBoardNo(boardNo);
 
                 if(community != null) {
-                    List<Attachment> fList = cService.selectFiles(boardNo);
+                    List<Attachment> fList = cService.selectFiles(boardNo, 3);
 
                     if(!fList.isEmpty()) {
                         request.setAttribute("fList", fList);
@@ -206,7 +206,7 @@ public class CommunityController extends HttpServlet {
                 // 2) 파일 저장 경로
                 String root = request.getSession().getServletContext().getRealPath("/");
                 
-                String filePath = root + "resources\\uploadImages\\";
+                String filePath = root + "resources\\uploadImages";
                 
                 MultipartRequest mRequest =
                       new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
@@ -215,7 +215,7 @@ public class CommunityController extends HttpServlet {
                 String title = mRequest.getParameter("title");
                 String content = mRequest.getParameter("content");
                 
-                Community community = new Community(boardNo, title, content);
+                Community community = new Community(boardNo, title, content, 3);
                 
                 // 전달받은 파일 정보를 저장할 리스트 생성
                 List<Attachment> fList = new ArrayList<Attachment>();

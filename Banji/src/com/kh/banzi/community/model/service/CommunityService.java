@@ -4,6 +4,7 @@ import static com.kh.banzi.common.DBCP.getConnection;
 
 import java.io.File;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,6 @@ public class CommunityService {
         Connection conn = getConnection();
 
         List<Community> cList = dao.selectList(conn, pInfo);
-
         conn.close();
 
         return cList;
@@ -69,7 +69,8 @@ public class CommunityService {
             if(result > 0) {
                 conn.commit();
                 community.setViews(community.getViews() + 1);
-            }
+            }else
+                conn.rollback();
         }
 
         conn.close();
@@ -166,9 +167,9 @@ public class CommunityService {
      * @return
      * @throws Exception
      */
-    public List<Attachment> selectFiles(int boardNo) throws Exception{
+    public List<Attachment> selectFiles(int boardNo, int boardType) throws Exception{
         Connection conn = getConnection();
-        List<Attachment> fList = dao.selectFiles(conn, boardNo);
+        List<Attachment> fList = dao.selectFiles(conn, boardNo, boardType);
         conn.close();
         return fList;
     }
@@ -226,7 +227,7 @@ public class CommunityService {
             result = 0; // result 재사용
             
             // 기존 해당 게시글에 포함되었던 파일 정보를 DB로 부터 얻어옴.
-            List<Attachment> oldList = dao.selectFiles(conn, community.getBoardNo());
+            List<Attachment> oldList = dao.selectFiles(conn, community.getBoardNo(), community.getBoardType());
             
             boolean flag = false; // 결과확인용도 : 같을때 true
             for(Attachment newFile : fList) {

@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.kh.banzi.qna.model.vo.Qna"%>
 <%@page import="java.util.List"%>
@@ -19,6 +21,14 @@
  int prev = (currentPage-1)/10*10;   // < 버튼 
  
  int next = (currentPage+9)/10*10+1; // > 버튼 
+ String pattern = "yy-MM-dd HH:mm";
+ String pattern2 = "HH:mm";
+ Calendar today = Calendar.getInstance();
+ String year = today.get(Calendar.YEAR)+"";
+ String month = String.format("%2s", "0"+(today.get(Calendar.MONDAY)+1)+"");
+ String day = String.format("%2s", "0"+today.get(Calendar.DATE)+"");
+ SimpleDateFormat sdf1 = new SimpleDateFormat(pattern);
+ SimpleDateFormat sdf2 = new SimpleDateFormat(pattern2);
 %>
 <!DOCTYPE html>
 <html>
@@ -58,12 +68,19 @@
         table th{
           background-color:#FFBA00;
           font-weight:bold;
+          font-size:1.15em;
         }
         table td{
           font-weight:400;
         }
         th:first-of-type{
-        width:30%;
+        width:15%;
+        }
+        th:nth-of-type(2){
+        width:40%;
+        }
+        th:nth-of-type(4){
+        width:15%;
         }
         .reply{
           width:100px;
@@ -173,21 +190,25 @@ float:right;
               <table class="table table-hover table-striped" id="list-table">
                    <thead>
                       <tr>
-                          <th>제목</th>
                           <th>작성자</th>
+                          <th>제목</th>
                           <th>작성일</th>
                           <th style="padding-right:0px">답변</th>
                       </tr>
                   </thead> 
                   <tbody>
                   <%for(Qna q : qList){ %>
-                    <tr id="<%=q.getBoardNo() %>">
+                    <tr id="<%=q.getBoardNo() %>" class="mouse">
+                      <td><%=q.getRegWriter() %></td>
                       <td class="boardTitle">
                       <%=q.getTitle() %>
                       </td>
-                      <td><%=q.getRegWriter() %></td>
-                      <td><%=q.getRegDate() %>
-                      <!-- <button type="botton" class="btn btn-secondary float-right">미답변</button> -->
+                      <%String[] str = (q.getRegDate()+"").substring(0, 10).split("-");%>
+                      <%if(str[0].equals(year)&&str[1].equals(month)&&str[2].equals(day)){ %>
+                        <td><%=sdf2.format(q.getRegDate())%></td> 
+                        <%} else{ %>
+                        <td><%=sdf1.format(q.getRegDate())%></td>
+                        <%} %>
                       <%if (q.getReplyCount() > 0) {%>
                       <td><div class="reply ok">답변완료</div>
                       <%} else{ %>
@@ -297,10 +318,10 @@ float:right;
 			       댓글
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ok();">Close</button>
+			        <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal" onclick="ok();">Close</button>
 			        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ok();">확인</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateQna();">수정</button>
-			      </div>
+<!--               <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateQna();">수정</button>
+ -->			      </div>
 			    </div>
 			  </div>
 			</div>
@@ -338,6 +359,9 @@ userNick = "";
     		  $("#info").append("<span class='date'> 작성일 :" + map.qna.regDate);
     		  $("#content").html(map.qna.content);
     		  $("[type='hidden']").attr('class', boardNo);
+    		  if(map.qna.regWriter == userNick){
+    			  $("#close").after("<div class ='btn btn-primary' data-dismiss='modal' onclick='updateQna();'>수정");
+    		  }
     		  if(map.fList.length != 0){
     			  var src;
     			  var flag = true;
@@ -479,7 +503,13 @@ userNick = "";
     };
     function updateQna(){
     	var boardNo = $("[type='hidden']").attr("class");
-    	location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
+    	console.log($("#info").attr("class"));
+     	if(userNick == $("#info").attr("class")){
+     		  location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
+     	}else{
+     		alert("작성자만 수정 가능합니다.");
+     		return;
+     	}
     };
     function ok(){
     	location.reload();

@@ -115,11 +115,19 @@ public class CommnityDAO {
         
         try {
             pstmt = conn.prepareStatement(query);
+            
             pstmt.setInt(1, boardNo);
             
             rset = pstmt.executeQuery();
             if(rset.next()) {
-                community = new Community(boardNo, rset.getString("USER_NAME"), rset.getTimestamp("REG_DATE"), rset.getString("TITLE"), rset.getString("CONTENT"), rset.getInt("VIEWS"));
+                community = new Community(boardNo, 
+                        rset.getString("USER_NAME"),
+                        rset.getTimestamp("REG_DATE"),
+                        rset.getString("TITLE"),
+                        rset.getString("CONTENT"),
+                        rset.getInt("VIEWS"),
+                        rset.getInt("BOARD_TYPE")
+                        );
             }
         }finally {
             rset.close();
@@ -278,7 +286,7 @@ public class CommnityDAO {
 
 
 
-    public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+    public List<Attachment> selectFiles(Connection conn, int boardNo, int boardType) throws Exception{
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         List<Attachment> fList = null;
@@ -287,6 +295,7 @@ public class CommnityDAO {
         try {
            pstmt = conn.prepareStatement(query);
            pstmt.setInt(1, boardNo);
+           pstmt.setInt(2, boardType);
            
            rset = pstmt.executeQuery();
            

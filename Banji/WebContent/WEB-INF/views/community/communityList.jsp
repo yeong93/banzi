@@ -1,3 +1,5 @@
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.community.model.vo.Community"%>
 <%@page import="java.util.List"%>
@@ -19,6 +21,14 @@
  int prev = (currentPage-1)/10*10;   // < 버튼 
  
  int next = (currentPage+9)/10*10+1; // > 버튼 
+ String pattern = "yy-MM-dd HH:mm";
+ String pattern2 = "HH:mm";
+ Calendar today = Calendar.getInstance();
+ String year = today.get(Calendar.YEAR)+"";
+ String month = String.format("%2s", "0"+(today.get(Calendar.MONDAY)+1)+"");
+ String day = String.format("%2s", "0"+today.get(Calendar.DATE)+"");
+ SimpleDateFormat sdf1 = new SimpleDateFormat(pattern);
+ SimpleDateFormat sdf2 = new SimpleDateFormat(pattern2);
 %>
 	
 <!DOCTYPE html>
@@ -60,30 +70,38 @@
         table th{
           background-color:#FFBA00;
           font-weight:bold;
+          font-size:1.15em;
+          
         }
         table td{
           font-weight:400;
         }
         th:first-of-type{
-        width:30%;
+        width:15%;
+        }
+        th:nth-of-type(2){
+        width:40%;
+        }
+        th:nth-of-type(4){
+        width:15%;
         }
 	</style>
 	
 </head>
 <body>
-	<div class="boardTitle ">
 		<%@ include file="../common/header.jsp"%>
+	<div class="boardTitle ">
 
 		<div class="container">
-		<h1>자유게시판</h1>
+		<h1>C O M M U N I T Y</h1>
 	        <div class="my">
 	            <table class="table table-hover table-striped" id="list-table">
 	                <thead>
 	                    <tr>
-	                        <th>제목</th>
 	                        <th>작성자</th>
-	                        <th>조회수</th>
+	                        <th>제목</th>
 	                        <th>작성일</th>
+	                        <th>조회수</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -94,23 +112,18 @@
                    <%}  else{%> 
                                <% for(Community c : cList) {%>
                                   <tr id="<%=c.getBoardNo()%>">
+                                     <td><%=c.getRegName() %></td>
                                      <td class="boardTitle">
-                                                                           <%
-                                        String src = null;
-                                        for(Attachment at : fList){
-                                            if(at.getParentBoardNo() == c.getBoardNo()){
-                                                src = request.getContextPath()+"/resources/uploadImages/"+at.getFileChangeName();
-                                                %>
-                                                  <img src="<%=src %>">
-                                                <%
-                                            }
-                                        }
-                                      %>
                                       <%=c.getTitle() %>
                                      </td>
-                                     <td><%=c.getRegName() %></td>
-                                     <td><%=c.getViews() %></td>
-                                     <td><%=c.getRegDate() %></td>
+                                    <%String[] str = (c.getRegDate()+"").substring(0, 10).split("-");%>
+                                    <%if(str[0].equals(year)&&str[1].equals(month)&&str[2].equals(day)){ %>
+                                      <td><%=sdf2.format(c.getRegDate())%></td> 
+                                      <%} else{ %>
+                                      <td><%=sdf1.format(c.getRegDate())%></td>
+                                      <%} %>
+                                      <td><%=c.getViews() %></td>
+                                      
                                     </tr>
                                <%} %>
                    <%} %>	          
