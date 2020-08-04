@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage.css">
 
+<style>
+	.boardImg{width: 374px !important; height: 308px !important;}
+</style>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
@@ -29,9 +32,7 @@
 		<div id="container" class="event">
 			<h1 class="type1">이벤트 게시글 작성</h1>
 			
-			<ul class="eventList mx-auto">
-				
-				<form action="<%=request.getContextPath()%>/event/insertEvent.do?type=1&cp=<%=cp%>" method="post" 
+				<form class="eventList mx-auto" action="<%=request.getContextPath()%>/event/insertEvent.do?type=<%=type%>&cp=<%=cp%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 				  
 				  <table class="mx-auto table">
@@ -65,24 +66,24 @@
 				  		<td><p>썸네일 이미지</p></td>
 				  		<td>
 				  			<div class="boardImg" id="titleImgArea">
-								<img id="titleImg" width="374" height="308">
-							</div>
+									<img id="titleImg" width="374" height="308">
+								</div>
 				  		</td>
 				  	</tr>
 				  	
 				  	<tr>
 				  		<td><p>메인 이미지</p></td>
 				  		<td>
-							<div class="mr-2 boardImg" id="contentImgArea1">
-								<img id="contentImg1" width="1000" height="500">
-							</div>
+								<div class="mr-2 boardImg" id="contentImgArea1">
+									<img id="contentImg1" width="374" height="308">
+								</div>
 				  		</td>
 				  	</tr>
 
 		  			<div id="fileArea">
 						썸네일 이미지 : <input type="file" id="img1" name="img1" onchange="LoadImg(this,1)"> 
 						메인 이미지 : <input type="file" id="img2" name="img2" onchange="LoadImg(this,2)"> 
-					</div>
+					 </div>
 					
 				  	<tr>
 				  		<td><p>내용</p></td>
@@ -102,7 +103,7 @@
 
 			</form>
 				
-			</ul>
+	
 			
 		</div>
 		<!-- //container -->

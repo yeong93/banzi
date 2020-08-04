@@ -21,14 +21,13 @@
 
 	int prev = (currentPage - 1)/6 * 6;
 	int next = (currentPage + 5)/6 * 6 + 1;
-	
 %>
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="UTF-8">
-<title>진행중인 이벤트</title>
+<title>종료된 이벤트</title>
 <!-- CSS -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 
@@ -50,8 +49,8 @@
 
 			<!-- -------------------------------- 메뉴 -------------------------------- -->
 			<ul class="tabType1">
-				<li class="on"><a href="eventList.do?type=1">진행중 이벤트</a></li>
-				<li><a href="pastList.do?type=2">종료된 이벤트</a></li>
+				<li><a href="eventList.do?type=1">진행중 이벤트</a></li>
+				<li class="on"><a href="pastList.do?type=2">종료된 이벤트</a></li>
 			</ul>
 
 			<!-- -------------------------------- 이벤트 -------------------------------- -->
@@ -69,27 +68,30 @@
 										String viewUrl =  request.getContextPath() + "/event/eventView.do?type=" + eventType
 																		+ "&cp=" + currentPage + "&no=" + e.getEventNo();
 									%>
+									
 								
 									<a id="view" href="<%=viewUrl%>"> 
 									
-										<p class="thumb">
-										
+										<div class="thumb">
 										<%
-     								String src = request.getContextPath() + "/resources/img/event/empty.png";
-   									for(Attachment at : fList){
-	   										if(at.getParentBoardNo() == e.getEventNo()){
-	   											
-	   											src = request.getContextPath() 
-	    													+ "/resources/uploadImages/" 
-	    													+ at.getFileChangeName();
-	   										} 
+											String src = request.getContextPath() + "/resources/img/event/empty.png";
+     									for(Attachment at : fList){
+     										if(at.getParentBoardNo() == e.getEventNo()){
+     											
+     											src = request.getContextPath() 
+     													+ "/resources/uploadImages/" 
+     													+ at.getFileChangeName();
+     										}
      									}
-   											%>
-   												<img src="<%=src%>">
-   											<% 
+     											%>
+     												<img src="<%=src%>">
+     											<% 
      								%>
-										</p>
-										<p class="ing" id="<%=e.getEventNo()%>">진행중</p>
+     									<div class="end">
+												<p class="text">이벤트가<br>종료되었습니다.</p>
+											</div>
+										</div>
+										<p class="ing" id="<%=e.getEventNo()%>">종료</p>
 										<p class="tit"><%=e.getEventTitle()%></p>
 										<% 
 											String start = new SimpleDateFormat("yyyy-MM-dd").format(e.getStartDay());
@@ -115,21 +117,21 @@
 			<ul class="paging">
 					
 					<%if(currentPage > 10) {%>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=1">&lt;&lt;</a></li>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=prev%>">&lt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=1">&lt;&lt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=<%=prev%>">&lt;</a></li>
 					<% } %>
 							
 					<% for(int p = startPage; p <= endPage; p++){ %>
 					 <% if(p == currentPage){ %>
 					 		<li><strong><%=p%></strong></li>
 						<% }else{ %>
-							<li><a id="now" href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=p%>"><%=p%></a></li>
+							<li><a id="now" href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=<%=p%>"><%=p%></a></li>
 						<% } %>
 					<% } %>
 		
 					<%if(next < maxPage) {%>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=next%>">&gt;</a></li>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=maxPage%>">&gt;&gt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=<%=next%>">&gt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=<%=maxPage%>">&gt;&gt;</a></li>
 					<% } %>
 			
 			</ul>

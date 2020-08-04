@@ -72,9 +72,10 @@ public class EncryptWrapper extends HttpServletRequestWrapper{
 		// 암호화된 비밀번호 반환
 		String encPwd = Base64.getEncoder().encodeToString(md.digest());
 		// java.util.Base64 인코더를 이용해 암호화된 바이트 배열을 문자열로 반환
-		
-		System.out.println("암호화 전 : " + pwd);
-		System.out.println("암호화 후 : " + encPwd);
+		/*
+		 * System.out.println("암호화 전 : " + pwd); System.out.println("암호화 후 : " +
+		 * encPwd);
+		 */
 
 		return encPwd;
 	}

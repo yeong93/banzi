@@ -179,7 +179,10 @@ public class EventService {
 		Connection conn = getConnection();
 		
 		Event event = dao.eventUpdateView(conn, eventNo);
-		event.setEventContent(event.getEventContent().replace("<br>", "\r\n"));
+		
+		if(event.getEventContent() != null) {
+			event.setEventContent(event.getEventContent().replace("<br>", "\r\n"));			
+		}
 		
 		conn.close();
 		return event;
@@ -197,8 +200,10 @@ public class EventService {
 		
 		int result = 0;
 		
-		event.setEventContent(replaceParameter(event.getEventContent())); 
-		event.setEventContent(event.getEventContent().replace("\r\n", "<br>")); 
+		if(event.getEventContent() != null) {
+			event.setEventContent(replaceParameter(event.getEventContent())); 
+			event.setEventContent(event.getEventContent().replace("\r\n", "<br>")); 
+		}
 		
 		result = dao.eventUpdate(conn, event);
 		
@@ -270,5 +275,5 @@ public class EventService {
 		conn.close();
 		return result;
 	}
-
+	
 }

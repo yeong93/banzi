@@ -31,20 +31,14 @@
 	<section id="content">
 
 		<!-- -------------------------------- 메인 -------------------------------- -->
-		<div id="container" class="event">
+		<div id="container" class="event eventList mx-auto">
 			
-			<ul class="eventList mx-auto">
 				  
 				  <table class="mx-auto table">
 				  
 				  	<tr>
 				  		<td><p>제목</p></td>
 				  		<td><%=event.getEventTitle() %></td>
-				  	</tr>
-				  	
-				  	<tr>
-				  		<td><p>작성자</p></td>
-				  		<td><%=event.getEventWriter() %></td>
 				  	</tr>
 				  	
 				  	<tr>
@@ -81,9 +75,17 @@
 				  	
 				  	<% } %>
 				  	
+				  	<%
+				  		String content = event.getEventContent();
+				  		if(content == null){
+				  			content = "";
+				  		}
+				  	
+				  	%>
+				  	
 				  	<tr>
 				  		<td colspan="2">
-				  			<div id="event-content"><%=event.getEventContent() %></div>
+				  			<div id="event-content"><%=content%></div>
 						</td>
 				  	</tr>
 		
@@ -95,17 +97,17 @@
 					<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
 						<button type="submit" class="btn btn-primary btn-warning" id="delBtn"
 						onclick="location.href='eventDelete.do?no=<%=event.getEventNo()%>';">글 삭제</button>
+						
+						<%if(type == "1"){ %>
 						<button type="button" class="btn btn-primary btn-warning" id="upBtn"
-						onclick="location.href='eventUpdateForm.do?cp=<%=cp%>&no=<%=event.getEventNo()%>';">글 수정</button>
+						onclick="location.href='eventUpdateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=event.getEventNo()%>';">글 수정</button>
+						<% } %>
 					<% } %>
 					
-					<a href="eventList.do?&cp=<%=cp%>" class="btn btn-primary btn-warning float-right" id="listBtn">목록으로</a>
+					<a href="eventList.do?&type=<%=type%>&cp=<%=cp%>" class="btn btn-primary btn-warning float-right" id="listBtn">목록으로</a>
 				</div>
 				
-				</form>
 				
-			</ul>
-			
 		</div>
 		<!-- //container -->
 
@@ -113,6 +115,7 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	
 	<script>
+	
 		$("#delBtn").on("click",function() {
 			if(confirm("정말 삭제하시겠습니까?")){
 				location.href="eventDelete.do?type=<%=type%>&no=<%=event.getEventNo()%>";
