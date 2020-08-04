@@ -150,7 +150,6 @@ public class InformationController extends HttpServlet {
 			}else if(command.equals("/view.do")) {
 				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
 				category = request.getParameter("category");
-				System.out.println(category);
 				// 1. 게시글 조회
 				Information information = service.selectInformation(infoBoardNo);
 				if(information != null) {
@@ -197,7 +196,6 @@ public class InformationController extends HttpServlet {
 				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
 				// 업데이트를 위한 게시글 정보 조회 서비스 호출
 				Information information = service.updateView(infoBoardNo);
-				System.out.println(information);
 				if(information != null) {
 					List<Attachment> fList = service.selectFiles(infoBoardNo);
 					if(!fList.isEmpty()) {
