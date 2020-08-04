@@ -93,7 +93,7 @@
                 <div class="form-group" id="divName">
                     <label for="inputName" class="col-lg-2 control-label">닉네임</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="한글만 입력해주세요." maxlength="15">
+                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="닉네임을 입력해주세요." maxlength="15">
                     </div>
                 </div>
 
@@ -130,7 +130,7 @@
                 </div>
                 <div class="form-group">
                 	<div id="group">
-                    <div class="col-lg-offset-2 col-lg-10 mx-auto">
+                    <div class="col-lg-offset-2 col-lg-10 text-center">
                         <button type="submit" class="btn btn-primary color" id="btn" >회원가입</button>
                         <button type="reset" class="btn btn-primary color" id="btn2">취소</button>
                     </div>
@@ -144,28 +144,7 @@
                 //모달을 전역변수로 선언
                 var modalContents = $(".modal-contents");
                 var modal = $("#defaultModal");
-                
-                $('.onlyAlphabetAndNumber').keyup(function(event){
-                    if (!(event.keyCode >=37 && event.keyCode<=40)) {
-                        var inputVal = $(this).val();
-                        $(this).val($(this).val().replace(/[^_a-z0-9]/gi,'')); //_(underscore), 영어, 숫자만 가능
-                    }
-                });
-                
-                $(".onlyHangul").keyup(function(event){
-                    if (!(event.keyCode >=37 && event.keyCode<=40)) {
-                        var inputVal = $(this).val();
-                        $(this).val(inputVal.replace(/[a-z0-9]/gi,''));
-                    }
-                });
-            
-                $(".onlyNumber").keyup(function(event){
-                    if (!(event.keyCode >=37 && event.keyCode<=40)) {
-                        var inputVal = $(this).val();
-                        $(this).val(inputVal.replace(/[^0-9]/gi,''));
-                    }
-                });
-                
+
                 //------- 검사하여 상태를 class에 적용
                 $('#id').keyup(function(event){
                     
@@ -243,6 +222,7 @@
                     var divName = $('#divName');
                     var divEmail = $('#divEmail');
                     
+                    var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
                     
                     //아이디 검사
                     if($('#id').val()==""){
@@ -253,7 +233,16 @@
                         divId.addClass("has-error");
                         $('#id').focus();
                         return false;
-                    }else{
+                    }else if($(!regExp.test($("#id").val()))){
+                    	modalContents.text("유효한 아이디를 입력해주세요.");
+						modal.modal('show');
+                        
+                        divId.removeClass("has-success");
+                        divId.addClass("has-error");
+                    	return false;
+                    }
+  		
+                    else{
                         divId.removeClass("has-error");
                         divId.addClass("has-success");
                     }
@@ -348,9 +337,10 @@
     		$("#passwordCheck").on("input",function() {
     			if($("#password").val().trim()!= $("#passwordCheck").val().trim()){
     				$("#checkPwd").text("비밀번호가 일치하지 않습니다.").css("color","red");
+
     			}else{
     				$("#checkPwd").text("비밀번호가 일치합니다.").css("color","green");
-    			}
+    				}
     	  		});
             
 
@@ -361,7 +351,10 @@
              // ajax를 이용한 아이디 유효성 검사
              var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
              if(!regExp.test($id.val())){
+            	 
                  $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
+
+                 if($id.val().length == 0)	$("#checkId").text("");
 
              }else{ // 유효한 아이디 형식일 때
                  $.ajax({
@@ -383,13 +376,6 @@
              }
          });
 
-            // 입력된 값이 지워지면 텍스트 삭제 -------------- > 안됨
-         	$(document).ready(function() { 
-         		 if($id.val().trim() ==""){
-               	 $("#checkId").text("");
-                }
-         	});
-            
 			
         </script>
             <hr/>
