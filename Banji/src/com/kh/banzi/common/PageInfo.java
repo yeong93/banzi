@@ -14,7 +14,18 @@ public class PageInfo {
 	private int boardType; // 게시글 타입
 	private String category;
 	
-	public PageInfo(int currentPage, int listCount, int boardType, String category) {
+	
+	
+	public PageInfo(int currentPage, int listCount, int boardType) {
+        super();
+        this.currentPage = currentPage;
+        this.listCount = listCount;
+        this.boardType = boardType;
+        makePageInfo();
+    }
+
+
+    public PageInfo(int currentPage, int listCount, int boardType, String category) {
 		this.currentPage = currentPage;
 		this.listCount = listCount;
 		this.boardType = boardType;
