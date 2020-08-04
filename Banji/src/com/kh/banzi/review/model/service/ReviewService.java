@@ -215,14 +215,13 @@ public class ReviewService {
 			review.setReviewContent(review.getReviewContent().replace("\r\n", "<br>")); 
 			
 			result = dao.updateReview(conn, review);
-			
+			System.out.println("서어비스 " + result);
 			List<Attachment> deleteFiles = new ArrayList<Attachment>();
-		    // ----------------여기까지함 -------------
 			
 		    if(result>0 && !fList.isEmpty()) {
 		    	result = 0; 
-		    	
-		    	List<Attachment> oldList = dao.selectFiles(conn, review.getReviewBoardNo());
+		    	int reviewNo = review.getReviewBoardNo();
+		    	List<Attachment> oldList = dao.selectFiles(conn, reviewNo);
 		    	
 		    	boolean flag = false; 
 		    	for(Attachment newFile : fList) {
@@ -240,8 +239,9 @@ public class ReviewService {
 		    		}
 		    		newFile.setParentBoardNo(review.getReviewBoardNo()); 
 		    		
+		    		// ----------------여기까지함 -------------
 		    		if(flag) { // update 상황 (flag:true) == 겹칠때
-		    			result = dao.updateAttachment(conn, newFile);
+		    			result = dao.updateAttachment(conn, newFile); //1 담김
 		    			
 		    		}else { // insert 상황 (새로운 이미지 추가 상황) == 겹치는게 없을때
 		    			result = dao.insertAttachment(conn, newFile);
@@ -272,7 +272,6 @@ public class ReviewService {
 		    }
 			
 		    conn.close();
-
 		    return result;
 		}
 

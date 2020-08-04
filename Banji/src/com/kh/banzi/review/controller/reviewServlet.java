@@ -204,20 +204,22 @@ public class reviewServlet extends HttpServlet {
 				}else if(command.equals("/updateReviewForm.do")) {
 					 System.out.println("OK");
 					
-					int maxSize = 1024 *1024 *10;
+					 int maxSize = 1024 * 1024 *10; 
 					String root = request.getSession().getServletContext().getRealPath("/");
-					String filePath = root + "resources\\uploadImages";
-					MultipartRequest mRequest
-					= new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 					
+					String filePath = root + "resources\\uploadImages\\";
+					MultipartRequest mRequest =
+							new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+					
+					// 수정
+					int reviewNo =  Integer.parseInt(mRequest.getParameter("no"));
 					String reviewTitle = mRequest.getParameter("title");
-					int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
 					String reviewContent = mRequest.getParameter("content");
-					int reviewRating =  Integer.parseInt(mRequest.getParameter("rating"));
-					int reviewNo = Integer.parseInt(request.getParameter("no"));
+					int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
+					int rating = Integer.parseInt(mRequest.getParameter("forwardRating"));
 					
-					Review review = new Review(reviewNo, reviewTitle, reviewContent, reviewRating, reviewCategory);
-					System.out.println("리이뷰"+review);
+					
+					Review review = new Review(reviewNo, reviewTitle, reviewContent, rating, reviewCategory);
 					
 					List<Attachment> fList = new ArrayList<Attachment>();
 					
@@ -244,13 +246,14 @@ public class reviewServlet extends HttpServlet {
 			                 fList.add(temp);
 						}
 					}
-					
+					// 여기까지
+					System.out.println(review);
 					int result = reviewService.updateReview(review, fList);
 					
 					if(result>0) {
 						status = "success";
 						msg = "게시글 수정 성공";
-						path = "review.do?type="+boardType + "&cp=" + currentPage +"&no=" + result;
+						path = "detailReview.do?type="+boardType + "&cp=" + currentPage +"&no=" + result;
 					}else {
 						status = "error";
 						msg = "게시글 수정 실패";
@@ -261,6 +264,7 @@ public class reviewServlet extends HttpServlet {
 					request.getSession().setAttribute("msg", msg);
 					response.sendRedirect(path);
 					
+				
 				// 카테고리 분류 화면 이동	
 				}else if(command.equals("/reviewCategory.do")) {
 					errorMsg = "리뷰 목록 조회";

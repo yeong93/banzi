@@ -130,7 +130,8 @@
         }
 
         .review-box:hover {
-            background-color: rgba(165, 165, 161, 0.1)
+            background-color: rgba(165, 165, 161, 0.1);
+            cursor: pointer;
         }
 
         .review-box-top {

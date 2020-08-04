@@ -86,6 +86,14 @@ public class Review {
 		this.reviewCategory = reviewCategory;
 	}
 
+	
+	// index용 생성자
+	public Review(String reviewTitle, String reviewContent) {
+		super();
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
+	}
+
 	public int getReviewBoardNo() {
 		return reviewBoardNo;
 	}

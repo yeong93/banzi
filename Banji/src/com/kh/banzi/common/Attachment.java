@@ -51,12 +51,22 @@ public class Attachment {
         this.fileLevel = fileLevel;
     }
     
+    // index 이미지 조회용 생성자
+    public Attachment(int fileNo, int parentBoardNo, String fileChangeName, String filePath, int fileLevel) {
+    	super();
+    	this.fileNo = fileNo;
+    	this.parentBoardNo = parentBoardNo;
+    	this.fileChangeName = fileChangeName;
+    	this.filePath = filePath;
+    	this.fileLevel = fileLevel;
+    }
+    
 
 	public int getFileNo() {
         return fileNo;
     }
 
-    public void setFileNo(int fileNo) {
+	public void setFileNo(int fileNo) {
         this.fileNo = fileNo;
     }
 
