@@ -62,8 +62,18 @@ public class Qna {
         this.replyCount = replyCount;
     }
     
+    
+    
 
-    public int getReplyCount() {
+    public Qna(String title, String content) {
+		super();
+		this.title = title;
+		this.content = content;
+	}
+
+
+
+	public int getReplyCount() {
         return replyCount;
     }
 

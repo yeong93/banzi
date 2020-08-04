@@ -291,7 +291,7 @@ public class ReviewDAO {
 	}
 
 
-	public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+	public List<Attachment> selectFiles(Connection conn, int reviewNo) throws Exception{
 		PreparedStatement pstmt = null;
         ResultSet rset = null;
         List<Attachment> fList = null;
@@ -299,12 +299,12 @@ public class ReviewDAO {
         
         try {
            pstmt = conn.prepareStatement(query);
-           pstmt.setInt(1, boardNo);
-           
+           pstmt.setInt(1, reviewNo);
            rset = pstmt.executeQuery();
            
            fList = new ArrayList<Attachment>();
            Attachment file = null;
+           
            while(rset.next()) {
                  file = new Attachment();
                  file.setFileNo(rset.getInt("FILE_NO"));
@@ -314,6 +314,7 @@ public class ReviewDAO {
                  
                  fList.add(file);
               }
+           // System.out.println("에프리스트"+fList);
            
         }finally {
            rset.close();
@@ -415,7 +416,6 @@ public class ReviewDAO {
 			pstmt.setInt(4, newFile.getFileNo());
 			
 			result = pstmt.executeUpdate();
-			
 		}finally {
 			pstmt.close();
 		}
