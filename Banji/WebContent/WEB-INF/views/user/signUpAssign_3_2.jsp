@@ -19,7 +19,7 @@
     #section{
         text-align: center;
     }
-    #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#808080; color:white
+    #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px; background-color :#ffce54; color:white; border:none;
     }
     #back{
    	height:10px;

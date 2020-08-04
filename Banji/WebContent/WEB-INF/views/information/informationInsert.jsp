@@ -3,6 +3,7 @@
 <% 
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
+	String category = request.getParameter("category");
 %>
 <!DOCTYPE html>
 <html>
@@ -45,7 +46,7 @@
 				- application/x-www-form-urlencoded : 모든 문자를 서버로 전송하기 전에 인코딩 (form태그 기본값)	
 				- multipart/form-data : 모든 문자를 인코딩 하지 않음.(원본 데이터가 유지되어 이미지, 파일등을 서버로 전송 할 수 있음.) 
 			-->
-			<form action="<%=request.getContextPath()%>/information/insert.do?type=<%=type%>&cp=<%=cp%>" method="post" 
+			<form action="<%=request.getContextPath()%>/information/insert.do?type=<%=type%>&cp=<%=cp%>&category=<%=category%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 
 				<div class="mb-2">
@@ -72,23 +73,26 @@
 					<h5 class="my-0" id="today"></h5>
 				</div>
 				<hr>
-				<div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label"></label>
+				<div id = "wrapper">
+				<div>
 					<div class="boardImg" id="titleImgArea">
-						<img id="titleImg" width="700" height="300">
+						<img id="titleImg" width="1000" height="300">
 					</div>
 				</div>
-				<div class="form-inline mb-2">
+				<div>
 					<label class="input-group-addon mr-3 insert-label"></label>
-					<div class="mr-2 boardImg" id="contentImgArea1">
-						<img id="contentImg1" width="700" height="300">
+					<div id="contentImgArea1">
+						<img id="contentImg1" width="1000" height="300">
 					</div>
-					<div class="mr-2 boardImg" id="contentImgArea2">
-						<img id="contentImg2" width="700" height="300">
+					<br>
+					<div id="contentImgArea2">
+						<img id="contentImg2" width="1000" height="300">
 					</div>
-					<div class="mr-2 boardImg" id="contentImgArea3">
-						<img id="contentImg3" width="700" height="300">
+					<br>
+					<div id="contentImgArea3">
+						<img id="contentImg3" width="1000" height="300">
 					</div>
+				</div>
 				</div>
 				<!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
@@ -105,8 +109,8 @@
 					<input type="file" id="img3" name="img3" onchange="LoadImg(this,3)"> 
 					<input type="file" id="img4" name="img4" onchange="LoadImg(this,4)">
 				</div>
-
 				<div class="form-group">
+				<br>
 					<div>
 						<label for="content">내용</label>
 					</div>
@@ -140,12 +144,14 @@
 				$("#title").focus();
 				return false;
 			}
+			
 			console.log($("#content2").val());
 			if ($("#content2").val().trim().length == 0) {
 				alert("내용을 입력해 주세요.");
 				$("#content2").focus();
 				return false;
 			}
+			
 		}
 		
 		 // 이미지 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수

@@ -28,7 +28,7 @@
     #section{
         text-align: center;
     }
-    #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#808080; color:white
+    #main {margin: auto auto; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px; background-color :#ffce54; color:white; border:none;
     }
     #back{
     height:10px;
@@ -69,7 +69,7 @@
        <div id="section">
        <br><br><br><br>
        <h3><%=signUp.getUserName()%>님의 회원가입이 완료되었습니다!</h3>
-              <button type="button" id="main" onclick="location.href='<%=request.getContextPath()%>'">홈으로</button>
+              <button type="button" id="main" class="btn btn-primary" onclick="location.href='<%=request.getContextPath()%>'">홈으로</button>
     </div> 
 </body>
 </html>

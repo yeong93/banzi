@@ -8,6 +8,7 @@
 	List<Attachment> fList = (List<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
+	String category=request.getParameter("category");
 %>
 <!DOCTYPE html>
 <html>
@@ -28,17 +29,10 @@
     .boardImg{
     	cursor : pointer;
     }
-	#wrapper{
-	width : 100%;
-	height : 100%;
-	position : relative;
-	}
-	#wrapper div{
-	margin : 0 auto;'
-	left : 50%;
-	top : 50%;
-	padding : 10px;
-	}
+    #listBtn, #updateBtn {
+    background-color:#ffce54;
+    border-color:white;
+    }
 </style>
 </head>
 <body>
@@ -49,7 +43,7 @@
 			<h3>게시글 수정</h3>
 			<hr>
 			
-			<form action="<%=request.getContextPath()%>/information/update.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>" method="post" 
+			<form action="<%=request.getContextPath()%>/information/update.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>&category=<%=category%>" method="post" 
 				  enctype="multipart/form-data" role="form" onsubmit="return validate();">
 
 				<div class="mb-2">
@@ -81,19 +75,21 @@
 				<div id = "wrapper">
 				<div>
 					<div class="boardImg" id="titleImgArea">
-						<img id="titleImg" width="700" height="300">
+						<img id="titleImg" width="1000" height="300">
 					</div>
 				</div>
 				<div>
 					<label class="input-group-addon mr-3 insert-label"></label>
 					<div id="contentImgArea1">
-						<img id="contentImg1" width="700" height="300">
+						<img id="contentImg1" width="1000" height="300">
 					</div>
+					<br>
 					<div id="contentImgArea2">
-						<img id="contentImg2" width="700" height="300">
+						<img id="contentImg2" width="1000" height="300">
 					</div>
+					<br>
 					<div id="contentImgArea3">
-						<img id="contentImg3" width="700" height="300">
+						<img id="contentImg3" width="1000" height="300">
 					</div>
 				</div>
 				</div>
@@ -106,18 +102,17 @@
 				</div>
 
 				<div class="form-group">
+					<br>
 					<div>
 						<label for="content">내용</label>
 					</div>
 					<textarea class="form-control" id="content2" name="content"
 						rows="10" style="resize: none;"><%=information.getInfoBoardContent()%></textarea>
 				</div>
-
-
 				<hr class="mb-4">
 				<div class="text-center">
-					<button type="submit" class="btn btn-primary">수정</button>
-					<button type="button" class="btn btn-primary"
+					<button type="submit" class="btn btn-primary" id="updateBtn">수정</button>
+					<button type="button" class="btn btn-primary" id="listBtn"
 					onclick="location.href='view.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>'">이전으로</button>
 				</div>
 

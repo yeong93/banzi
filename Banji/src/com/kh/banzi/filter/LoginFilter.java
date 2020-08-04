@@ -20,7 +20,6 @@ public class LoginFilter implements Filter {
 
     public LoginFilter() { }
 	public void init(FilterConfig fConfig) throws ServletException {
-		System.out.println("로그인 필터 작동");
 
 	} 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

@@ -19,8 +19,8 @@
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType();
 
-	int prev = (currentPage - 1)/6 * 10;
-	int next = (currentPage + 5)/6 * 10 + 1;
+	int prev = (currentPage - 1)/6 * 6;
+	int next = (currentPage + 5)/6 * 6 + 1;
 	
 %>
 <!DOCTYPE html>
@@ -50,9 +50,8 @@
 
 			<!-- -------------------------------- 메뉴 -------------------------------- -->
 			<ul class="tabType1">
-				<li class="on"><a href="/event/eventList.do?type=1">진행중 이벤트</a></li>
-				<li><a href="/event/pastList.do?type=2">종료된 이벤트</a></li>
-				<li><a href="/event/winnerList.do">당첨자 발표</a></li>
+				<li class="on"><a href="eventList.do?type=1">진행중 이벤트</a></li>
+				<li><a href="pastList.do?type=2">종료된 이벤트</a></li>
 			</ul>
 
 			<!-- -------------------------------- 이벤트 -------------------------------- -->
@@ -66,35 +65,32 @@
 					
 						<% for(Event e: eList){ %>
 								<li>
-									<%-- "<%=request.getContextPath()%>/event/eventView.do?type=<%=eventType%>&cp=<%=currentPage%>&no=<%=eventNo%>"; --%>
 									<% 
 										String viewUrl =  request.getContextPath() + "/event/eventView.do?type=" + eventType
 																		+ "&cp=" + currentPage + "&no=" + e.getEventNo();
 									%>
-									
 								
 									<a id="view" href="<%=viewUrl%>"> 
 									
 										<p class="thumb">
-												<% 
-													String src = null;
-													for(Attachment at : fList){
-														if(at.getParentBoardNo() == e.getEventNo()){
-															src = request.getContextPath()
-																	+ "/resources/img/banzi/"
-																	+ at.getFileChangeName();
-															%>
-															<img src="<%=src%>">
-															<% 
-														}else{
-															src = request.getContextPath()
-																	+ "/resources/img/banzi/empty.png";
-														}
-													}
-												%>
+										
+										<%
+     								String src = request.getContextPath() + "/resources/img/event/empty.png";
+   									for(Attachment at : fList){
+	   										if(at.getParentBoardNo() == e.getEventNo()){
+	   											
+	   											src = request.getContextPath() 
+	    													+ "/resources/uploadImages/" 
+	    													+ at.getFileChangeName();
+	   										} 
+     									}
+   											%>
+   												<img src="<%=src%>">
+   											<% 
+     								%>
 										</p>
 										<p class="ing" id="<%=e.getEventNo()%>">진행중</p>
-										<p class="tit"><%=e.getEventContent()%></p>
+										<p class="tit"><%=e.getEventTitle()%></p>
 										<% 
 											String start = new SimpleDateFormat("yyyy-MM-dd").format(e.getStartDay());
 											String end = new SimpleDateFormat("yyyy-MM-dd").format(e.getEndDay());
@@ -110,7 +106,7 @@
 			
 			<div class=" text-center">
 				<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
-						<button type="button" class="btn btn btn-primary btn-warning" id="insertBtn" onclick="location.href='insertEventForm.do';">글작성</button>
+						<button type="button" class="btn btn btn-primary btn-warning" id="insertBtn" onclick="location.href='insertEventForm.do?type=<%=eventType%>&cp=<%=currentPage%>';">글작성</button>
 				<% } %>
 			</div>
 
@@ -119,21 +115,21 @@
 			<ul class="paging">
 					
 					<%if(currentPage > 10) {%>
-						<li class="btn" href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=1">&lt;&lt;</li>
-						<li class="btn" href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=prev%>">&lt;</li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=1">&lt;&lt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=prev%>">&lt;</a></li>
 					<% } %>
 							
 					<% for(int p = startPage; p <= endPage; p++){ %>
 					 <% if(p == currentPage){ %>
 					 		<li><strong><%=p%></strong></li>
 						<% }else{ %>
-							<li><a id="now" href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=p%>"><%=p%></a></li>
+							<li><a id="now" href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=p%>"><%=p%></a></li>
 						<% } %>
 					<% } %>
 		
 					<%if(next < maxPage) {%>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=next%>">&gt;</a></li>
-						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=1&cp=<%=maxPage%>">&gt;&gt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=next%>">&gt;</a></li>
+						<li class="btn"><a href="<%=request.getContextPath()%>/event/eventList.do?type=<%=eventType%>&cp=<%=maxPage%>">&gt;&gt;</a></li>
 					<% } %>
 			
 			</ul>

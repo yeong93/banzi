@@ -78,17 +78,34 @@
     	width:700px;
     	height:300px;
     }
+    
+	#wrapper{
+	width : 100%;
+	height : 100%;
+	position : relative;
+	}
+	#wrapper div{
+	margin : 0 auto;
+	left : 50%;
+	top : 50%;
+	}
+	.boardImg{
+	position : absoute;
+	margin-bottom :500px;
+	width:1000px !important;
+	height: 300px !important;
+	}
+	.boardImgArea{
+	margin : 0 auto !important;
+	}
 </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
   	<section id="content">
 	<div class="container">
-
 		<div>
-
 			<div id="board-area">
-
 				<!-- Category -->
 				<h6 class="mt-4">카테고리 : [<%= information.getCategoryName() %>]</h6>
 				
@@ -99,15 +116,12 @@
 				<p class="lead">
 					작성자 : <%= information.getUserId()%>
 				</p>
-
 				<hr>
-
 				<!-- Date -->
 				<p>
 					<%=information.getInfoBoardCreateDate() %>
 			 		<span class="float-right">조회수 <%= information.getReadCount() %></span>
 				</p>
-
 				<hr>
 				
                <% if(fList != null){ %>
@@ -131,19 +145,18 @@
 	                    		 }
                  	   %> 	  
 	                    	  <div class="<%= imgClass%>">
-	                          <img class="d-block w-100 boardImg" id="imgArea" src="<%= src %>" />
+	                          <img class="d-block boardImg" src="<%= src %>" />
 	                          <input type="hidden" value=<%=at.getFileNo() %>>
 	                         </div> 
 	                    	
 	                    <%  } } } %>
 	                    
                     </div> 
+                    
                     <a class="carousel-control-prev" href="#carousel-325626" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a class="carousel-control-next" href="#carousel-325626" data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
                 </div>
 
 				<% } %>
-
-
 				<!-- Content -->
 				<div id="board-content"><%= information.getInfoBoardContent() %></div>
 				<hr>
@@ -151,9 +164,8 @@
 					<% if(loginUser != null && (information.getUserId().equals(loginUser.getUserId()))) {%>
 					<button id="deleteBtn" class="btn btn-primary float-right" id="deleteBtn">삭제</button>  
 					<!--  삭제 버튼 클릭시 해당 게시글 상태를 'N'으로 바꾸고 목록으로 돌아가기 -->
-					<a href="updateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1" id="updateBtn">수정</a>
+					<a href="updateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=information.getInfoBoardNo()%>&category=<%=category %>" class="btn btn-primary float-right ml-1 mr-1" id="updateBtn">수정</a>
 					<% } %>
-					
 					<a href="list.do?type=<%=type%>&cp=<%=cp%>&category=<%=category %>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
 				</div>
 			</div>
@@ -165,11 +177,10 @@
 	<script>
 		$("#deleteBtn").on("click",function() {
 			if(confirm("정말 삭제하시겠습니까?")){
-				location.href="delete.do?type=<%=type%>&no=<%=information.getInfoBoardNo()%>";
+				location.href="delete.do?type=<%=type%>&no=<%=information.getInfoBoardNo()%>&category=<%=category%>";
 			}
 			
 		});
-	
 	</script>
 </body>
 </html>
