@@ -130,7 +130,7 @@
 	        <hr>
 	        <%-- 로그인이 되어있으면서 유저 등급이 에디터인 경우에만 글쓰기 버튼이 보임 --%>
 	        <%  if(loginUser != null && loginUser.getUserGrade().trim().equals("editor")) {%>
-	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href ='insertForm.do?type=<%=boardType%>';">글쓰기</button>
+	        <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href ='insertForm.do?type=<%=boardType%>&category=<%=category%>';">글쓰기</button>
 	        <% } %>
 	        
 	        <!-- 페이징바 -->
@@ -179,7 +179,7 @@
 			var infoBoardNo = $(this).parent().children().eq(0).text();
 			// location.href : 요청을 보내서 이동하는 jquery 내부 객체
 			location.href =
-			"<%=request.getContextPath()%>/information/view.do?type=<%=boardType%>&cp=<%=currentPage%>&no=" + infoBoardNo;
+			"<%=request.getContextPath()%>/information/view.do?type=<%=boardType%>&cp=<%=currentPage%>&category=<%=category%>&no=" + infoBoardNo;
 		// .으로 메소드 체이닝
 		}).on("mouseenter", function() {
 			// cursor를 pointer로 변경시킴

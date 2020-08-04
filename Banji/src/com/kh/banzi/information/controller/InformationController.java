@@ -58,14 +58,14 @@ public class InformationController extends HttpServlet {
 			// 게시판 타입을 쿼리스트링에서 얻어오기
 			
 			int boardType = Integer.parseInt(request.getParameter("type"));
-			
+			String category = request.getParameter("category");
 			// 게시판 목록 현재 페이지를 쿼리스트링에서 얻어오기
 			String currentPage = request.getParameter("cp");
-			
+
 			if(command.equals("/list.do")) {
 				ErrorMsg = "정보 게시판 목록 조회";
-				String category = request.getParameter("category");
-
+				
+				category = request.getParameter("category");
 				PageInfo pInfo = service.getPageInfo(currentPage, boardType,category);
 				
 				List<Information> bList = service.selectList(pInfo, category);
@@ -79,13 +79,14 @@ public class InformationController extends HttpServlet {
 				
 			//  ================= 게시글 작성 화면 이동 Controller =========================
 			}else if(command.equals("/insertForm.do")) {
+				category = request.getParameter("category");
 				path = "/WEB-INF/views/information/informationInsert.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
 			//  ================= 게시글 작성 Controller =========================
 			}else if(command.equals("/insert.do")){
-
+				category = request.getParameter("category");
 				int maxSize = 1024 * 1024 * 10; // 10MB
 				
 				String root = request.getSession().getServletContext().getRealPath("/");
@@ -134,7 +135,7 @@ public class InformationController extends HttpServlet {
 				if(result >0) {
 					status = "success";
 					msg = "게시글이 등록되었습니다.";
-					path = "view.do?type=" + boardType+"&cp=1&no="+result;
+					path = "view.do?type=" + boardType+"&cp=1&no="+result+"&category="+category;
 					
 				}else {
 					status = "error";
@@ -148,6 +149,8 @@ public class InformationController extends HttpServlet {
 			// ============= 게시글 상세 조회 Controller =============================
 			}else if(command.equals("/view.do")) {
 				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
+				category = request.getParameter("category");
+				System.out.println(category);
 				// 1. 게시글 조회
 				Information information = service.selectInformation(infoBoardNo);
 				if(information != null) {
@@ -173,11 +176,12 @@ public class InformationController extends HttpServlet {
 			}else if(command.equals("/delete.do")) {
 				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
 				int result = service.deleteInformation(infoBoardNo);
+				category = request.getParameter("category");
 				
 				if(result >0) {
 					status = "success";
 					msg = "게시글이 삭제되었습니다.";
-					path = "list.do?type=" + boardType;
+					path = "list.do?type=" + boardType +"&category=" + category;
 				}else {
 					status = "error";
 					msg = "게시글 삭제에 실패하셨습니다." ;
@@ -189,6 +193,7 @@ public class InformationController extends HttpServlet {
 				
 			// ================= 게시글 수정 화면 이동  Controller =========================
 			}else if(command.equals("/updateForm.do")) {
+				category = request.getParameter("category");
 				int infoBoardNo = Integer.parseInt(request.getParameter("no"));
 				// 업데이트를 위한 게시글 정보 조회 서비스 호출
 				Information information = service.updateView(infoBoardNo);
@@ -209,7 +214,7 @@ public class InformationController extends HttpServlet {
 				int maxSize = 1024 * 1024 * 10;
 				String root = request.getSession().getServletContext().getRealPath("/");
 				String filePath = root + "resources\\uploadImages\\";
-				
+				category = request.getParameter("category");
 				MultipartRequest mRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 				
 				int infoBoardNo = Integer.parseInt(mRequest.getParameter("no"));
@@ -249,7 +254,7 @@ public class InformationController extends HttpServlet {
 				if(result >0) {
 					status = "success";
 					msg = "게시글 수정에 성공했습니다.";
-					path = "view.do?type="+boardType+"&cp="+currentPage+"&no="+result;
+					path = "view.do?type="+boardType+"&cp="+currentPage+"&no="+result+"&category="+category;
 				}else {
 					status = "error";
 					msg = "게시글 수정에 실패했습니다.";

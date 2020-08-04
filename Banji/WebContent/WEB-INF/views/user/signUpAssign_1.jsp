@@ -62,7 +62,7 @@ ul {background:white;}
 .checkbox {background-color:white; width:762px; clear:both; margin: auto auto;}
 .ValidationSummary1 {background-color:white;}
 .selected{text-decoration:line-through;color:#116a28}
-#nextb {margin: auto auto; border:1px #116a28; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#808080; color:white}
+#nextb {margin: auto auto; border:1px #116a28; margin-top:40px; margin-bottom:100px; clear:both; width:300px; height:45px;background-color :#ffce54; color:white}
 .join_button { margin:auto auto; clear:both; text-align:center; background-color:white;}
 
 /* 인피니티산스 Regular */
@@ -522,7 +522,7 @@ textarea:focus, input:focus{
               </div>
                      <hr class="j_hr" />
                    <div class="join_button">
-                        <button type="submit" id="nextb">다음</button>
+                        <button type="submit" id="nextb" class="btn btn-primary">다음</button>
                    </div>
 		    </div>
 		    <!--article 끝-->
