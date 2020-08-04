@@ -50,14 +50,14 @@ public class QnaController extends HttpServlet {
         String text = null;
         String errorMsg = null;
         try {
-            QnaService qService = new QnaService();
+            QnaService service = new QnaService();
 
             String currentPage = request.getParameter("cp");
 
             if (command.equals("/list.do")) {
-                PageInfo pInfo = qService.getPageInfo(currentPage);
+                PageInfo pInfo = service.getPageInfo(currentPage);
 
-                List<Qna> qList = qService.selectList(pInfo);
+                List<Qna> qList = service.selectList(pInfo);
 
                 path = "/WEB-INF/views/qna/qnaList.jsp";
                 request.setAttribute("pInfo", pInfo);
@@ -66,10 +66,10 @@ public class QnaController extends HttpServlet {
             } else if (command.equals("/view.do")) {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
 
-                Qna qna = qService.selectQna(boardNo);
+                Qna qna = service.selectQna(boardNo);
 
-                List<Reply> rList = qService.selectReply(boardNo);
-                List<Attachment> fList = qService.selectFiles(boardNo);
+                List<Reply> rList = service.selectReply(boardNo);
+                List<Attachment> fList = service.selectFiles(boardNo);
                 String userGrade = "";
                 if(request.getSession().getAttribute("loginUser") != null) {
                     userGrade = ((User)request.getSession().getAttribute("loginUser")).getUserGrade();
@@ -136,7 +136,7 @@ public class QnaController extends HttpServlet {
                     }
                 }
 
-                int result = qService.insertQna(qna,fList);
+                int result = service.insertQna(qna,fList);
 
                 if(result > 0) {
                     status = "success";
@@ -157,7 +157,7 @@ public class QnaController extends HttpServlet {
                 String content = request.getParameter("replyContent");
 
                 Reply reply = new Reply(regWriter, content, boardNo);
-                int result = qService.inserReply(reply);
+                int result = service.inserReply(reply);
 
                 if (result > 0)
                     response.getWriter().print("댓글 삽입 성공");
@@ -166,10 +166,10 @@ public class QnaController extends HttpServlet {
             } else if (command.equals("/updateForm.do")) {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
 
-                Qna qna = qService.updateView(boardNo);
+                Qna qna = service.updateView(boardNo);
 
                 if(qna != null) {
-                    List<Attachment> fList = qService.selectFiles(boardNo);
+                    List<Attachment> fList = service.selectFiles(boardNo);
 
                     if(!fList.isEmpty()) {
                         request.setAttribute("fList", fList);
@@ -234,7 +234,7 @@ public class QnaController extends HttpServlet {
                     }
                 }
 
-                int result = qService.updateBoard(qna, fList);
+                int result = service.updateBoard(qna, fList);
 
                 if(result>0) {
                     status = "success";
@@ -252,7 +252,7 @@ public class QnaController extends HttpServlet {
             } else if (command.equals("/deleteReply.do")) {
                 int replyNo = Integer.parseInt(request.getParameter("replyNo"));
 
-                int result = qService.deleteReply(replyNo);
+                int result = service.deleteReply(replyNo);
 
                 if (result > 0)
                     response.getWriter().print("댓글 삭제 성공");
@@ -266,6 +266,25 @@ public class QnaController extends HttpServlet {
                 Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create();
                 
                 gson.toJson(rList, response.getWriter());
+            } else if (command.equals("/delete.do")) {
+                int boardNo = Integer.parseInt(request.getParameter("no"));
+                
+                int result = service.deleteQna(boardNo);
+                
+                if(result > 0 ) {
+                    status = "success";
+                    msg = "게시글이 삭제되었습니다.";
+                    path = "list.do";
+                    
+                 }else {
+                    status = "error";
+                    msg = "게시글 삭제 실패";
+                    path = request.getHeader("referer");
+                    
+                 }
+                 request.getSession().setAttribute("status", status);
+                 request.getSession().setAttribute("msg", msg);
+                 response.sendRedirect(path);
             }
         }catch (Exception e) {
             e.printStackTrace();

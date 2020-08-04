@@ -45,6 +45,7 @@
         font-family: 'Roboto', sans-serif;
         font-weight:bold;
         text-align:center;
+        padding-bottom:25px;
        }
     	.pagination {
             justify-content: center;

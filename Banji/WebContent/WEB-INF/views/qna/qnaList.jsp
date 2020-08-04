@@ -40,6 +40,8 @@
        h1{
         font-family: 'Roboto', sans-serif;
         text-align:center;
+        padding-bottom:25px;
+        
        }
        *{
          font-family: "InfinitySans-RegularA1";
@@ -224,7 +226,7 @@ float:right;
           <hr>
           
           <%-- 로그인이 되어있는 경우 --%>
-          <% if(loginUser != null && loginUser.getUserGrade().equals("master") && loginUser.getUserGrade().equals("editor")) {%>
+          <% if(loginUser != null ) {%>
           <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
           <% } %> 
           
@@ -318,10 +320,8 @@ float:right;
 			       댓글
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal" onclick="ok();">Close</button>
-			        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ok();">확인</button>
-<!--               <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateQna();">수정</button>
- -->			      </div>
+			        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ok();">확인</button>
+			      </div>
 			    </div>
 			  </div>
 			</div>
@@ -360,7 +360,9 @@ userNick = "";
     		  $("#content").html(map.qna.content);
     		  $("[type='hidden']").attr('class', boardNo);
     		  if(map.qna.regWriter == userNick){
-    			  $("#close").after("<div class ='btn btn-primary' data-dismiss='modal' onclick='updateQna();'>수정");
+    			  $("modal-footer").html()
+    			  $(".modal-footer").prepend("<div class ='btn btn-primary' data-dismiss='modal' onclick='deleteQna();'>삭제");
+    			  $(".modal-footer").prepend("<div class ='btn btn-primary' data-dismiss='modal' onclick='updateQna();'>수정");
     		  }
     		  if(map.fList.length != 0){
     			  var src;
@@ -387,8 +389,8 @@ userNick = "";
     			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
              $("#content").append($div, $p2);
     			   if(userNick != "" && userNick == map.rList[i].regWriter){
- 			         var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+")");
- 			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+")");
+ 			         var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");");
+ 			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
  			         $("#content").append($showUpdate, $deleteReply);
     			   }
      			  }
@@ -476,8 +478,8 @@ userNick = "";
              $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
              $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
              if(userNick == map.rList[i].regWriter){
-                 var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+")");
-                 var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+")");
+                 var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");");
+                 var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
                  $("#content").append($div, $p2, $showUpdate, $deleteReply);
               }else{
             	   $("#content").append($div, $p2);
@@ -503,7 +505,6 @@ userNick = "";
     };
     function updateQna(){
     	var boardNo = $("[type='hidden']").attr("class");
-    	console.log($("#info").attr("class"));
      	if(userNick == $("#info").attr("class")){
      		  location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
      	}else{
@@ -511,12 +512,19 @@ userNick = "";
      		return;
      	}
     };
+    function deleteQna(){
+    	if(confirm("해당 글을 삭제 하시겠습니까?")){
+    	 var boardNo = $("[type='hidden']").attr("class");
+    	 location.href="delete.do?no="+boardNo;
+    	}
+    }; 
     function ok(){
     	location.reload();
     }
     
     // 댓글 수정
     function showDeleteReply(replyNo){
+    	console.log()
    	 if(confirm("해당 댓글을 삭제하시겠습니까?")){
       var boardNo = $("[type='hidden']").attr("class");
       console.log("댓"+replyNo);

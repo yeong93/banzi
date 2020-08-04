@@ -153,7 +153,26 @@ public class NoticeController extends HttpServlet {
                 request.getSession().setAttribute("msg", msg);
                 response.sendRedirect(path);
 
-            }
+            } else if (command.equals("/delete.do")) {
+                int boardNo = Integer.parseInt(request.getParameter("no"));
+                
+                int result = service.deleteNotice(boardNo);
+                
+                if(result > 0 ) {
+                    status = "success";
+                    msg = "게시글이 삭제되었습니다.";
+                    path = "list.do";
+                    
+                 }else {
+                    status = "error";
+                    msg = "게시글 삭제 실패";
+                    path = request.getHeader("referer");
+                    
+                 }
+                 request.getSession().setAttribute("status", status);
+                 request.getSession().setAttribute("msg", msg);
+                 response.sendRedirect(path);
+            } 
         }catch (Exception e) {
             e.printStackTrace();
         }

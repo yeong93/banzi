@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.community.model.vo.Community"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,7 +8,8 @@
   ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
   Community community = (Community)request.getAttribute("community");
 	String cp = request.getParameter("cp");
-	
+	String pattern = "yy-MM-dd HH:mm";
+	SimpleDateFormat sdf1 = new SimpleDateFormat(pattern);
 %>
 <!DOCTYPE html>
 <html>
@@ -92,6 +94,9 @@
    font-weight: 600;
    font-size:0.9em;
 	}
+	.reply_content{
+	 margin:20px 0px 25px;
+	}
 </style>
 </head>
 <body>
@@ -114,7 +119,7 @@
 
 				<!-- Date -->
 				<p>
-					<%= community.getRegDate() %>
+					<%= sdf1.format(community.getRegDate()) %>
 			 		<span class="float-right">조회수 <%= community.getViews() %></span>
 				</p>
 
@@ -276,6 +281,36 @@
 			      });
  			   }
  		   });
+ 		   
+ 		    function showDeleteReply(replyNo){
+ 		      if(confirm("해당 댓글을 삭제하시겠습니까?")){
+ 		      /*  var boardNo = $("[type='hidden']").attr("class") */;
+ 		      var boardNo = "<%=community.getBoardNo()%>";
+ 		       $.ajax({
+ 		    	  url : "<%=request.getContextPath()%>/qna/deleteReply.do",
+ 		        data : {"replyNo" : replyNo},
+ 		        success : function(result){
+ 		          alert(result);
+              selectReplyList(boardNo);
+ 		        }, error :  function(){
+ 		          console.log("ajax 통신 실패");
+ 		        }
+ 		         
+ 		       });
+ 		      }else{
+ 		    	  return;
+ 		      }      
+ 		     };
+ 		     
+ 		     // 글삭제
+ 		    $("#deleteBtn").on("click",function(){
+          if(confirm("해당 글을삭제하시겠습니까?")){
+        	  var boardNo = "<%=community.getBoardNo()%>";
+        	  location.href ="<%=request.getContextPath()%>/community/delete.do?no="+boardNo;
+          }else{
+        	  return;
+          }
+ 		    });
 	</script>
 </body>
 </html>

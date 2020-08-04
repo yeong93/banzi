@@ -361,4 +361,19 @@ public class QnaDAO {
         return result;
     }
 
+    public int deleteQna(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("deleteQna");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result;
+    }
+
 }

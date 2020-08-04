@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
+import com.kh.banzi.community.model.dao.CommunityDAO;
 import com.kh.banzi.notice.model.dao.NoticeDAO;
 import com.kh.banzi.notice.model.vo.Notice;
 import com.kh.banzi.qna.model.dao.QnaDAO;
@@ -108,6 +109,21 @@ public class NoticeService {
             result = result.replaceAll("\"", "&quot;");
         }
 
+        return result;
+    }
+
+    public int deleteNotice(int boardNo) throws Exception{
+        Connection conn = getConnection();
+        int result = dao.deleteNotice(conn, boardNo);
+        
+        
+        if(result > 0) {
+            conn.commit();
+            new CommunityDAO().deleteFiles(conn, boardNo, 4);
+        }
+        else
+            conn.rollback();
+        conn.close();
         return result;
     }
 

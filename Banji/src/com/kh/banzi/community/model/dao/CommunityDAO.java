@@ -14,13 +14,13 @@ import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 
-public class CommnityDAO {
+public class CommunityDAO {
 
     private Properties prop;
     
-    public CommnityDAO() throws Exception{
+    public CommunityDAO() throws Exception{
         String fileName 
-        = CommnityDAO.class.getResource("/com/kh/banzi/sql/community/community-query.properties").getPath();
+        = CommunityDAO.class.getResource("/com/kh/banzi/sql/community/community-query.properties").getPath();
         
         prop = new Properties();
         
@@ -342,7 +342,7 @@ public class CommnityDAO {
 
 
 
-    public int deleteFiles(Connection conn, int boardNo) throws Exception{
+    public int deleteFiles(Connection conn, int boardNo, int boardType) throws Exception{
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("deleteFiles");
@@ -350,8 +350,8 @@ public class CommnityDAO {
         try {
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, boardNo);
+            pstmt.setInt(2, boardType);
             result = pstmt.executeUpdate();
-            
         }finally {
             pstmt.close();
         }

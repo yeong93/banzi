@@ -40,6 +40,7 @@
        h1{
         font-family: 'Roboto', sans-serif;
         text-align:center;
+        padding-bottom:25px;
        }
        *{
          font-family: "InfinitySans-RegularA1";
@@ -221,8 +222,7 @@ float:right;
           
           <hr>
           
-          <%-- 로그인이 되어있는 경우 --%>
-          <% if(loginUser != null) {%>
+          <% if(loginUser != null && (loginUser.getUserGrade().trim().equals("master") || loginUser.getUserGrade().trim().equals("editor"))) {%>
           <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
           <% } %> 
           
@@ -322,6 +322,8 @@ float:right;
           </div>
         </div>
       </div>
+      <div>
+      </div>
       <%@ include file="../common/footer.jsp"%>
     </div>
 	
@@ -330,7 +332,6 @@ float:right;
     // 게시글 상세보기 기능 (jquery를 통해 작업)
      $("#list-table td").on("click", function(){
          var boardNo = $(this).parent().attr("id");
-         
          location.href = "<%=request.getContextPath()%>/notice/view.do?cp=<%=currentPage%>&no="+boardNo;
       }).on("mouseenter",function(){
          $(this).parent().css("cursor","pointer")

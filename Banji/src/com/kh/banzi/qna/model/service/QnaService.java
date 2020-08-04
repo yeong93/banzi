@@ -12,6 +12,8 @@ import javax.naming.NamingException;
 
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.PageInfo;
+import com.kh.banzi.community.model.dao.CommunityDAO;
+import com.kh.banzi.community.model.service.CommunityService;
 import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.qna.model.dao.QnaDAO;
 import com.kh.banzi.qna.model.vo.Qna;
@@ -264,6 +266,21 @@ public class QnaService {
         
         if (result > 0)
             conn.commit();
+        else
+            conn.rollback();
+        conn.close();
+        return result;
+    }
+
+    public int deleteQna(int boardNo) throws Exception{
+        Connection conn = getConnection();
+        
+        int result = dao.deleteQna(conn, boardNo);
+        
+        if(result > 0) {
+            new CommunityDAO().deleteFiles(conn, boardNo, 5);
+            conn.commit();
+        }
         else
             conn.rollback();
         conn.close();

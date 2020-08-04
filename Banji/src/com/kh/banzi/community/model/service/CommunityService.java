@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.banzi.common.Attachment;
-import com.kh.banzi.community.model.dao.CommnityDAO;
+import com.kh.banzi.community.model.dao.CommunityDAO;
 import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
@@ -24,10 +24,10 @@ import com.kh.banzi.community.model.vo.Reply;
  */
 public class CommunityService {
 
-    private CommnityDAO dao;
+    private CommunityDAO dao;
 
     public CommunityService() throws Exception{
-        dao = new CommnityDAO();
+        dao = new CommunityDAO();
     }
 
     /** 페이징 처리 정보 생성 Service
@@ -182,7 +182,10 @@ public class CommunityService {
      */
     public int deleteCommunity(int boardNo) throws Exception{
         Connection conn = getConnection();
-        int result = (dao.deleteCommunity(conn, boardNo) > 0 && dao.deleteFiles(conn, boardNo) > 0 ) ? 1 : 0;
+        int result = dao.deleteCommunity(conn, boardNo);
+        
+        if(result > 0) 
+            dao.deleteFiles(conn, boardNo, 3);
         
         if (result > 0)
             conn.commit();
@@ -230,29 +233,25 @@ public class CommunityService {
             // 기존 해당 게시글에 포함되었던 파일 정보를 DB로 부터 얻어옴.
             List<Attachment> oldList = dao.selectFiles(conn, community.getBoardNo(), community.getBoardType());
             
-            boolean flag = false; // 결과확인용도 : 같을때 true
+            boolean flag = false; 
             for(Attachment newFile : fList) {
-               // 새로운 파일 목록(newFile)의 요소에 순차적으로 접근
                
-               flag = false; // flag 초기화
+               flag = false; 
                
                for(Attachment oldFile : oldList) {
-                  // 기존 파일 목록의 요소(oldFile)에 순차적으로 접근
                   
                   if(newFile.getFileLevel() == oldFile.getFileLevel()) {
-                     // 새로운 파일의 레벨과 기존 파일중에 중복되는 레벨이 있을 경우
                      flag = true;
                      deleteFiles.add(oldFile); // 기존파일을 삭제 리스트에 추가
                      newFile.setFileNo(oldFile.getFileNo());
                   }
                }
-               newFile.setParentBoardNo(community.getBoardNo()); // 너가 작성되는 글이 나의 번호이다.
-               
-               // flag 상태에 따라 알맞은 DAO 호출
-               if(flag) { // update 상황 (flag:true) == 겹칠때
+               newFile.setParentBoardNo(community.getBoardNo()); 
+               newFile.setParentBoardType(community.getBoardType());
+               if(flag) { 
                   result = dao.updateAttachment(conn, newFile);
                   
-               }else { // insert 상황 (새로운 이미지 추가 상황) == 겹치는게 없을때
+               }else { 
                   result = dao.insertAttachment(conn, newFile);
                }
                
