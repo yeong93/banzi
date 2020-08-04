@@ -119,8 +119,9 @@
 		            </div>
 		        </div>
 		        
-		        <input type="hidden" id="rating" name="rating" value="0">
 		        <input type="hidden" id="rating-hidden" name="rating" data-rate="<%=review.getReviewRating() %>">
+		        <input type="hidden" id="forwardRating" name="forwardRating">
+				
 			</div>
 
 			<label>이미지</label>
@@ -151,7 +152,7 @@
 		</div>
 		
 		
-		<input type="hidden" id="rating"  value="0">
+		
 		<!-- 숨긴 input태그 -->
 		<div id="fileArea">
 			<!--  multiple 속성
@@ -281,6 +282,12 @@
 	      }
 	    }
 		
+	    // 가져온 별을 체크해야함...    
+	    $(function(){
+	    	var targetScore = $("#rating-hidden").attr('data-rate');
+	    	// console.log(targetScore);
+	    	$(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
+	    });
 	    
 	    // 별점용 -> 체크시 값 이동
 	    $(function(){
@@ -290,18 +297,10 @@
 		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#F05522'});
 		        console.log(targetNum);
 		        
-		      	$("#rating").val(targetNum);
+		      	$("#forwardRating").val(targetNum);
 		    })
 		});
-		
-	    
-	    // 가져온 별을 체크해야함...    
-	    $(function(){
-	    	var targetScore = $("#rating-hidden").attr('data-rate');
-	    	console.log(targetScore);
-	    	$(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
-	    });
-    
+	
     
 	</script>
 </body>

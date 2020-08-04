@@ -258,6 +258,14 @@ public class QnaController extends HttpServlet {
                     response.getWriter().print("댓글 삭제 성공");
                 else
                     response.getWriter().print("댓글 삭제 실패");
+            } else if (command.equals("/selectReply.do")) {
+                int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+                
+                List<Reply> rList = new QnaService().selectReply(boardNo);
+                
+                Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm:ss").create();
+                
+                gson.toJson(rList, response.getWriter());
             }
         }catch (Exception e) {
             e.printStackTrace();

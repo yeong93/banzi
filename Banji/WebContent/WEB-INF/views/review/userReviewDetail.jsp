@@ -145,7 +145,7 @@
 					<a href="updateReview.do?type=<%=type%>&cp=<%=cp%>&no=<%=review.getReviewBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1" id="updateBtn">수정</a>
 					<% } %>
 					
-					<a href="review.do?type=<%=type%>&cp=<%=cp%>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
+					<a href="review.do?type=<%=type%>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
 				</div>
 					<%@ include file="reviewRelpy.jsp" %>
 			</div>

@@ -81,7 +81,15 @@ public class Information {
 		this.categoryName = categoryName;
 	}
 	
+	// + 메인 페이지 정보 조회용 생성자
+	public Information(int infoBoardNo, String infoBoardTitle, String infoBoardContent) {
+		super();
+		this.infoBoardNo = infoBoardNo;
+		this.infoBoardTitle = infoBoardTitle;
+		this.infoBoardContent = infoBoardContent;
+	}
 	
+
 	// (3) getter와 setter 작성
 	public int getInfoBoardNo() {
 		return infoBoardNo;

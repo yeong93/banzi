@@ -162,15 +162,15 @@ body {
 	<p class="intro">수의사</p>
 	<p class="line-height"></p>
 	<p align="center">
-		반지는 인증 절차를 통해 검증받은 수의사와 훈련가의 전문적인 Q&A와 이벤트를 통해 전문적인 지식을 제공합니다. <br>
-		차별화된 반지 사이트를 통해 특별한 경험을 느껴보세요.
+		반지는 까다로운 인증 절차를 통해 검증받은 수의사와 훈련가의 전문적인 Q&A와 이벤트를 통해 다양한 전문적인 지식을 제공합니다. <br>
+		차별화된 반지 사이트를 통하여 특별한 경험을 느껴보세요.
 	</p>
 
 	<!-- 첫 번째 줄 -->
 	<div class="container">
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사1.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사1.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김지석</h3>
@@ -184,7 +184,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사2.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사2.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>박민정</h3>
@@ -198,7 +198,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사3.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사3.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김서하</h3>
@@ -217,7 +217,7 @@ body {
 	<div class="container">
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사4.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사4.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>한진호</h3>
@@ -230,7 +230,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사5.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사5.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>심숙영</h3>

@@ -80,7 +80,7 @@ public class QnaDAO {
                                 rset.getString("USER_NAME"),
                                 rset.getString("TITLE"),
                                 rset.getString("CONTENT"),
-                                rset.getDate("REG_DATE"),
+                                rset.getTimestamp("REG_DATE"),
                                 rset.getInt("BOARD_TYPE"),
                                 rset.getInt("REPLY_COUNT"))
                         );
@@ -106,7 +106,7 @@ public class QnaDAO {
                 qna = new Qna(rset.getString("USER_NAME"),
                               rset.getString("TITLE"),
                               rset.getString("CONTENT"),
-                              rset.getDate("REG_DATE"));
+                              rset.getTimestamp("REG_DATE"));
             }
         }finally {
             rset.close();
@@ -196,6 +196,7 @@ public class QnaDAO {
             pstmt.setString(3, at.getFilePath());
             pstmt.setInt(4, at.getFileLevel());
             pstmt.setInt(5, at.getParentBoardNo());
+            pstmt.setInt(6, at.getParentBoardType());
             
             result = pstmt.executeUpdate();
         }finally {

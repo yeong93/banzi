@@ -17,6 +17,7 @@ import com.kh.banzi.common.MyFileRenamePolicy;
 import com.kh.banzi.community.model.service.CommunityService;
 import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
+import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.user.model.vo.User;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -46,17 +47,17 @@ public class CommunityController extends HttpServlet {
 
         try {
 
-            CommunityService cService = new CommunityService();
+            CommunityService service = new CommunityService();
 
             String currentPage = request.getParameter("cp");
 
 
             if(command.equals("/list.do")) {
-                PageInfo pInfo = cService.getPageInfo(currentPage);
+                PageInfo pInfo = service.getPageInfo(currentPage);
 
-                List<Community> cList = cService.selectList(pInfo);
+                List<Community> cList = service.selectList(pInfo);
 
-                List<Attachment> fList = cService.selectFileList(pInfo);
+                List<Attachment> fList = service.selectFileList(pInfo);
 
 
                 path = "/WEB-INF/views/community/communityList.jsp";
@@ -73,11 +74,11 @@ public class CommunityController extends HttpServlet {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
 
                 // 1. 게시글 조회
-                Community community = cService.selectCommunity(boardNo);
+                Community community = service.selectCommunity(boardNo);
 
                 // 2. 게시글 조회 성공 시 이미지 조회
                 if(community != null) {
-                    List<Attachment> fList = cService.selectFiles(boardNo);
+                    List<Attachment> fList = service.selectFiles(boardNo, community.getBoardType());
 
                     if(!fList.isEmpty()) 
                         request.setAttribute("fList", fList);
@@ -152,7 +153,7 @@ public class CommunityController extends HttpServlet {
                     }
                 }
 
-                int result = cService.insertBoard(community,fList);
+                int result = service.insertBoard(community,fList);
 
                 if(result > 0) {
                     status = "success";
@@ -170,7 +171,7 @@ public class CommunityController extends HttpServlet {
 
             } else if (command.equals("/delete.do")) {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
-                int result = cService.deleteCommunity(boardNo);
+                int result = service.deleteCommunity(boardNo);
 
                 if (result > 0) {
                     status = "success";
@@ -187,11 +188,11 @@ public class CommunityController extends HttpServlet {
             } else if (command.equals("/updateForm.do")) {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
 
-                Community community = cService.updateView(boardNo);
+                Community community = service.updateView(boardNo);
                 community.setBoardNo(boardNo);
 
                 if(community != null) {
-                    List<Attachment> fList = cService.selectFiles(boardNo);
+                    List<Attachment> fList = service.selectFiles(boardNo, 3);
 
                     if(!fList.isEmpty()) {
                         request.setAttribute("fList", fList);
@@ -206,7 +207,7 @@ public class CommunityController extends HttpServlet {
                 // 2) 파일 저장 경로
                 String root = request.getSession().getServletContext().getRealPath("/");
                 
-                String filePath = root + "resources\\uploadImages\\";
+                String filePath = root + "resources\\uploadImages";
                 
                 MultipartRequest mRequest =
                       new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
@@ -215,7 +216,7 @@ public class CommunityController extends HttpServlet {
                 String title = mRequest.getParameter("title");
                 String content = mRequest.getParameter("content");
                 
-                Community community = new Community(boardNo, title, content);
+                Community community = new Community(boardNo, title, content, 3);
                 
                 // 전달받은 파일 정보를 저장할 리스트 생성
                 List<Attachment> fList = new ArrayList<Attachment>();
@@ -253,7 +254,7 @@ public class CommunityController extends HttpServlet {
                    }
                 }
                 
-                int result = cService.updateCommunity(community, fList);
+                int result = service.updateCommunity(community, fList);
                 
                 if(result>0) {
                    status = "success";
@@ -268,6 +269,20 @@ public class CommunityController extends HttpServlet {
                 request.getSession().setAttribute("status", status);
                 request.getSession().setAttribute("msg", msg);
                 response.sendRedirect(path);
+            } else if (command.equals("/insertReply.do")) {
+                int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+                String regName = request.getParameter("regName");
+                String content = request.getParameter("content");
+                
+                Reply reply = new Reply(regName, content, boardNo);
+                
+                int result = service.insertReply(reply);
+                
+                if(result > 0)
+                    response.getWriter().print("댓글 삽입 성공");
+                else
+                    response.getWriter().print("댓글 삽입 실패");
+                
             }
 
         }catch(Exception e) {
