@@ -196,6 +196,7 @@ public class QnaDAO {
             pstmt.setString(3, at.getFilePath());
             pstmt.setInt(4, at.getFileLevel());
             pstmt.setInt(5, at.getParentBoardNo());
+            pstmt.setInt(6, at.getParentBoardType());
             
             result = pstmt.executeUpdate();
         }finally {

@@ -21,7 +21,8 @@ public class Reply {
         this.content = content;
         this.boardNo = boardNo;
     }
-
+    
+    
 
 
     public Reply(String regWriter, String content, Timestamp regDate) {

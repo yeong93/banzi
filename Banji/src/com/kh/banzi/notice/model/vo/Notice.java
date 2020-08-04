@@ -16,6 +16,19 @@ public class Notice {
     }
     
     
+    
+    
+    public Notice(String regWriter, String title, String content, int boardType) {
+        super();
+        this.regWriter = regWriter;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+    }
+
+
+
+
     public Notice(int boardNo, String regWriter, String title, String content, Timestamp regDate, int views) {
         super();
         this.boardNo = boardNo;

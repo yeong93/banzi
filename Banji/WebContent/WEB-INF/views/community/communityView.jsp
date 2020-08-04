@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>게시글</title>
 <style>
@@ -20,6 +21,9 @@
 
 	.boardImgArea{
 		height: 300px;
+	}
+	*{
+	font-family: 'Nanum Gothic', sans-serif;
 	}
 
 	.boardImg{
@@ -45,7 +49,7 @@
 	}
 	
 	.replyWrite > table{
-		width: 90%;
+		width: 100%;
 		align: center;
 	}
 	
@@ -72,6 +76,21 @@
 	}
 	.container{
 	  padding-top:157px;
+	}
+	.reply_content{
+	 width:80%;
+	}
+	.p1{
+	 font-size:1.2em;
+	 font-weight:bold;
+	}
+	.hr{
+    border-top:2px solid #868484;
+	}
+	.rWriter{
+	 padding-bottom: 15px;
+   font-weight: 600;
+   font-size:0.9em;
 	}
 </style>
 </head>
@@ -133,7 +152,26 @@
 
 				<!-- Content -->
 				<div id="board-content"><%= community.getContent() %></div>
-				
+				<div id="reply-area ">
+				  <%if(loginUser != null) {%>
+				  <!-- 댓글 작성 부분 -->
+				  <div class="replyWrite">
+				    <table align="center">
+				      <tr>
+				        <td id="replyContentArea"><textArea rows="3" id="replyContent"></textArea>
+				        </td>
+				        <td id="replyBtnArea">
+				          <button class="btn btn-primary" id="addReply">댓글<br>등록</button>
+				        </td>
+				      </tr>
+				    </table>
+				  </div>
+				<%} %>
+				  <!-- 댓글 출력 부분 -->
+				  <div class ="relply-list">
+				  </div>
+				</div>
+
 
 				<hr>
 				 
@@ -155,12 +193,89 @@
 	</div>
 	
 	<script>
- 	 $("#deleteBtn").on("click", function(){
+ <%-- 	 $("#deleteBtn").on("click", function(){
 		  if(confirm("정말 삭제 하시겠습니까?")){
 			  location.href="delete.do?no=<%=community.getBoardNo()%>";
 		  }
-	 }); 
-
+	 });  --%>
+	 <%
+	    User tempUser = (User)session.getAttribute("loginUser");
+	%>
+	var loginMemberId;
+	<% if(tempUser != null){%>
+	userId = "<%=tempUser.getUserId()%>";
+	userNick = "<%=tempUser.getUserName()%>";
+	<%} else {%>
+	userNick = "";
+	<%}%>
+ 	    $(function(){
+ 		     selectReplyList(<%=community.getBoardNo()%>);
+ 		   });
+ 		   
+ 	    // 댓글 목록 조회
+	   function selectReplyList(boardNo){
+	     var url = "<%= request.getContextPath() %>/qna/selectReply.do";
+	     $.ajax({
+	       url : url,
+	       data : {"boardNo" : boardNo},
+	       dataType : "JSON",
+	       success : function(rList){
+	         if(rList.length != 0){
+	        	   $(".relply-list").html("");
+	             $hr = $("<hr>").addClass("hr");
+	             $p1 = $("<p>").addClass("p1").text("댓글");
+	             $(".relply-list").append($hr,$p1);
+	             for(var i = 0; i < rList.length; i++){
+	               if(i > 0){
+	            	   $hr2 = $("<hr>");
+	                 $(".relply-list").append($hr2); 
+	               }
+	               $div = $("<div>").addClass("rWriter").html("작성자 : " + rList[i].regWriter +"<br>"+"작성일 : " + rList[i].regDate);
+	               $p2 = $("<p>").addClass("reply_content").html(rList[i].content);
+	               $(".relply-list").append($div, $p2);
+	               if(userNick == rList[i].regWriter){
+	            	   var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+rList[i].replyNo+")");
+	            	   var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+rList[i].replyNo+")");
+	            	   $(".relply-list").append($showUpdate, $deleteReply);  
+	               }
+	             }
+	           
+	         }
+	       }, error : function() {
+	         console.log("ajax 통신 실패");
+	       }
+	     });
+	   }
+ 		   
+ 		   
+ 		   $("#addReply").on("click",function(){
+ 			   var content = $("#replyContent").val();
+ 			   
+ 			   if(content.trim().length==0){
+ 				   alert("댓글 작성 후 클릭해 주세요");
+			     $("#replyContent").focus();
+ 			   }else{
+ 				   var url = "<%=request.getContextPath()%>/community/insertReply.do";
+ 				   var boardNo = "<%=community.getBoardNo()%>";
+ 				   var regName = "<%=community.getRegName()%>";
+			     $.ajax({
+			        url : url,
+			        type : "POST",
+			        data : {"regName" : regName, "boardNo" : boardNo, "content" : content},
+			        
+			        success : function(result){
+			          alert(result);
+			          $("#replyContent").val("");
+			          // 삽입된 내용을 화면에서 지움
+			          
+			          // 갱신된 DB 내용을 다시 조회하여 화면 댓글 목록을 갱신함.
+			          selectReplyList(boardNo);
+			        }, error : function(){
+			          console.log("ajax 통신 실패");
+			        }
+			      });
+ 			   }
+ 		   });
 	</script>
 </body>
 </html>

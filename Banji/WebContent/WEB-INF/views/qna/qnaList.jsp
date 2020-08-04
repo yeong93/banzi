@@ -224,7 +224,7 @@ float:right;
           <hr>
           
           <%-- 로그인이 되어있는 경우 --%>
-          <% if(loginUser != null) {%>
+          <% if(loginUser != null && loginUser.getUserGrade().equals("master") && loginUser.getUserGrade().equals("editor")) {%>
           <button type="button" class="btn btn-primary float-right" id="insertBtn" onclick="location.href = 'insertForm.do?type=<%=boardType%>';">글쓰기</button>
           <% } %> 
           

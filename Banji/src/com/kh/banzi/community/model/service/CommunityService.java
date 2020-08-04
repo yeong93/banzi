@@ -12,6 +12,7 @@ import com.kh.banzi.common.Attachment;
 import com.kh.banzi.community.model.dao.CommnityDAO;
 import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
+import com.kh.banzi.community.model.vo.Reply;
 
 /**
  * @author user1
@@ -280,6 +281,25 @@ public class CommunityService {
        
         conn.close();
 
+        return result;
+    }
+
+    public int insertReply(Reply reply) throws Exception{
+        Connection conn = getConnection();
+        
+        reply.setContent(replaceParameter(reply.getContent()));
+        
+        // 개행문자 처리 \r\n -> <br>
+        reply.setContent(reply.getContent().replaceAll("\n", "<br>"));
+        
+        int result = dao.insertReply(conn, reply);
+        
+        if(result > 0)
+            conn.commit();
+        else
+            conn.rollback();
+        
+        conn.close();
         return result;
     }
 

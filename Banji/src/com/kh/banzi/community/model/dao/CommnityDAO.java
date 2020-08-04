@@ -12,6 +12,7 @@ import java.util.Properties;
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.community.model.vo.Community;
 import com.kh.banzi.community.model.vo.PageInfo;
+import com.kh.banzi.community.model.vo.Reply;
 
 public class CommnityDAO {
 
@@ -442,6 +443,32 @@ public class CommnityDAO {
            pstmt.close();
         }
         
+        return result;
+    }
+
+
+
+
+    /** 댓글 삽입
+     * @param conn
+     * @param reply
+     * @return result
+     * @throws Exception
+     */
+    public int insertReply(Connection conn, Reply reply) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("insertReply");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, reply.getRegWriter());
+            pstmt.setString(2, reply.getContent());
+            pstmt.setInt(3, reply.getBoardNo());
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
         return result;
     }
     

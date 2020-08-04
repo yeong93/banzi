@@ -129,8 +129,6 @@
                     <a class="carousel-control-prev" href="#carousel-325626" data-slide="prev"><span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a> <a class="carousel-control-next" href="#carousel-325626" data-slide="next"><span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
                 </div>
                 <% } %>       
-        
-
         <!-- Content -->
         <div id="board-content"><%= notice.getContent() %></div>
         
@@ -144,11 +142,11 @@
           <!-- 삭제 버튼 클릭시 해당 게시글 상태를 'N'으로 바꾸고 목록으로 돌아가기 --> 
           <a href="updateForm.do?cp=<%=cp%>&no=<%=notice.getBoardNo()%>" class="btn btn-primary float-right ml-1 mr-1">수정</a>
           <% } %> 
-          
           <a href="list.do?cp=<%=cp%>" class="btn btn-primary float-right">목록으로</a>
         </div>
       </div>
-
+      <div class="reply">
+      </div>
 
       <%@ include file="../common/footer.jsp"%>
     </div>
@@ -160,6 +158,7 @@
         location.href="delete.do?no=<%=notice.getBoardNo()%>";
       }
    }); 
+
 
   </script>
 </body>

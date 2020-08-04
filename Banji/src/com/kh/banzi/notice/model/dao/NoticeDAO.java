@@ -102,5 +102,27 @@ public class NoticeDAO {
         return result;
     }
 
+    public int inserNotice(Connection conn, Notice notice) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        
+        String query = prop.getProperty("insertNotice");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           
+           pstmt.setInt(1, notice.getBoardNo());
+           pstmt.setString(2, notice.getRegWriter());
+           pstmt.setString(3, notice.getTitle());
+           pstmt.setString(4, notice.getContent());
+           
+
+           result = pstmt.executeUpdate();
+        }finally {
+           pstmt.close();
+        }
+        return result;
+    }
+
 
 }
