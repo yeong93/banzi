@@ -147,7 +147,6 @@
 					
 					<a href="review.do?type=<%=type%>" class="btn btn-primary float-right" id="listBtn">목록으로</a>
 				</div>
-					<%@ include file="reviewRelpy.jsp" %>
 			</div>
 	</section>
 			<%@ include file="../common/footer.jsp"%>
