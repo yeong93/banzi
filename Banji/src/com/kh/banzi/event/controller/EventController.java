@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.naming.java.javaURLContextFactory;
 
+import com.google.gson.Gson;
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.MyFileRenamePolicy;
 import com.kh.banzi.event.model.service.EventService;
@@ -303,7 +304,42 @@ public class EventController extends HttpServlet {
 				request.getSession().setAttribute("status", status);
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(path);
+				
+//--------------------------------- 이벤트 당첨자 ------------------------------------
+			}else if(command.equals("/winnerList.do")) {
+				errorMsg = "이벤트 당첨자 목록 조회";
+		
+				PageInfo pInfo = EventService.winnerPageInfo(currentPage);
+				List<Event> wList = eService.winnerList(pInfo); 		
+				
+				path = "/WEB-INF/views/event/winnerList.jsp";
+			
+				request.setAttribute("pInfo", pInfo); 
+				request.setAttribute("wList", wList);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			
+			}else if(command.equals("/winnerView.do")) {
+				errorMsg = "이벤트 당첨자 세부 조회";
+				
+				int no = Integer.parseInt(request.getParameter("no"));
+				Event event = EventService.winnerView(no);
+				
+				Gson gson = new Gson();
+				gson.toJson(event, response.getWriter());
+				
+			}else if(command.equals("/changeWinner.do")) {
+				errorMsg = "이벤트 당첨자 수정";
+				
+				int no = Integer.parseInt(request.getParameter("no"));
+				
+				
+				
+			}else if(command.equals("/deleteWinner.do")) {
+				errorMsg = "이벤트 당첨자 삭제";
+				int no = Integer.parseInt(request.getParameter("no"));
 
+				
 			}
 
 		} catch (Exception e) {
