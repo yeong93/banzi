@@ -79,14 +79,12 @@ public class QnaService {
         int boardNo = dao.selecNextNo(conn);
         if (boardNo > 0) {
             qna.setBoardNo(boardNo);
-            System.out.println(boardNo);
 
             qna.setContent(replaceParameter(qna.getContent()));
             qna.setContent(qna.getContent().replaceAll("\r\n", "<br>"));
 
 
             result = dao.insertQna(conn, qna);
-            System.out.println(result);
 
             if(result > 0 && !fList.isEmpty()) {
                 result = 0;
@@ -138,13 +136,17 @@ public class QnaService {
 
     public List<Attachment> selectFiles(int boardNo) throws Exception{
         Connection conn = getConnection();
-        List<Attachment> fList = dao.selectFiles(conn, boardNo);
+        List<Attachment> fList = dao.selectFiles(conn, boardNo, 5);
 
         return fList;
     }
 
     public int inserReply(Reply reply) throws Exception{
         Connection conn= getConnection();
+        
+        reply.setContent(replaceParameter(reply.getContent()));
+        
+        reply.setContent(reply.getContent().replaceAll("\n", "<br>"));
         int result = dao.insertReply(conn, reply);
 
         if(result > 0)
@@ -182,34 +184,29 @@ public class QnaService {
         // 게시글 수정 DAO 호출
         result = dao.updateBoard(conn, qna);
 
-        // 서버에서 삭제되어야될 파일 정보를 모아두는 List
         List<Attachment> deleteFiles = new ArrayList<Attachment>();
 
         if(result>0 && !fList.isEmpty()) {
             result = 0; // result 재사용
 
-            // 기존 해당 게시글에 포함되었던 파일 정보를 DB로 부터 얻어옴.
-            List<Attachment> oldList = dao.selectFiles(conn, qna.getBoardNo());
+            List<Attachment> oldList = dao.selectFiles(conn, qna.getBoardNo(), qna.getBoardType());
 
             boolean flag = false; // 결과확인용도 : 같을때 true
             for(Attachment newFile : fList) {
-                // 새로운 파일 목록(newFile)의 요소에 순차적으로 접근
 
                 flag = false; // flag 초기화
 
                 for(Attachment oldFile : oldList) {
-                    // 기존 파일 목록의 요소(oldFile)에 순차적으로 접근
 
                     if(newFile.getFileLevel() == oldFile.getFileLevel()) {
-                        // 새로운 파일의 레벨과 기존 파일중에 중복되는 레벨이 있을 경우
                         flag = true;
                         deleteFiles.add(oldFile); // 기존파일을 삭제 리스트에 추가
                         newFile.setFileNo(oldFile.getFileNo());
                     }
                 }
+                newFile.setParentBoardType(qna.getBoardType());
                 newFile.setParentBoardNo(qna.getBoardNo()); // 너가 작성되는 글이 나의 번호이다.
 
-                // flag 상태에 따라 알맞은 DAO 호출
                 if(flag) { // update 상황 (flag:true) == 겹칠때
                     result = dao.updateAttachment(conn, newFile);
 
@@ -254,18 +251,21 @@ public class QnaService {
         return result;
     }
 
-    /** 댓글 수정
+    /** 댓글 삭제
      * @param replyNo
      * @return result
      * @throws Exception
      */
-    public int deleteReply(int replyNo) throws Exception{
+    public int deleteReply(int replyNo, int boardNo) throws Exception{
         Connection conn = getConnection();
         
         int result = dao.deleteReply(conn, replyNo);
         
-        if (result > 0)
+        
+        if (result > 0) {
+            dao.decreaseReply(conn, boardNo);
             conn.commit();
+        }
         else
             conn.rollback();
         conn.close();

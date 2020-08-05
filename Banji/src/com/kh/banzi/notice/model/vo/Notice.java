@@ -18,6 +18,26 @@ public class Notice {
     
     
     
+    public Notice(String title, String content) {
+        super();
+        this.title = title;
+        this.content = content;
+    }
+
+
+
+
+    public Notice(int boardNo, String title, String content, int boardType) {
+        super();
+        this.boardNo = boardNo;
+        this.title = title;
+        this.content = content;
+        this.boardType = boardType;
+    }
+
+
+
+
     public Notice(String regWriter, String title, String content, int boardType) {
         super();
         this.regWriter = regWriter;

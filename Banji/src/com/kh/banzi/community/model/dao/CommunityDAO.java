@@ -471,5 +471,24 @@ public class CommunityDAO {
         }
         return result;
     }
+
+
+
+
+    public int deleteReply(Connection conn, int replyNo) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        
+        String query = prop.getProperty("deleteReply");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, replyNo);
+            result = pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        return result;
+    }
     
 }

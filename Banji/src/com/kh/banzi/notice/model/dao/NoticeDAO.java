@@ -141,5 +141,46 @@ public class NoticeDAO {
         return result;
     }
 
+    public int updateNotice(Connection conn, Notice notice) throws Exception{
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query =prop.getProperty("updateNotice");
+        
+        try {
+           pstmt = conn.prepareStatement(query);
+           pstmt.setString(1, notice.getTitle());
+           pstmt.setString(2, notice.getContent());
+           pstmt.setInt(3, notice.getBoardNo());
+           
+           result = pstmt.executeUpdate();
+
+        }finally {
+           pstmt.close();
+        }
+        
+        return result;
+    }
+
+    public Notice udpateView(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Notice notice = null;
+        String query = prop.getProperty("updateView");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            
+            rset = pstmt.executeQuery();
+            
+            if (rset.next()) 
+                notice = new Notice(rset.getString("TITLE"),rset.getString("CONTENT"));
+        }finally {
+            rset.close();
+            pstmt.close();
+        }
+        return notice;
+    }
+
 
 }
