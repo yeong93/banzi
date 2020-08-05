@@ -20,7 +20,13 @@ public class Community {
         this.content = content;
     }
     
-    
+    // main위한 생성자
+    public Community(String title, String content, int boardNo) {
+        super();
+        this.title = title;
+        this.content = content;
+        this.boardNo = boardNo;
+    }
 
 
     public Community(int boardNo, String title, String content, int boardType) {

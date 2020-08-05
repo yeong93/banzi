@@ -78,8 +78,6 @@ public class indexService {
 		Connection conn = getConnection();
 		List<Attachment> qList = dao.selectQNAFileList(conn);
 		conn.close();
-		
-		System.out.println(qList);
 		return qList;
 	}
 
@@ -88,8 +86,6 @@ public class indexService {
 		Connection conn = getConnection();
 		List<Attachment> rList = dao.selectReviewFileList(conn);
 		conn.close();
-		
-		System.out.println(rList);
 		return rList;
 	}
 

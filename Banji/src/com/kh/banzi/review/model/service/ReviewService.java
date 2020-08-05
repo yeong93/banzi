@@ -196,7 +196,7 @@ public class ReviewService {
 		public Review updateReview(int reviewNo) throws Exception{
 			Connection conn = getConnection();
 			Review review =dao.updateReview(conn, reviewNo); 
-			// review.setReviewContent(review.getReviewContent().replace("<br>", "\r\n")); 
+			review.setReviewContent(review.getReviewContent().replace("<br>", "\r\n")); 
 			conn.close();
 			return review; 
 		}
@@ -215,7 +215,7 @@ public class ReviewService {
 			review.setReviewContent(review.getReviewContent().replace("\r\n", "<br>")); 
 			
 			result = dao.updateReview(conn, review);
-			System.out.println("서어비스 " + result);
+			
 			List<Attachment> deleteFiles = new ArrayList<Attachment>();
 			
 		    if(result>0 && !fList.isEmpty()) {

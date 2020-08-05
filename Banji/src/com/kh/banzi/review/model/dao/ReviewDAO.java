@@ -314,7 +314,6 @@ public class ReviewDAO {
                  
                  fList.add(file);
               }
-           // System.out.println("에프리스트"+fList);
            
         }finally {
            rset.close();
@@ -363,7 +362,7 @@ public class ReviewDAO {
 						rset.getInt("REVIEW_CATEGORY")
 						);
 			}
-			System.out.println("디에이이이오"+review);
+			
 		}finally {
 			rset.close();
 			pstmt.close();
@@ -388,7 +387,8 @@ public class ReviewDAO {
 			pstmt.setString(1, review.getReviewTitle());
 			pstmt.setString(2, review.getReviewContent());
 			pstmt.setInt(3, review.getReviewCategory());
-			pstmt.setInt(4, review.getReviewBoardNo());
+			pstmt.setInt(4, review.getReviewRating());
+			pstmt.setInt(5, review.getReviewBoardNo());
 			
 			result = pstmt.executeUpdate();
 		}finally {
