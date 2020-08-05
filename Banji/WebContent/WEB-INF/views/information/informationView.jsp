@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.information.model.vo.Information"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -119,11 +120,11 @@
 				<hr>
 				<!-- Date -->
 				<p>
-					<%=information.getInfoBoardCreateDate() %>
+					<%  String date = new SimpleDateFormat("yyyy-MM-dd").format(information.getInfoBoardCreateDate());%>	
+					<%=date%>
 			 		<span class="float-right">조회수 <%= information.getReadCount() %></span>
 				</p>
 				<hr>
-				
                <% if(fList != null){ %>
 								<div class="carousel slide m-3" id="carousel-325626">
                     
