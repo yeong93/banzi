@@ -440,4 +440,110 @@ public class EventDAO {
 	}
 
 
+	/** 당첨자 발표 글 개수
+	 * @param conn
+	 * @param eventType
+	 * @return
+	 * @throws Exception
+	 */
+	public int winnerListCount(Connection conn) throws Exception{
+		Statement stmt = null;
+		ResultSet rset = null;
+		int listCount = 0;
+		
+		String query = prop.getProperty("winnerListCount");
+
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+
+		} finally {
+			rset.close();
+			stmt.close();
+		}
+
+		return listCount;
+	}
+
+
+	/** 당첨자 목록
+	 * @param conn
+	 * @param pInfo
+	 * @return wList
+	 * @throws Exception
+	 */
+	public List<Event> winnerList(Connection conn, PageInfo pInfo) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Event> wList = null;
+		
+		String query = prop.getProperty("winnerList");
+		
+		try {
+			int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
+			int endRow = startRow + pInfo.getLimit() - 1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			
+			wList = new ArrayList<Event>();
+			Event e = null;
+			
+			while(rset.next()) {
+				e = new Event(
+						rset.getInt("BOARD_NO"), 
+						rset.getString("EVENT_TITLE"),
+						rset.getTimestamp("EVENT_START_DT"),
+						rset.getTimestamp("EVENT_END_DT"),
+						rset.getInt("EVENT_WIN_NO") 
+						);
+				wList.add(e);
+			}
+		} finally {
+			rset.close();
+			pstmt.close();
+		}
+		return wList;
+	}
+
+
+	/** 당첨자 세부 조회
+	 * @param conn
+	 * @param no
+	 * @return event
+	 * @throws Exception
+	 */
+	public Event winnerView(Connection conn, int no) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Event event = null;
+		
+		String query = prop.getProperty("winnerView");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				event = new Event(
+						rset.getInt("BOARD_NO"),
+						rset.getString("EVENT_TITLE"),
+						rset.getString("EVENT_WIN"));
+			}
+		} finally {
+			rset.close();
+			pstmt.close();
+		}
+		return event;
+	}
+
+
 }

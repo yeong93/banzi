@@ -28,6 +28,7 @@
 		
 			<h1 class="type1">관리자 페이지</h1>
 			<!-- ----------------------------------------------------------------- -->
+			<h3 class="type1 text-center">회원 등급 부여</h3><br>
 			<div class="eventList mx-auto">
 				<table class="table mx-auto text-center">
 					<thead class="thead-light">
@@ -63,7 +64,6 @@
 					</tbody>
 				</table>
 			</div>
-			
 
 		</div>
 	</section>
