@@ -22,7 +22,7 @@
 	    }
         
     	body { margin: 0; padding: 0;}
-        .empty { width: 100%; height: 200px;}
+        .empty { width: 100%; height: 100px;}
         
         .container {
             position: relative;
@@ -96,6 +96,7 @@
 </head>
 <body>
   <%@ include file="WEB-INF/views/common/header.jsp" %>
+  
   <section id="content">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -105,16 +106,19 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
+        	<img src="<%=request.getContextPath()%>/resources/img/banner01.png">
           <div class="carousel-caption d-none d-md-block">
 
           </div>
         </div>
         <div class="carousel-item">
+        	<img src="<%=request.getContextPath()%>/resources/img/banner01.png">
           <div class="carousel-caption d-none d-md-block">
 
           </div>
         </div>
         <div class="carousel-item">
+        	<img src="<%=request.getContextPath()%>/resources/img/banner01.png">
           <div class="carousel-caption d-none d-md-block">
 
           </div>

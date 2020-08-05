@@ -244,7 +244,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사1.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/수의사6.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김가연</h3>
@@ -262,7 +262,7 @@ body {
 	<div class="container">
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사4.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사4.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>한진호</h3>
@@ -276,7 +276,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사1.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사8.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김가연</h3>
@@ -299,7 +299,7 @@ body {
 	<div class="container">
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사1.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사1.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김지석</h3>
@@ -313,7 +313,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사2.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사2.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>박민정</h3>
@@ -327,7 +327,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사3.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사3.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김서하</h3>
@@ -346,7 +346,7 @@ body {
 	<div class="container">
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사4.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사7.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>한진호</h3>
@@ -359,7 +359,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사5.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사5.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>심숙영</h3>
@@ -373,7 +373,7 @@ body {
 
 		<div class="box">
 			<div class="icon">
-				<img src="/resources/img/수의사1.jpg"></img>
+				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사6.jpg"></img>
 			</div>
 			<div class="content">
 				<h3>김가연</h3>
