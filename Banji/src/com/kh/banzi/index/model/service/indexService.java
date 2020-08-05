@@ -20,7 +20,7 @@ public class indexService {
 	}
 	
 
-	/** info 제목얻어오기
+	/** info 제목얻어오기- 카테고리1
 	 * @return iList
 	 * @throws Exception
 	 */
@@ -34,30 +34,7 @@ public class indexService {
 	}
 
 
-	public List<Community> selectCommunityList() throws Exception{
-		Connection conn = getConnection();
-		List<Community> iList = dao.selectCommunityList(conn);
-		conn.close();
-		return iList;
-	}
-
-
-	public List<Qna> selectQNAList()throws Exception {
-		Connection conn = getConnection();
-		List<Qna> iList = dao.selectQNAList(conn);
-		conn.close();
-		return iList;
-	}
-
-
-	public List<Review> selectReviewList() throws Exception{
-		Connection conn = getConnection();
-		List<Review> rList = dao.selectReviewList(conn);
-		conn.close();
-		return rList;
-	}
-
-
+	// 파일 -카테고리1
 	public List<Attachment> selectInfoFileList()throws Exception {
 		Connection conn = getConnection();
 		List<Attachment> iList = dao.selectInfoFileList(conn);
@@ -65,28 +42,73 @@ public class indexService {
 		return iList;
 	}
 
-
-	public List<Attachment> selectCommunityFileList() throws Exception{
+	
+	/** info 제목얻어오기- 카테고리2
+	 * @return iList
+	 * @throws Exception
+	 */
+	public List<Information> selectInfoListTwo() throws Exception{
 		Connection conn = getConnection();
-		List<Attachment> iList = dao.selectCommunityFileList(conn);
+		List<Information> iList = dao.selectInfoListTwo(conn);
+		
 		conn.close();
+		
 		return iList;
 	}
 
 
-	public List<Attachment> selectQNAFileList() throws Exception{
+	// 파일 -카테고리2
+	public List<Attachment> selectInfoFileListTwo()throws Exception {
 		Connection conn = getConnection();
-		List<Attachment> qList = dao.selectQNAFileList(conn);
+		List<Attachment> iList = dao.selectInfoFileListTwo(conn);
 		conn.close();
-		return qList;
+		return iList;
+	}
+
+	
+	/** info 제목얻어오기- 카테고리3
+	 * @return iList
+	 * @throws Exception
+	 */
+	public List<Information> selectInfoListThree() throws Exception{
+		Connection conn = getConnection();
+		List<Information> iList = dao.selectInfoListThree(conn);
+		
+		conn.close();
+		
+		return iList;
 	}
 
 
-	public List<Attachment> selectReviewFileList() throws Exception{
+	// 파일 -카테고리3
+	public List<Attachment> selectInfoFileListThree()throws Exception {
 		Connection conn = getConnection();
-		List<Attachment> rList = dao.selectReviewFileList(conn);
+		List<Attachment> iList = dao.selectInfoFileListThree(conn);
 		conn.close();
-		return rList;
+		return iList;
 	}
+
+	/** info 제목얻어오기- 카테고리4
+	 * @return iList
+	 * @throws Exception
+	 */
+	public List<Information> selectInfoListFour() throws Exception{
+		Connection conn = getConnection();
+		List<Information> iList = dao.selectInfoListFour(conn);
+		
+		conn.close();
+		
+		return iList;
+	}
+
+
+	// 파일 -카테고리4
+	public List<Attachment> selectInfoFileListFour()throws Exception {
+		Connection conn = getConnection();
+		List<Attachment> iList = dao.selectInfoFileListFour(conn);
+		conn.close();
+		return iList;
+	}
+
 
 }

@@ -215,6 +215,7 @@
             height: 50%;
             box-sizing: border-box;
             text-align: left;
+            overflow: hidden;
         }
 
         .review-box-bottom>p {

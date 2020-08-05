@@ -1,3 +1,6 @@
+
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,7 +9,7 @@
 <meta charset="UTF-8">
 <title>BAN JI</title>
   <meta charset="UTF-8">
-  <title>07.시맨틱태그</title>
+  <title>BAN JI</title>
   <style>
   		@font-face { 
             font-family: 'GmarketSansMedium'; 
@@ -23,7 +26,7 @@
         
     	body { margin: 0; padding: 0;}
         .empty { width: 100%; height: 100px;}
-        
+          
         .container {
             position: relative;
             width: 85%;
@@ -38,14 +41,12 @@
             height: 90%;
             box-sizing: border-box;
             
+            
             margin: 15px;
             display: inline-block;
-            position: relative;
-        }
-
+          }  
         .img-box:hover{
             cursor: pointer;
-            background-color: rgba(165, 165, 161, 0.2);
         }
        
         .img-box > svg{
@@ -59,8 +60,8 @@
         }
 
         .category{
-            height: 18px;
-            margin-left: 520px;
+            height: 26px;
+            margin-left: 390px;
             font-size: 18px;
             margin-top: 20px;
 			font-family: "InfinitySans-RegularA1";
@@ -112,13 +113,13 @@
           </div>
         </div>
         <div class="carousel-item">
-        	<img src="<%=request.getContextPath()%>/resources/img/banner01.png">
+        	<img src="<%=request.getContextPath()%>/resources/img/banner02.jpg">
           <div class="carousel-caption d-none d-md-block">
 
           </div>
         </div>
         <div class="carousel-item">
-        	<img src="<%=request.getContextPath()%>/resources/img/banner01.png">
+        	<img src="<%=request.getContextPath()%>/resources/img/banner03.jpg">
           <div class="carousel-caption d-none d-md-block">
 
           </div>
@@ -136,68 +137,38 @@
   </section>
   
       <div class="empty"></div>
-        <div class="category">-정보</div>
+        <div class="category">-음식 정보</div>
         <div class="container">
         
             <div class="img-box">
-            	<p class="info-title0 title-text"></p>
+            	<p class="info-title title-text"></p>
             </div>
-
+        </div>
+        
+        <div class="category">-견종백과 정보</div>
+        <div class="container">
+        
             <div class="img-box">
-            <p class="info-title1 title-text"></p>
+            	<p class="info-title2 title-text"></p>
             </div>
-  
+        </div>
+        
+        <div class="category">-건강상식 정보</div>
+        <div class="container">
+        
             <div class="img-box">
-            <p class="info-title2 title-text"></p>
+            	<p class="info-title3 title-text"></p>
+            </div>
+        </div>
+        
+        <div class="category">-교육/훈련 정보</div>
+        <div class="container">
+        
+            <div class="img-box">
+            	<p class="info-title4 title-text"></p>
             </div>
         </div>
 
-
-        <div class="category">-자유게시판</div>
-        <div class="container">
-            <div class="img-box">
-                <p class="community-title0 title-text"></p>
-                
-            </div>
-            <div class="img-box">
-            <p class="community-title1 title-text"></p>
-                
-            </div>
-            <div class="img-box">
-            <p class="community-title2 title-text"></p>
-            </div>
-        </div>
-        
-        
-        <div class="category">-Q&A</div>
-        <div class="container">
-            <div class="img-box">
-                <p class="qna-title0 title-text"></p>
-               
-            </div>
-            <div class="img-box">
-            <p class="qna-title1 title-text"></p>
-                
-            </div>
-            <div class="img-box">
-            <p class="qna-title2 title-text"></p>
-            </div>
-        </div>
-        
-        <div class="category">-사용후기</div>
-        <div class="container">
-            <div class="img-box">
-                <p class="review-title0 title-text"></p>
-            </div>
-            
-            <div class="img-box">
-            <p class="review-title1 title-text"></p>
-            </div>
-            
-            <div class="img-box">
-            <p class="review-title2 title-text"></p>
-            </div>
-        </div>
      
      
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -213,144 +184,164 @@
   <%@ include file="WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>
-// 정보 게시판용
+// 정보 게시판용-카테고리1
 $(function(){
 	$.ajax({
 		  url : "<%=request.getContextPath()%>/main/selectInfo.do",
 	      type : "POST",
 	      dataType : "JSON",
 	      success : function(map){
-	    	  for(var i=0; i<map.iList.length ; i++){
+	    		
 	    		  
 	    		 // 하이퍼링크
-	    		 var hrefNo = map.iList[i].infoBoardNo;
+	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
-	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&no=" + hrefNo);
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
 	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
-	    	 	 $(".info-title"+i).append($a);
+	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
-	    		 $p = $("<p>");
+	    		/* $p = $("<p>");
 	    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
-	    		 $p.text(map.iList[i].infoBoardTitle);
-	    	 	 $(".info-title"+i).append($p);
-	    	 	 
+	    		 $p.text(map.iList[0].infoBoardTitle);
+	    	 	 $(".info-title").append($p);
+	    	 	 */
 	    	 	 // 이미지
-	    	 	 if(map.iList[i].infoBoardNo == map.fList[i].parentBoardNo){
-		    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-		             $(".info-title"+i).append("<img src="+src+">");
-		             
-	    	 	 }  
+	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
+		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
+		    	 $img = $("<img>");
+		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 
+		    	 $a.append($img);
+		         $(".info-title").append($a);
+	    	 	
 	    	  }
+	    	 	 
 	      },error : function(){
 	         console.log("ajax 통신 실패");
 	      }
 	});
 });
 
-// 자유게시판
+//정보 게시판용-카테고리2
 $(function(){
 	$.ajax({
-		  url : "<%=request.getContextPath()%>/main/selectCommunity.do",
+		  url : "<%=request.getContextPath()%>/main/selectInfo2.do",
 	      type : "POST",
 	      dataType : "JSON",
 	      success : function(map){
-	    	  for(var i=0; i<map.cList.length ; i++){
-		    		 // 하이퍼링크
-		    		 var hrefNo = map.cList[i].boardNo;
-		    	 	 $a = $("<a>");
-		    	 	 $a.attr("href", "<%=request.getContextPath()%>/community/view.do?type=3&no=" + hrefNo);
-		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
-		    	 	 $(".community-title"+i).append($a);
-		    	 	
-		    	 	 // 텍스트용
-		    		 $p = $("<p>");
-		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
-		    		 $p.text(map.cList[i].title);
-		    	 	 $(".community-title"+i).append($p);
-		    	 	 
-		    	 	 // 이미지
-		    	 	 if(map.cList[i].boardNo == map.fList[i].parentBoardNo){
-			    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-			             $(".community-title"+i).append("<img src="+src+">");
-			             
-		    	 	 }  
-	    	  }
-	      },error : function(){
-	         console.log("ajax 통신 실패");
-	      }
-	});
-});
-
-//Q&A
-$(function(){
-	$.ajax({
-		  url : "<%=request.getContextPath()%>/main/selectQNA.do",
-	      type : "POST",
-	      dataType : "JSON",
-	      success : function(map){
-	    	  for(var i=0; i<map.qList.length ; i++){
-		    		 // 하이퍼링크
-		    		 var hrefNo = map.qList[i].boardNo;
-		    	 	 $a = $("<a>");
-		    	 	 $a.attr("href", "<%=request.getContextPath()%>/qna/list.do?type=5&no=" + hrefNo);
-		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
-		    	 	 $(".qna-title"+i).append($a);
-		    	 	
-		    	 	 // 텍스트용
-		    		 $p = $("<p>");
-		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
-		    		 $p.text(map.qList[i].title);
-		    	 	 $(".qna-title"+i).append($p);
-		    	 	 
-		    	 	 // 이미지
-		    	 	 if(map.qList[i].boardNo == map.fList[i].parentBoardNo){
-		    	 		 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-			             $(".qna-title"+i).append("<img src="+src+">");
+	    		  console.log(map.iList);
+	    		  console.log(map.fList);
 	    		  
-		    	 	 }
+	    		 // 하이퍼링크
+	    		 var hrefNo = map.iList[0].infoBoardNo;
+	    	 	 $a = $("<a>");
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	// $(".info-title").append($a);
+	    	 	
+	    	 	 // 텍스트용
+	    		/* $p = $("<p>");
+	    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+	    		 $p.text(map.iList[0].infoBoardTitle);
+	    	 	 $(".info-title").append($p);
+	    	 	 */
+	    	 	 // 이미지
+	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
+		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
+		    	 $img = $("<img>");
+		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 
+		    	 $a.append($img);
+		         $(".info-title2").append($a);
+	    	 	
 	    	  }
+	    	 	 
 	      },error : function(){
 	         console.log("ajax 통신 실패");
 	      }
 	});
 });
 
-//사용후기
+//정보 게시판용-카테고리3
 $(function(){
 	$.ajax({
-		  url : "<%=request.getContextPath()%>/main/selectReview.do",
+		  url : "<%=request.getContextPath()%>/main/selectInfo3.do",
 	      type : "POST",
 	      dataType : "JSON",
 	      success : function(map){
-	    	  for(var i=0; i<map.rList.length ; i++){
-		    		 // 하이퍼링크
-		    		 console.log(map.rList[0]);
-		    		 console.log(map.fList[0]);
-		    		 var hrefNo = map.rList[i].reviewBoardNo;
-		    	 	 $a = $("<a>");
-		    	 	 $a.attr("href", "<%=request.getContextPath()%>/review/detailReview.do?type=6&no=" + hrefNo);
-		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
-		    	 	 $(".review-title"+i).append($a);
-		    	 	
-		    	 	 // 텍스트용
-		    		 $p = $("<p>");
-		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
-		    		 $p.text(map.rList[i].reviewTitle);
-		    	 	 $(".review-title"+i).append($p);
-		    	 	 
-		    	 	 // 이미지
-		    	 	 if(map.rList[i].reviewBoardNo == map.fList[i].parentBoardNo){
-		    	 		src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-			             $(".review-title"+i).append("<img src="+src+">");
+	    		  console.log(map.iList);
+	    		  console.log(map.fList);
 	    		  
-		    	 	 }
+	    		 // 하이퍼링크
+	    		 var hrefNo = map.iList[0].infoBoardNo;
+	    	 	 $a = $("<a>");
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	// $(".info-title").append($a);
+	    	 	
+	    	 	 // 텍스트용
+	    		/* $p = $("<p>");
+	    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+	    		 $p.text(map.iList[0].infoBoardTitle);
+	    	 	 $(".info-title").append($p);
+	    	 	 */
+	    	 	 // 이미지
+	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
+		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
+		    	 $img = $("<img>");
+		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 
+		    	 $a.append($img);
+		         $(".info-title3").append($a);
+	    	 	
 	    	  }
+	    	 	 
 	      },error : function(){
 	         console.log("ajax 통신 실패");
 	      }
 	});
 });
+
+//정보 게시판용-카테고리4
+$(function(){
+	$.ajax({
+		  url : "<%=request.getContextPath()%>/main/selectInfo4.do",
+	      type : "POST",
+	      dataType : "JSON",
+	      success : function(map){
+	    		  
+	    		 // 하이퍼링크
+	    		 var hrefNo = map.iList[0].infoBoardNo;
+	    	 	 $a = $("<a>");
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	// $(".info-title").append($a);
+	    	 	
+	    	 	 // 텍스트용
+	    		/* $p = $("<p>");
+	    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+	    		 $p.text(map.iList[0].infoBoardTitle);
+	    	 	 $(".info-title").append($p);
+	    	 	 */
+	    	 	 // 이미지
+	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
+		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
+		    	 $img = $("<img>");
+		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 
+		    	 $a.append($img);
+		         $(".info-title4").append($a);
+	    	 	
+	    	  }
+	    	 	 
+	      },error : function(){
+	         console.log("ajax 통신 실패");
+	      }
+	});
+});
+
+
 
 </script>
 </html>

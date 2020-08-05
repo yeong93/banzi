@@ -301,7 +301,19 @@
 		    })
 		});
 	
+	    // 별점용 -> 체크시 값 이동
+	    $(function(){
+		    $('.make_star svg').click(function(){
+		        var targetNum = $(this).index()+1;
+		        $('.make_star svg').css({color:'#000'});
+		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#FFD600'});
+		        console.log(targetNum);
+		        
+		      	$("#forwardRating").val(targetNum);
+		    })
+		});
     
+
 	</script>
 </body>
 
