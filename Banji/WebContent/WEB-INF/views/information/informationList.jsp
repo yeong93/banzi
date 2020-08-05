@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.common.PageInfo"%>
 <%@page import="com.kh.banzi.information.model.vo.Information"%>
 <%@page import="java.util.List"%>
@@ -120,7 +121,10 @@
 	                			</td>
 	                			<td><%=information.getUserId() %></td>
 	                			<td><%=information.getReadCount() %></td>
-	                			<td><%=information.getInfoBoardModifyDate() %></td>
+	                			<% 
+                                 String date = new SimpleDateFormat("yyyy-MM-dd").format(information.getInfoBoardModifyDate());
+                              	%>
+	                			<td><%=date%></td>
 	                		</tr>
 	                	<% } %>
 	                	<% } %>

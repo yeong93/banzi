@@ -30,12 +30,14 @@
             border: none;
         }
         #back{
-        	height:10px;
+           height:10px;
         }
         #group{
-        	margin:auto;
+           margin:auto;
         }
     </style>
+    <!-- sweetalert : alert창을 꾸밀 수 있게 해주는 라이브러리 https://sweetalert.js.org/ -->
+  		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
     <body>
         <div class="container"><!-- 좌우측의 공간 확보 -->
@@ -69,7 +71,7 @@
             <!-- 본문 들어가는 부분 -->
             <h2>2. 회원가입</h2>
             <br>
-            <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/user/signUp.do">
+            <form class="form-horizontal" role="form" method="post" action="<%=request.getContextPath()%>/user/signUp.do" onsubmit="return validate();">
                 <div class="form-group" id="divId">
                     <label for="inputId" class="col-lg-2 control-label">아이디</label>
                     <span id="checkId">&nbsp;</span>
@@ -78,22 +80,24 @@
                     </div>
                 </div>
                 <div class="form-group" id="divPassword">
-                    <label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
+                    <label for="password" class="col-lg-2 control-label">비밀번호</label>
+                    <span id="checkPwd">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="password" class="form-control" id="password" name="pwd" data-rule-required="true" placeholder="비밀번호" maxlength="30">
+                        <input type="password" class="form-control" id="password" name="pwd" data-rule-required="true" placeholder="비밀번호는 영어 대,소문자 + 숫자, 총 6~12글자입니다." maxlength="30">
                     </div>
                 </div>
                 <div class="form-group" id="divPasswordCheck">
-                    <label for="inputPasswordCheck" class="col-lg-2 control-label">비밀번호 확인</label>
-                    <span id="checkPwd">&nbsp;</span>
+                    <label for="password2" class="col-lg-2 control-label">비밀번호 확인</label>
+                    <span id="checkPwd2">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="password" class="form-control" id="passwordCheck" name="password2" data-rule-required="true" placeholder="비밀번호 확인" maxlength="30">
+                        <input type="password" class="form-control" id="password2" name="pwd2" data-rule-required="true" placeholder="비밀번호 확인" maxlength="30">
                     </div>
                 </div>
                 <div class="form-group" id="divName">
                     <label for="inputName" class="col-lg-2 control-label">닉네임</label>
+                    <span id="checkName">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="닉네임을 입력해주세요." maxlength="15">
+                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="한글 두글자 이상으로 입력해주세요." maxlength="15">
                     </div>
                 </div>
 
@@ -129,7 +133,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                	<div id="group">
+                   <div id="group">
                     <div class="col-lg-offset-2 col-lg-10 text-center">
                         <button type="submit" class="btn btn-primary color" id="btn" >회원가입</button>
                         <button type="reset" class="btn btn-primary color" id="btn2">취소</button>
@@ -140,243 +144,127 @@
         
         <script>
         
-            $(function(){
-                //모달을 전역변수로 선언
-                var modalContents = $(".modal-contents");
-                var modal = $("#defaultModal");
+        var signUpCheck = { 
+   				"id":false,
+				"password":false,
+				"password2":false,
+				"name":false
+			};
 
-                //------- 검사하여 상태를 class에 적용
-                $('#id').keyup(function(event){
-                    
-                    var divId = $('#divId');
-                    
-                    if($('#id').val()==""){
-                        divId.removeClass("has-success");
-                        divId.addClass("has-error");
-                    }else{
-                        divId.removeClass("has-error");
-                        divId.addClass("has-success");
-                    }
-                });
-                
-                $('#password').keyup(function(event){
-                    
-                    var divPassword = $('#divPassword');
-                    
-                    if($('#password').val()==""){
-                        divPassword.removeClass("has-success");
-                        divPassword.addClass("has-error");
-                    }else{
-                        divPassword.removeClass("has-error");
-                        divPassword.addClass("has-success");
-                    }
-                });
-                
-                $('#passwordCheck').keyup(function(event){
-                    
-                    var passwordCheck = $('#passwordCheck').val();
-                    var password = $('#password').val();
-                    var divPasswordCheck = $('#divPasswordCheck');
-                    
-                    if((passwordCheck=="") || (password!=passwordCheck)){
-                        divPasswordCheck.removeClass("has-success");
-                        divPasswordCheck.addClass("has-error");
-                    }else{
-                        divPasswordCheck.removeClass("has-error");
-                        divPasswordCheck.addClass("has-success");
-                    }
-                });
-                
-                $('#name').keyup(function(event){
-                    
-                    var divName = $('#divName');
-                    
-                    if($.trim($('#name').val())==""){
-                        divName.removeClass("has-success");
-                        divName.addClass("has-error");
-                    }else{
-                        divName.removeClass("has-error");
-                        divName.addClass("has-success");
-                    }
-                });
-
-                $('#email').keyup(function(event){
-                    
-                    var divEmail = $('#divEmail');
-                    
-                    if($.trim($('#email').val())==""){
-                        divEmail.removeClass("has-success");
-                        divEmail.addClass("has-error");
-                    }else{
-                        divEmail.removeClass("has-error");
-                        divEmail.addClass("has-success");
-                    }
-                });
-                
-                //------- validation 검사
-                $( "form" ).submit(function( event ) {
-                    
-                    var divId = $('#divId');
-                    var divPassword = $('#divPassword');
-                    var divPasswordCheck = $('#divPasswordCheck');
-                    var divName = $('#divName');
-                    var divEmail = $('#divEmail');
-                    
-                    var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
-                    
-                    //아이디 검사
-                    if($('#id').val()==""){
-                        modalContents.text("아이디를 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divId.removeClass("has-success");
-                        divId.addClass("has-error");
-                        $('#id').focus();
-                        return false;
-                    }else if($(!regExp.test($("#id").val()))){
-                    	modalContents.text("유효한 아이디를 입력해주세요.");
-						modal.modal('show');
-                        
-                        divId.removeClass("has-success");
-                        divId.addClass("has-error");
-                    	return false;
-                    }
-  		
-                    else{
-                        divId.removeClass("has-error");
-                        divId.addClass("has-success");
-                    }
-                    
-                    //패스워드 검사
-                    if($('#password').val()==""){
-                        modalContents.text("패스워드를 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divPassword.removeClass("has-success");
-                        divPassword.addClass("has-error");
-                        $('#password').focus();
-                        return false;
-                    }else{
-                        divPassword.removeClass("has-error");
-                        divPassword.addClass("has-success");
-                    }
-                    
-                    //패스워드 확인
-                    if($('#passwordCheck').val()==""){
-                        modalContents.text("패스워드 확인을 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divPasswordCheck.removeClass("has-success");
-                        divPasswordCheck.addClass("has-error");
-                        $('#passwordCheck').focus();
-                        return false;
-                    }else{
-                        divPasswordCheck.removeClass("has-error");
-                        divPasswordCheck.addClass("has-success");
-                    }
-                    
-                    //패스워드 비교
-                    if($('#password').val()!=$('#passwordCheck').val() || $('#passwordCheck').val()==""){
-                        modalContents.text("패스워드가 일치하지 않습니다.");
-                        modal.modal('show');
-                        
-                        divPasswordCheck.removeClass("has-success");
-                        divPasswordCheck.addClass("has-error");
-                        $('#passwordCheck').focus();
-                        return false;
-                    }else{
-                        divPasswordCheck.removeClass("has-error");
-                        divPasswordCheck.addClass("has-success");
-                    }
-                    
-                    //이름
-                    if($('#name').val()==""){
-                        modalContents.text("이름을 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divName.removeClass("has-success");
-                        divName.addClass("has-error");
-                        $('#name').focus();
-                        return false;
-                    }else{
-                        divName.removeClass("has-error");
-                        divName.addClass("has-success");
-                    }
-                    
-                    //이메일
-                    if($('#email').val()==""){
-                        modalContents.text("이메일을 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divEmail.removeClass("has-success");
-                        divEmail.addClass("has-error");
-                        $('#email').focus();
-                        return false;
-                    }else{
-                        divEmail.removeClass("has-error");
-                        divEmail.addClass("has-success");
-                    }
-
-                    // 보안답변
-                    if($('#answer').val()==""){
-                        modalContents.text("보안답변을 입력하여 주시기 바랍니다.");
-                        modal.modal('show');
-                        
-                        divName.removeClass("has-success");
-                        divName.addClass("has-error");
-                        $('#answer').focus();
-                        return false;
-                    }else{
-                        divName.removeClass("has-error");
-                        divName.addClass("has-success");
-                    }
-                });
-
-            });
-            // 비밀번호 일치 여부 검사
-    		$("#passwordCheck").on("input",function() {
-    			if($("#password").val().trim()!= $("#passwordCheck").val().trim()){
-    				$("#checkPwd").text("비밀번호가 일치하지 않습니다.").css("color","red");
-
-    			}else{
-    				$("#checkPwd").text("비밀번호가 일치합니다.").css("color","green");
-    				}
-    	  		});
+	 	//********** 실시간 유효성 검사  ************/
+		// 정규표현식
+		// jQuery 변수 : 변수에 직접적으로 jQuery메소드를 사용할 수 있음.
+		
+        var $id = $("#id");
+		var $password = $("#password");
+		var $password2 = $("#password2");
+		var $name = $("#name");
+		
+        // id를 입력하는 경우 발생하는 이벤트
+        $("#id").on("input", function(){
+            // ajax를 이용한 아이디 유효성 검사
+            var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
+            if(!regExp.test($id.val())){
+                $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
+                signUpCheck.id=false;
+                if($id.val().length == 0)   $("#checkId").text("");
             
+            }else{ // 유효한 아이디 형식일 때
+                $.ajax({
+                    url : "idDupCheck.do",
+                    data: {"id" : $id.val()},
+                    type: "get",
 
-            // id를 입력하는 경우 발생하는 이벤트
-            var $id = $("#id");
-            
-         	$("#id").on("input", function(){
-             // ajax를 이용한 아이디 유효성 검사
-             var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
-             if(!regExp.test($id.val())){
-            	 
-                 $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
+                    success : function(result){
+                        if(result == 0) {
+                        	console.log(result);
+                            $("#checkId").text("사용 가능한 아이디입니다.").css("color", "green");
+                            signUpCheck.id=true;
+                        }else{
+                            $("#checkId").text("이미 사용중인 아이디입니다.").css("color", "red");
+                            signUpCheck.id=false;
+                        }
+                    }
+                    ,error : function() {
+                        console.log("ajax 통신 실패");
+                    }
+                });
+            }
+        });
 
-                 if($id.val().length == 0)	$("#checkId").text("");
-
-             }else{ // 유효한 아이디 형식일 때
-                 $.ajax({
-                     url : "idDupCheck.do",
-                     data: {"id" : $id.val()},
-                     type: "get",
-
-                     success : function(result){
-                         if(result ==0) {
-                             $("#checkId").text("사용 가능한 아이디입니다.").css("color", "green");
-                         }else{
-                             $("#checkId").text("이미 사용중인 아이디입니다.").css("color", "red");
-                         }
-                     }
-                     ,error : function() {
-                         console.log("ajax 통신 실패");
-                     }
-                 });
-             }
-         });
-
+		// 비밀번호 유효성 및 일치 검사
+		$("#password, #password2").on("input", function(){
+			//영어 대,소문자 + 숫자, 총 6~12글자
+			var regExp = /^[A-Za-z0-9]{6,12}$/;
 			
+			// 비밀번호1 유효성 검사
+			if(!regExp.test($password.val())){ 
+    		$("#checkPwd").text("비밀번호 형식이 유효하지 않습니다.").css("color","red");
+    		signUpCheck.password = false;
+    		if($password.val().length == 0)   $("#checkPwd").text("");
+	   		 }else{
+	    	$("#checkPwd").text("유효한 비밀번호 형식입니다.").css("color","green");
+	    	signUpCheck.password = true;
+    		}
+			
+			// 비밀번호1이 유효하지 않은 상태로 비밀번호 2를 작성하는 경우
+			if(!signUpCheck.password && $password2.val().length > 0){
+				swal("유효한 비밀번호를 작성해 주세요.");
+				$password2.val("");
+				$password.focus();
+			}else if(signUpCheck.password && $("#password2").val().length > 0){
+				if($("#password").val().trim() != $("#password2").val().trim()){
+					$("#checkPwd2").text("비밀번호 불일치입니다.").css("color","red");
+					signUpCheck.password2 = false;
+
+					if($("#password2").val().length == 0)   $("#checkPwd2").text("");
+					
+				}else{
+					$("#checkPwd2").text("비밀번호가 일치합니다.").css("color","green");
+					signUpCheck.password2 = true;
+				}
+			}
+			
+		});
+
+		// 이름 유효성 검사
+		$name.on("input", function(){
+			var regExp =  /^[가-힣]{2,}$/; // 한글 두 글자 이상
+			
+			if(!regExp.test($(this).val())){ // 입력한 이름이 유효하지 않은 경우
+				$("#checkName").text("한글 두 글자 이상을 입력하세요.").css("color","red");
+				signUpCheck.name = false;
+				if($name.val().length == 0)   $("#checkName").text("");
+			}else{
+				$("#checkName").text("정상적으로 입력되었습니다.").css("color","green");
+				signUpCheck.name = true;
+			}
+			
+		});
+		
+		
+    
+	// submit 동작
+	function validate(){
+		
+		for(var key in signUpCheck){
+			if(!signUpCheck[key]){
+				
+				var msg;
+				switch(key){
+				case "id" : msg="아이디가 ";  break;
+				case "password" : case "password2": msg="비밀번호가 ";  break;
+				case "name" : msg="이름이 ";  break;
+				}
+				
+				alert(msg + "유효하지 않습니다.");
+				var el = "#"+key;
+				$(el).focus();
+				return false;
+			}
+		}
+	}
+	
         </script>
             <hr/>
             <!-- 푸터 들어가는 부분 -->
