@@ -51,6 +51,7 @@
 			<ul class="tabType1">
 				<li><a href="eventList.do?type=1">진행중 이벤트</a></li>
 				<li class="on"><a href="pastList.do?type=2">종료된 이벤트</a></li>
+				<li><a href="winnerList.do?type=2">이벤트 당첨자</a></li>
 			</ul>
 
 			<!-- -------------------------------- 이벤트 -------------------------------- -->
@@ -116,7 +117,7 @@
 			<!-- -------------------------------- 페이징 바 -------------------------------- -->
 			<ul class="paging">
 					
-					<%if(currentPage > 10) {%>
+					<%if(currentPage > 5) {%>
 						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=1">&lt;&lt;</a></li>
 						<li class="btn"><a href="<%=request.getContextPath()%>/event/pastList.do?type=<%=eventType%>&cp=<%=prev%>">&lt;</a></li>
 					<% } %>

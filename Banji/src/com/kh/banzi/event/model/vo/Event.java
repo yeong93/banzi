@@ -14,18 +14,20 @@ public class Event {
 	private Timestamp endDay;
 	private String eventStatus;
 	private int boardType = 7;
+	private String eventWin;
+	private int eventWinNo;
 	
-	
-	
+
 	public Event() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent,
-			Timestamp createDay, Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus,
-			int boardType) {
+
+	public Event(int eventNo, String eventWriter, String eventTitle, String eventContent, Timestamp createDay,
+			Timestamp modifyDay, Timestamp startDay, Timestamp endDay, String eventStatus, int boardType,
+			String eventWin, int eventWinNo) {
 		super();
 		this.eventNo = eventNo;
 		this.eventWriter = eventWriter;
@@ -37,7 +39,11 @@ public class Event {
 		this.endDay = endDay;
 		this.eventStatus = eventStatus;
 		this.boardType = boardType;
+		this.eventWin = eventWin;
+		this.eventWinNo = eventWinNo;
 	}
+
+
 
 
 
@@ -87,16 +93,31 @@ public class Event {
 		this.startDay = startDay;
 		this.endDay = endDay;
 	}
-
+	
 	
 
-	public int getEventNo() {
-		return eventNo;
+	public Event(int eventNo, String eventTitle, Timestamp startDay, Timestamp endDay, int eventWinNo) {
+		super();
+		this.eventNo = eventNo;
+		this.eventTitle = eventTitle;
+		this.startDay = startDay;
+		this.endDay = endDay;
+		this.eventWinNo = eventWinNo;
+	}
+
+
+	public Event(int eventNo, String eventTitle, String eventWin) {
+		super();
+		this.eventNo = eventNo;
+		this.eventTitle = eventTitle;
+		this.eventWin = eventWin;
 	}
 
 
 
-
+	public int getEventNo() {
+		return eventNo;
+	}
 
 
 
@@ -106,17 +127,9 @@ public class Event {
 
 
 
-
-
-
-
 	public String getEventWriter() {
 		return eventWriter;
 	}
-
-
-
-
 
 
 
@@ -126,17 +139,9 @@ public class Event {
 
 
 
-
-
-
-
 	public String getEventTitle() {
 		return eventTitle;
 	}
-
-
-
-
 
 
 
@@ -146,26 +151,15 @@ public class Event {
 
 
 
-
-
-
-
 	public String getEventContent() {
 		return eventContent;
 	}
 
 
 
-
-
-
-
 	public void setEventContent(String eventContent) {
 		this.eventContent = eventContent;
 	}
-
-	
-
 
 
 
@@ -175,17 +169,9 @@ public class Event {
 
 
 
-
-
-
-
 	public void setCreateDay(Timestamp createDay) {
 		this.createDay = createDay;
 	}
-
-
-
-
 
 
 
@@ -195,17 +181,9 @@ public class Event {
 
 
 
-
-
-
-
 	public void setModifyDay(Timestamp modifyDay) {
 		this.modifyDay = modifyDay;
 	}
-
-
-
-
 
 
 
@@ -215,17 +193,9 @@ public class Event {
 
 
 
-
-
-
-
 	public void setStartDay(Timestamp startDay) {
 		this.startDay = startDay;
 	}
-
-
-
-
 
 
 
@@ -235,17 +205,9 @@ public class Event {
 
 
 
-
-
-
-
 	public void setEndDay(Timestamp endDay) {
 		this.endDay = endDay;
 	}
-
-
-
-
 
 
 
@@ -255,17 +217,9 @@ public class Event {
 
 
 
-
-
-
-
 	public void setEventStatus(String eventStatus) {
 		this.eventStatus = eventStatus;
 	}
-
-
-
-
 
 
 
@@ -275,30 +229,43 @@ public class Event {
 
 
 
-
-
-
-
 	public void setBoardType(int boardType) {
 		this.boardType = boardType;
 	}
 
 
 
+	public String getEventWin() {
+		return eventWin;
+	}
 
+
+
+	public void setEventWin(String eventWin) {
+		this.eventWin = eventWin;
+	}
+
+
+
+	public int getEventWinNo() {
+		return eventWinNo;
+	}
+
+
+
+	public void setEventWinNo(int eventWinNo) {
+		this.eventWinNo = eventWinNo;
+	}
 
 
 
 	@Override
 	public String toString() {
 		return "Event [eventNo=" + eventNo + ", eventWriter=" + eventWriter + ", eventTitle=" + eventTitle
-				+ ", eventContent=" + eventContent + ", createDay=" + createDay
-				+ ", modifyDay=" + modifyDay + ", startDay=" + startDay + ", endDay=" + endDay + ", eventStatus="
-				+ eventStatus + ", boardType=" + boardType + "]";
+				+ ", eventContent=" + eventContent + ", createDay=" + createDay + ", modifyDay=" + modifyDay
+				+ ", startDay=" + startDay + ", endDay=" + endDay + ", eventStatus=" + eventStatus + ", boardType="
+				+ boardType + ", eventWin=" + eventWin + ", eventWinNo=" + eventWinNo + "]";
 	}
-
-
-
 	
 
 }

@@ -204,6 +204,7 @@ color: white;
             <div class="dropdown-menu">
               <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/eventList.do?type=1">진행중인 이벤트</a>
               <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/pastList.do?type=2">종료된 이벤트</a>
+              <a class="dropdown-item"  href="<%=request.getContextPath()%>/event/winnerList.do?type=2">이벤트 당첨자</a>
             </div>
           </li>
           <li class="nav-item dropdown">

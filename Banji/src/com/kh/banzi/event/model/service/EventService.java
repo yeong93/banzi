@@ -275,5 +275,50 @@ public class EventService {
 		conn.close();
 		return result;
 	}
+
+	/** 당첨자 발표 글 개수
+	 * @param currentPage
+	 * @param eventType 
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public static PageInfo winnerPageInfo(String currentPage) throws Exception{
+		Connection conn = getConnection();
+
+		int cp = currentPage == null ? 1 : Integer.parseInt(currentPage);
+
+		int listCount = dao.winnerListCount(conn);
+
+		conn.close();
+		return new PageInfo(cp, listCount);
+	}
+
+	/** 당첨자 글 목록 조회
+	 * @param pInfo
+	 * @return wList
+	 * @throws Exception
+	 */
+	public List<Event> winnerList(PageInfo pInfo) throws Exception{
+		Connection conn = getConnection();
+		
+		List<Event> wList = dao.winnerList(conn, pInfo);
+		
+		conn.close();
+		return wList;
+	}
+
+	/** 당첨자 세부 조회
+	 * @param no
+	 * @return event
+	 * @throws Exception
+	 */
+	public static Event winnerView(int no) throws Exception{
+		Connection conn = getConnection();
+		
+		Event event = dao.winnerView(conn, no);
+		
+		conn.close();
+		return event;
+	}
 	
 }

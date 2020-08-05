@@ -32,9 +32,9 @@
 
 		<!-- -------------------------------- 메인 -------------------------------- -->
 		<div id="container" class="event eventList mx-auto">
-			
+			<h1 class="type1">이벤트</h1>
 				  
-				  <table class="mx-auto table">
+				  <table class="mx-auto table text-center">
 				  
 				  	<tr>
 				  		<td><p>제목</p></td>
