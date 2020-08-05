@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.banzi.event.model.service.EventService;
+import com.kh.banzi.event.model.vo.Event;
 import com.kh.banzi.masterPage.model.service.MasterPageService;
 import com.kh.banzi.user.model.vo.User;
 
@@ -65,6 +67,16 @@ public class MasterPageServlet extends HttpServlet {
 				request.getSession().setAttribute("status", status);
 				request.getSession().setAttribute("msg", msg);
 				response.sendRedirect(request.getHeader("referer"));
+				
+				}else if(command.equals("/stillList.do")) {
+					errorMsg = "이벤트 당첨자가 발표되지  않은 이벤트 목록 조회";
+					
+					List<Event> sList = service.stillList();
+					
+					path = "/WEB-INF/views/masterPage/stillList.jsp";
+					request.setAttribute("sList", sList);
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
 			}
 			
 		} catch (Exception e) {

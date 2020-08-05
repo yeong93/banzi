@@ -170,6 +170,7 @@ public class EventController extends HttpServlet {
 				int eventNo = Integer.parseInt(request.getParameter("no"));
 				
 				Event event = eService.selectEvent(eventNo);
+				System.err.println(event);
 				if(event != null) {
 					List<Attachment> fList = eService.selectFiles(eventNo);
 					
@@ -190,9 +191,7 @@ public class EventController extends HttpServlet {
 				}
 				
 //--------------------------------- 이벤트 게시글 수정 ------------------------------------				
-			}else if(command.equals("/eventUpdateForm.do")) {
-				errorMsg = "이벤트 게시글 수정";
-				
+			}else if(command.equals("/eventUpdateForm.do")) {				
 				int eventNo = Integer.parseInt(request.getParameter("no"));
 	
 				Event event = eService.eventUpdateView(eventNo);
@@ -309,7 +308,7 @@ public class EventController extends HttpServlet {
 			}else if(command.equals("/winnerList.do")) {
 				errorMsg = "이벤트 당첨자 목록 조회";
 		
-				PageInfo pInfo = EventService.winnerPageInfo(currentPage);
+				PageInfo pInfo = eService.winnerPageInfo(currentPage);
 				List<Event> wList = eService.winnerList(pInfo); 		
 				
 				path = "/WEB-INF/views/event/winnerList.jsp";
@@ -323,22 +322,41 @@ public class EventController extends HttpServlet {
 				errorMsg = "이벤트 당첨자 세부 조회";
 				
 				int no = Integer.parseInt(request.getParameter("no"));
-				Event event = EventService.winnerView(no);
+				Event event = eService.winnerView(no);
 				
 				Gson gson = new Gson();
 				gson.toJson(event, response.getWriter());
+				
+			}else if(command.equals("/changeWinnerForm.do")) {
+				int no = Integer.parseInt(request.getParameter("no"));
+				
+				Event event = eService.winnerView(no);
+				
+				path = "/WEB-INF/views/event/changeWinner.jsp";
+				request.setAttribute("event", event);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
 				
 			}else if(command.equals("/changeWinner.do")) {
 				errorMsg = "이벤트 당첨자 수정";
 				
 				int no = Integer.parseInt(request.getParameter("no"));
+				String content = request.getParameter("content");
+				System.out.println(content);
+						
+				int result = eService.changeWinner(no, content);
 				
-				
-				
-			}else if(command.equals("/deleteWinner.do")) {
-				errorMsg = "이벤트 당첨자 삭제";
-				int no = Integer.parseInt(request.getParameter("no"));
-
+				if(result > 0) {
+					status = "success";
+					msg = "당첨자 발표 수정 성공";
+				}else {
+					status = "error";
+					msg = "당첨자 발표 수정 실패";
+				}
+				request.getSession().setAttribute("status", status);
+				request.getSession().setAttribute("msg", msg);
+				path = "winnerList.do?type="+eventType+"&cp="+currentPage+"&no="+no;
+				response.sendRedirect(path);
 				
 			}
 

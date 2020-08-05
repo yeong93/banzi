@@ -24,11 +24,16 @@
 	<section id="content">
 	
 		<!-- -------------------------------- 메인 -------------------------------- -->
-		<div class="container-fluid mt-5 " class="event">
-		
+		<div id="container" class="event">
 			<h1 class="type1">관리자 페이지</h1>
-			<!-- ----------------------------------------------------------------- -->
-			<h3 class="type1 text-center">회원 등급 부여</h3><br>
+
+			<!-- -------------------------------- 메뉴 -------------------------------- -->
+			<ul class="tabType1">
+				<li class="on"><a href="userAuthList.do">회원 등급 부여</a></li>
+				<li><a href="stillList.do">당첨자 미발표 이벤트</a></li>
+			</ul>
+
+			<!-- -------------------------------- 이벤트 -------------------------------- -->
 			<div class="eventList mx-auto">
 				<table class="table mx-auto text-center">
 					<thead class="thead-light">
@@ -64,7 +69,6 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
 	</section>
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>

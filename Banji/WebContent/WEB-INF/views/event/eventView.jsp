@@ -97,11 +97,10 @@
 					<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
 						<button type="submit" class="btn btn-primary btn-warning" id="delBtn"
 						onclick="location.href='eventDelete.do?no=<%=event.getEventNo()%>';">글 삭제</button>
-						
-						<%if(type == "1"){ %>
+		
 						<button type="button" class="btn btn-primary btn-warning" id="upBtn"
 						onclick="location.href='eventUpdateForm.do?type=<%=type%>&cp=<%=cp%>&no=<%=event.getEventNo()%>';">글 수정</button>
-						<% } %>
+		
 					<% } %>
 					
 					<a href="eventList.do?&type=<%=type%>&cp=<%=cp%>" class="btn btn-primary btn-warning float-right" id="listBtn">목록으로</a>

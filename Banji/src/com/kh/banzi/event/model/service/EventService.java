@@ -320,5 +320,23 @@ public class EventService {
 		conn.close();
 		return event;
 	}
+
+	/** 당첨자 발표 수정
+	 * @param no
+	 * @param content
+	 * @return result
+	 * @throws Exception
+	 */
+	public static int changeWinner(int no, String content) throws Exception{
+		Connection conn = getConnection();
+		
+		int result = dao.changeWinner(conn, no, content);
+		
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		conn.close();
+		return result;
+	}
 	
 }
