@@ -265,7 +265,7 @@ body {
 				<img src="<%=request.getContextPath() %>/resources/img/introduce/훈련사4.jpg"></img>
 			</div>
 			<div class="content">
-				<h3>한진호</h3>
+				<h3>한진호</h3>  
 				<p class="hospital">베스트도그병원</p>
 				<p>
 					전남대학교 수의과대학 졸업 <br> 現) 강남 베스트도그 부원장 http://bestwithdog.co.kr
