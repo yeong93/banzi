@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.kh.banzi.event.model.vo.Event;
 import com.kh.banzi.user.model.vo.User;
 
 public class MasterPageDAO {
@@ -89,6 +90,40 @@ public class MasterPageDAO {
 		}
 		
 		return result;
+	}
+
+
+	public List<Event> stillList(Connection conn) throws Exception{
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		List<Event> sList = null;
+		String query = prop.getProperty("stillList");
+		
+		try {
+			
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			sList = new ArrayList<Event>();
+			Event e = null;
+			
+			while(rset.next()) {
+				e = new Event(
+						rset.getInt("BOARD_NO"), 
+						rset.getString("EVENT_TITLE"),
+						rset.getTimestamp("EVENT_START_DT"),
+						rset.getTimestamp("EVENT_END_DT"),
+						rset.getInt("EVENT_WIN_NO") 
+						);
+				sList.add(e);
+			}
+			
+		} finally {
+			rset.close();
+			stmt.close();
+		}
+		return sList;
 	}
 
 }

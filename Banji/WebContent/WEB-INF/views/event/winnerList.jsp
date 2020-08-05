@@ -65,7 +65,6 @@
 							<th>해당 이벤트 기간</th>
 							<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
 								<th>글 수정</th>
-								<th>글 삭제</th>
 							<% }%>
 						</tr>
 					</thead>
@@ -91,8 +90,8 @@
 									<td id="td4"><%=start%> ~ <%=end%></td>
 									
 									<% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
-									<td><button type="button" class="btn btn-outline-secondary" onclick="location.href='changeWinner.do?type=<%=eventType%>&cp=<%=currentPage%>&no=<%=e.getEventNo()%>';">수정</button></td>
-									<td><button type="button" class="btn btn-outline-secondary" onclick="location.href='deleteWinner.do?type=<%=eventType%>&cp=<%=currentPage%>&no=<%=e.getEventNo()%>';">삭제</button></td>
+									
+									<td><button type="button" class="btn btn-outline-secondary" onclick="location.href='changeWinnerForm.do?type=<%=eventType%>&cp=<%=currentPage%>&no=<%=e.getEventNo()%>';">수정</button></td> 
 							  	<% }%>
 							  	
 								</tr>
@@ -145,7 +144,6 @@
 			type : "POST",
 			dataType : "JSON",
 			success : function(event){
-				console.log(event);
 			
 				if(event != null){
 					Swal.fire({
@@ -169,6 +167,7 @@
 	});
 	
 	
+
 	</script>
 </body>
 

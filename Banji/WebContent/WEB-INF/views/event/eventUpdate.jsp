@@ -95,7 +95,7 @@
 				  		<td><p>내용</p></td>
 				  		<td colspan="2">
 				  			<textarea class="form-control" id="content" name="content" rows="10" style="resize: none;"
-				  			val="<%=event.getEventContent()%>"></textarea>
+				  			><%=event.getEventContent()%></textarea>
 						</td>
 				  	</tr>
 		

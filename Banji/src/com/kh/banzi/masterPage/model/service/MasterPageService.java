@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
+import com.kh.banzi.event.model.vo.Event;
 import com.kh.banzi.masterPage.model.dao.MasterPageDAO;
 import com.kh.banzi.user.model.vo.User;
 
@@ -48,6 +49,20 @@ public class MasterPageService {
 		
 		conn.close();
 		return result;
+	}
+
+	/** 당첨자 미발표 이벤트 조회
+	 * @return sList
+	 * @throws Exception
+	 */
+	public List<Event> stillList() throws Exception{
+		
+		Connection conn = getConnection();
+		
+		List<Event> sList = dao.stillList(conn);
+		
+		conn.close();
+		return sList;
 	}
 
 }
