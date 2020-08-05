@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.banzi.common.Attachment;
+import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.dao.CommunityDAO;
 import com.kh.banzi.community.model.vo.Community;
-import com.kh.banzi.community.model.vo.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 
 /**

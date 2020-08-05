@@ -188,6 +188,9 @@ border-bottom : 2px solid #a6a6a9;
 .date{
 float:right;
 }
+.changeColor {
+background-color: #81F7D8;
+}
   </style>
   
 </head>
@@ -198,7 +201,7 @@ float:right;
     <div class="container">
       <h1>NOTICE</h1>
           <div class="my">
-              <table class="table table-hover table-striped" id="list-table">
+              <table class="table" id="list-table">
                    <thead>
                       <tr>
                           <th>작성자</th>
@@ -346,6 +349,18 @@ float:right;
          $(this).parent().css("cursor","pointer")
       })
       ; 
+     $(document).ready(function (){
+         changeColor();
+       })
+       
+       function changeColor(){
+           $('#list-table tr').mouseover(function(){
+             $(this).addClass('changeColor');
+       }).mouseout(function() {
+            $(this).removeClass('changeColor');
+       });
+       }
+
     
     //------------------------------------------------------------------------------------------------------------
     // 검색

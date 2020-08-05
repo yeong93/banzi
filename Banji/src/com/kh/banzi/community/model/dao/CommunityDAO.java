@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Properties;
 
 import com.kh.banzi.common.Attachment;
+import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.vo.Community;
-import com.kh.banzi.community.model.vo.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 
 public class CommunityDAO {

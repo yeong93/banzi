@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.banzi.common.Attachment;
 import com.kh.banzi.common.MyFileRenamePolicy;
+import com.kh.banzi.common.PageInfo;
 import com.kh.banzi.community.model.service.CommunityService;
 import com.kh.banzi.community.model.vo.Community;
-import com.kh.banzi.community.model.vo.PageInfo;
 import com.kh.banzi.community.model.vo.Reply;
 import com.kh.banzi.user.model.vo.User;
 import com.oreilly.servlet.MultipartRequest;

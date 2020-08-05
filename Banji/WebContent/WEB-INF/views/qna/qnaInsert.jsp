@@ -124,6 +124,10 @@
             $("#title").focus();
             return false;
          }
+         if($("#title").val().trim().length >= 20){
+        	 alert("제목은 20글자를 초과할 수 없습니다.");
+        	 return false;
+         }
 
          if ($("#content").val().trim().length == 0) {
             alert("내용을 입력해 주세요.");

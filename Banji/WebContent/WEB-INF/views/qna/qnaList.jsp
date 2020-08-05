@@ -112,17 +112,20 @@
         }
         .nick_box{
          font-weight:bold;
-         margin-bottom:10px;
+         font-size:0.82em;
+        }
+        #date{
+        margin-bottom:20px;
         }
         .reply_content{
-         font-weight:200;
-         font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+         font-weight:300;
+         font-family: '돋움',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+         margin:7px 0px;
         }
         .p1{
          font-size:1.3em;
         }
         #content img{
-        width:100%;
         max-width:650px;
         margin:25px 0px;
         display:block;
@@ -191,6 +194,9 @@ border-bottom : 2px solid #a6a6a9;
 .date{
 float:right;
 }
+.changeColor {
+background-color: #81F7D8;
+}
   </style>
   
 </head>
@@ -201,7 +207,7 @@ float:right;
     <div class="container">
       <h1>Q N A</h1>
           <div class="my">
-              <table class="table table-hover table-striped" id="list-table">
+              <table class="table" id="list-table">
                    <thead>
                       <tr>
                           <th>작성자</th>
@@ -396,9 +402,10 @@ userNick = "";
   		          $("#content").append($hr2);
      				  }
     			   $p1 = $("<p>").text("댓글");
-    			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
+    			   $div = $("<div>").addClass("nick_box").text("작성자 : " + map.rList[i].regWriter);
+    			   $div2 = $("<div>").addClass("nick_box").attr("id","date").text("작성일 : " + map.rList[i].regDate);
     			   $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
-             $("#content").append($div, $p2);
+             $("#content").append($div,$div2, $p2);
     			   if(userNick != "" && userNick == map.rList[i].regWriter){
  			         /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
  			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
@@ -483,14 +490,15 @@ userNick = "";
                 $("#content").append($hr2);
               }
              $p1 = $("<p>").text("댓글");
-             $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
+             $div = $("<div>").addClass("nick_box").text("작성자 : " + map.rList[i].regWriter);
+             $div2 = $("<div>").addClass("nick_box").attr("id","date").text("작성일 : " + map.rList[i].regDate);
              $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
              if(userNick == map.rList[i].regWriter){
                  /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
                  var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
-                 $("#content").append($div, $p2, $deleteReply);
+                 $("#content").append($div,$div2, $p2, $deleteReply);
               }else{
-            	   $("#content").append($div, $p2);
+            	   $("#content").append($div,$div2, $p2);
               }
             }
           }
@@ -553,6 +561,19 @@ userNick = "";
         	location.reload();
         }
     });
+    
+    $(document).ready(function (){
+    	changeColor();
+    })
+    
+		function changeColor(){
+    	  $('#list-table tr').mouseover(function(){
+    		  $(this).addClass('changeColor');
+		}).mouseout(function() {
+			   $(this).removeClass('changeColor');
+		});
+		}
+
   </script>
   
   

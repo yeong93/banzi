@@ -1,9 +1,9 @@
+<%@page import="com.kh.banzi.common.PageInfo"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="com.kh.banzi.community.model.vo.Community"%>
 <%@page import="java.util.List"%>
-<%@page import="com.kh.banzi.community.model.vo.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
   PageInfo pInfo = (PageInfo)request.getAttribute("pInfo");
@@ -95,6 +95,9 @@
         th:nth-of-type(4){
         width:15%;
         }
+        .changeColor {
+				background-color: #81F7D8;
+				}
 	</style>
 	
 </head>
@@ -105,7 +108,7 @@
 		<div class="container">
 		<h1>자유게시판</h1>
 	        <div class="my">
-	            <table class="table table-hover table-striped" id="list-table">
+	            <table class="table" id="list-table">
 	                <thead>
 	                    <tr>
 	                        <th>작성자</th>
@@ -232,6 +235,19 @@
          $(this).parent().css("cursor","pointer")
       })
       ; 
+
+     $(document).ready(function (){
+       changeColor();
+     })
+     
+     function changeColor(){
+         $('#list-table tr').mouseover(function(){
+           $(this).addClass('changeColor');
+     }).mouseout(function() {
+          $(this).removeClass('changeColor');
+     });
+     }
+
 		
 		//------------------------------------------------------------------------------------------------------------
 		// 검색
