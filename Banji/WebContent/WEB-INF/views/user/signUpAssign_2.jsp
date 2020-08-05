@@ -30,10 +30,10 @@
             border: none;
         }
         #back{
-        	height:10px;
+           height:10px;
         }
         #group{
-        	margin:auto;
+           margin:auto;
         }
     </style>
     </head>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                	<div id="group">
+                   <div id="group">
                     <div class="col-lg-offset-2 col-lg-10 text-center">
                         <button type="submit" class="btn btn-primary color" id="btn" >회원가입</button>
                         <button type="reset" class="btn btn-primary color" id="btn2">취소</button>
@@ -233,19 +233,23 @@
                         divId.addClass("has-error");
                         $('#id').focus();
                         return false;
-                    }else if($(!regExp.test($("#id").val()))){
-                    	modalContents.text("유효한 아이디를 입력해주세요.");
-						modal.modal('show');
-                        
-                        divId.removeClass("has-success");
-                        divId.addClass("has-error");
-                    	return false;
-                    }
-  		
-                    else{
+                    }else{
                         divId.removeClass("has-error");
                         divId.addClass("has-success");
                     }
+                    /*
+                    if($(!regExp.test($("#id").val()))){
+                        modalContents.text("유효한 아이디를 입력해주세요.");
+                   		modal.modal('show');
+                         
+                         divId.removeClass("has-success");
+                         divId.addClass("has-error");
+                        return false;
+                     }else{
+                         divId.removeClass("has-error");
+                         divId.addClass("has-success");
+                     }
+                    */
                     
                     //패스워드 검사
                     if($('#password').val()==""){
@@ -334,27 +338,29 @@
 
             });
             // 비밀번호 일치 여부 검사
-    		$("#passwordCheck").on("input",function() {
-    			if($("#password").val().trim()!= $("#passwordCheck").val().trim()){
-    				$("#checkPwd").text("비밀번호가 일치하지 않습니다.").css("color","red");
-
-    			}else{
-    				$("#checkPwd").text("비밀번호가 일치합니다.").css("color","green");
-    				}
-    	  		});
+          $("#passwordCheck").on("input",function() {
+             if($("#password").val().trim()!= $("#passwordCheck").val().trim()){
+                $("#checkPwd").text("비밀번호가 일치하지 않습니다.").css("color","red");
+                
+                if($("#passwordCheck").val().length == 0 || $("#password").val().length == 0)	$("#checkPwd").text("");
+                
+             }else{
+                $("#checkPwd").text("비밀번호가 일치합니다.").css("color","green");
+                }
+               });
             
 
             // id를 입력하는 경우 발생하는 이벤트
             var $id = $("#id");
             
-         	$("#id").on("input", function(){
+            $("#id").on("input", function(){
              // ajax를 이용한 아이디 유효성 검사
              var regExp = /^[a-z][a-zA-Z\d]{5,11}/;
              if(!regExp.test($id.val())){
-            	 
+                
                  $("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color", "red");
 
-                 if($id.val().length == 0)	$("#checkId").text("");
+                 if($id.val().length == 0)   $("#checkId").text("");
 
              }else{ // 유효한 아이디 형식일 때
                  $.ajax({
@@ -376,7 +382,7 @@
              }
          });
 
-			
+         
         </script>
             <hr/>
             <!-- 푸터 들어가는 부분 -->

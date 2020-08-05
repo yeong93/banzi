@@ -139,7 +139,7 @@ public class InformationController extends HttpServlet {
 					
 				}else {
 					status = "error";
-					msg = "게시글 등록 실패";
+					msg = "게시글 등록 실패"; 
 					path = request.getHeader("referer");
 				}
 				request.getSession().setAttribute("status", status);
