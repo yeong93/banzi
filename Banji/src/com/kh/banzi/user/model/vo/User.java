@@ -105,8 +105,18 @@ public class User {
 		this.userAnswer = userAnswer;
 	}
 	
-	
-	
+
+	/** 관리자 페이지
+	 * @param userNo
+	 * @param userId
+	 * @param userGrade
+	 */
+	public User(int userNo, String userId, String userGrade) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userGrade = userGrade;
+	}
 
 	// (3) getter와 setter 작성
 	public int getUserNo() {
