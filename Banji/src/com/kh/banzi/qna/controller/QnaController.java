@@ -251,8 +251,9 @@ public class QnaController extends HttpServlet {
                 response.sendRedirect(path);
             } else if (command.equals("/deleteReply.do")) {
                 int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+                int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 
-                int result = service.deleteReply(replyNo);
+                int result = service.deleteReply(replyNo, boardNo);
 
                 if (result > 0)
                     response.getWriter().print("댓글 삭제 성공");

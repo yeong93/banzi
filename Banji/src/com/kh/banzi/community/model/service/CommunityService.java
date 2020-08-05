@@ -93,14 +93,12 @@ public class CommunityService {
 
         if (boardNo > 0) {
             community.setBoardNo(boardNo);
-            System.out.println(boardNo);
 
             community.setContent(replaceParameter(community.getContent()));
             community.setContent(community.getContent().replaceAll("\r\n", "<br>"));
 
 
             result = dao.insertCommunity(conn, community);
-            System.out.println(result);
 
             if(result > 0 && !fList.isEmpty()) {
                 result = 0;
@@ -298,6 +296,19 @@ public class CommunityService {
         else
             conn.rollback();
         
+        conn.close();
+        return result;
+    }
+
+    public int deleteReply(int replyNo) throws Exception{
+        Connection conn = getConnection();
+        
+        int result = dao.deleteReply(conn, replyNo);
+        
+        if(result > 0)
+            conn.commit();
+        else
+            conn.rollback();
         conn.close();
         return result;
     }

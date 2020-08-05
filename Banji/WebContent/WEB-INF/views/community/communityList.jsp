@@ -38,14 +38,23 @@
 <meta charset="UTF-8">
 <title>게시판</title>
     <style>
+          @font-face {
+  font-family: "yg-jalnan";
+  src:
+    url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
        *{
       font-family: "InfinitySans-RegularA1";
       }
        h1{
-        font-family: 'Roboto', sans-serif;
+        font-family: "yg-jalnan";
         font-weight:bold;
         text-align:center;
         padding-bottom:25px;
+        letter-spacing:5px;
        }
     	.pagination {
             justify-content: center;
@@ -94,7 +103,7 @@
 	<div class="boardTitle ">
 
 		<div class="container">
-		<h1>C O M M U N I T Y</h1>
+		<h1>자유게시판</h1>
 	        <div class="my">
 	            <table class="table table-hover table-striped" id="list-table">
 	                <thead>
@@ -195,10 +204,10 @@
 	        
 	        
 	        <!-- 검색 -->
-	        <div>
+<!-- 	        <div>
 	            <form action="search" method="GET" class="text-center" id="searchForm">
 	                <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-	                    <!-- <option value="title" selected>글제목</option> -->
+	                    <option value="title" selected>글제목</option>
 	                    <option value="title">글제목</option>
 	                    <option value="content">내용</option>
 	                    <option value="titcont">제목+내용</option>
@@ -207,7 +216,7 @@
 	                <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
 	            </form>
 	            
-	        </div>
+	        </div> -->
     	</div>
 		<%@ include file="../common/footer.jsp"%>
 	</div>

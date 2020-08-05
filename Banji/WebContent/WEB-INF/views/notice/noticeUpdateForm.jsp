@@ -1,10 +1,11 @@
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@page import="java.util.List"%>
-<%@page import="com.kh.banzi.community.model.vo.Community"%>
+<%@page import="com.kh.banzi.notice.model.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <% 
-  Community community = (Community)request.getAttribute("community");
+    
+<% 
+  Notice notice = (Notice)request.getAttribute("notice");
   List<Attachment> fList = (List<Attachment>)request.getAttribute("fList");
   String type = request.getParameter("type"); 
   String cp = request.getParameter("cp");
@@ -37,7 +38,7 @@
       <h3>게시글 수정</h3>
       <hr>
       
-      <form action="<%=request.getContextPath()%>/community/update.do?cp=<%=cp%>&no=<%=community.getBoardNo()%>" method="post" 
+      <form action="<%=request.getContextPath()%>/notice/update.do?cp=<%=cp%>&no=<%=notice.getBoardNo()%>" method="post" 
           enctype="multipart/form-data" role="form" onsubmit="return validate();">
 
 <!--         <div class="mb-2">
@@ -53,7 +54,7 @@
         </div> -->
         <div class="form-inline mb-2">
           <label class="input-group-addon mr-3 insert-label">제목</label> 
-          <input type="text" class="form-control" id="title" name="title" size="70" value="<%=community.getTitle()%>">
+          <input type="text" class="form-control" id="title" name="title" size="70" value="<%=notice.getTitle()%>">
         </div>
 
         <div class="form-inline mb-2">
@@ -105,7 +106,7 @@
             <label for="content">내용</label>
           </div>
           <textarea class="form-control" id="content" name="content"
-            rows="10" style="resize: none;"><%=community.getContent()%></textarea>
+            rows="10" style="resize: none;"><%=notice.getContent()%></textarea>
         </div>
 
 

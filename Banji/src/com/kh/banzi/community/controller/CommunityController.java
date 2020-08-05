@@ -283,6 +283,15 @@ public class CommunityController extends HttpServlet {
                 else
                     response.getWriter().print("댓글 삽입 실패");
                 
+            } else if (command.equals("/deleteReply.do")) {
+                int replyNo = Integer.parseInt(request.getParameter("replyNo"));
+                
+                int result = service.deleteReply(replyNo);
+                
+                if(result > 0)
+                    response.getWriter().print("댓글 삭제 성공");
+                else
+                    response.getWriter().print("댓글 삭제 실패");
             }
 
         }catch(Exception e) {

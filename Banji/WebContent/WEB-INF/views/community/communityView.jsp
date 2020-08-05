@@ -239,9 +239,8 @@
 	               $p2 = $("<p>").addClass("reply_content").html(rList[i].content);
 	               $(".relply-list").append($div, $p2);
 	               if(userNick == rList[i].regWriter){
-	            	   var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+rList[i].replyNo+")");
 	            	   var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+rList[i].replyNo+")");
-	            	   $(".relply-list").append($showUpdate, $deleteReply);  
+	            	   $(".relply-list").append( $deleteReply);  
 	               }
 	             }
 	           
@@ -287,7 +286,7 @@
  		      /*  var boardNo = $("[type='hidden']").attr("class") */;
  		      var boardNo = "<%=community.getBoardNo()%>";
  		       $.ajax({
- 		    	  url : "<%=request.getContextPath()%>/qna/deleteReply.do",
+ 		    	  url : "<%=request.getContextPath()%>/community/deleteReply.do",
  		        data : {"replyNo" : replyNo},
  		        success : function(result){
  		          alert(result);

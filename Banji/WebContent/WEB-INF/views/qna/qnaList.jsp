@@ -37,8 +37,18 @@
 <meta charset="UTF-8">
 <title>게시판</title>
    <style>
+   @font-face {
+  font-family: "yg-jalnan";
+  src:
+    url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+   
        h1{
-        font-family: 'Roboto', sans-serif;
+        /* font-family: 'Roboto', sans-serif; */
+        font-family: "yg-jalnan";
         text-align:center;
         padding-bottom:25px;
         
@@ -113,7 +123,9 @@
         }
         #content img{
         width:100%;
-        heught:auto;
+        max-width:650px;
+        margin:25px 0px;
+        display:block;
         }
         
         <!-- btn -->
@@ -285,10 +297,10 @@ float:right;
           
           
           <!-- 검색 -->
-          <div>
+<!--           <div>
               <form action="search" method="GET" class="text-center" id="searchForm">
                   <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-                      <!-- <option value="title" selected>글제목</option> -->
+                      <option value="title" selected>글제목</option>
                       <option value="title">글제목</option>
                       <option value="content">내용</option>
                       <option value="titcont">제목+내용</option>
@@ -297,7 +309,7 @@ float:right;
                   <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
               </form>
               
-          </div>
+          </div> -->
       </div>
       <!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -360,9 +372,9 @@ userNick = "";
     		  $("#content").html(map.qna.content);
     		  $("[type='hidden']").attr('class', boardNo);
     		  if(map.qna.regWriter == userNick){
-    			  $("modal-footer").html()
-    			  $(".modal-footer").prepend("<div class ='btn btn-primary' data-dismiss='modal' onclick='deleteQna();'>삭제");
-    			  $(".modal-footer").prepend("<div class ='btn btn-primary' data-dismiss='modal' onclick='updateQna();'>수정");
+    			  $(".bt").remove();
+    			  $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='deleteQna();'>삭제");
+    			  $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='updateQna();'>수정");
     		  }
     		  if(map.fList.length != 0){
     			  var src;
@@ -370,7 +382,6 @@ userNick = "";
     			  for(var i = 0; i < map.fList.length; i++){
  						  src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
  						  $("#content").append("<img src="+src+">");
- 						  console.log(src);
  						  src = "";
     			  }
     			  
@@ -386,12 +397,12 @@ userNick = "";
      				  }
     			   $p1 = $("<p>").text("댓글");
     			   $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
-    			   $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
+    			   $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
              $("#content").append($div, $p2);
     			   if(userNick != "" && userNick == map.rList[i].regWriter){
- 			         var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");");
+ 			         /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
  			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
- 			         $("#content").append($showUpdate, $deleteReply);
+ 			         $("#content").append($deleteReply);
     			   }
      			  }
     		  }
@@ -457,9 +468,6 @@ userNick = "";
             var src;
             var flag = true;
             for(var i = 0; i < map.fList.length; i++){
-              console.log(i);
-              console.log(map.fList.fileLevel);
-              console.log(map.fList[i].fileChangeName);
               src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
               $("#content").append("<img src="+src+">");
             }
@@ -476,11 +484,11 @@ userNick = "";
               }
              $p1 = $("<p>").text("댓글");
              $div = $("<div>").addClass("nick_box").text(map.rList[i].regWriter);
-             $p2 = $("<p>").addClass("reply_content").text(map.rList[i].content);
+             $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
              if(userNick == map.rList[i].regWriter){
-                 var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");");
+                 /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
                  var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
-                 $("#content").append($div, $p2, $showUpdate, $deleteReply);
+                 $("#content").append($div, $p2, $deleteReply);
               }else{
             	   $("#content").append($div, $p2);
               }
@@ -522,15 +530,13 @@ userNick = "";
     	location.reload();
     }
     
-    // 댓글 수정
+    // 댓글 삭제
     function showDeleteReply(replyNo){
-    	console.log()
    	 if(confirm("해당 댓글을 삭제하시겠습니까?")){
       var boardNo = $("[type='hidden']").attr("class");
-      console.log("댓"+replyNo);
     	$.ajax({
     	 url : "<%=request.getContextPath()%>/qna/deleteReply.do",
-    	 data : {"replyNo" : replyNo},
+    	 data : {"replyNo" : replyNo, "boardNo" : boardNo},
     	 success : function(result){
     		 alert(result);
     		 reload(boardNo);
@@ -541,6 +547,12 @@ userNick = "";
     	});
    	 }    	
     };
+    
+    $(document).keydown(function(event) {
+        if ( event.keyCode == 27 || event.which == 27 ) {
+        	location.reload();
+        }
+    });
   </script>
   
   

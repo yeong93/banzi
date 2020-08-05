@@ -205,7 +205,7 @@ public class QnaDAO {
         return result;
     }
 
-    public List<Attachment> selectFiles(Connection conn, int boardNo) throws Exception{
+    public List<Attachment> selectFiles(Connection conn, int boardNo, int boardType) throws Exception{
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         List<Attachment> fList = null;
@@ -213,6 +213,7 @@ public class QnaDAO {
         try {
             pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, boardNo);
+            pstmt.setInt(2, boardType);
             
             rset = pstmt.executeQuery();
             
@@ -374,6 +375,20 @@ public class QnaDAO {
             pstmt.close();
         }
         return result;
+    }
+
+    public void decreaseReply(Connection conn, int boardNo) throws Exception{
+        PreparedStatement pstmt = null;
+        String query = prop.getProperty("decreaseReply");
+        
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, boardNo);
+            pstmt.executeUpdate();
+        }finally {
+            pstmt.close();
+        }
+        
     }
 
 }

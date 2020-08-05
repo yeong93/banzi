@@ -37,10 +37,19 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
    <style>
+      @font-face {
+  font-family: "yg-jalnan";
+  src:
+    url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
        h1{
-        font-family: 'Roboto', sans-serif;
+        font-family: "yg-jalnan";
         text-align:center;
         padding-bottom:25px;
+        letter-spacing:5px;
        }
        *{
          font-family: "InfinitySans-RegularA1";
@@ -187,7 +196,7 @@ float:right;
   <div class="container">
 
     <div class="container">
-      <h1>N O T I C E</h1>
+      <h1>NOTICE</h1>
           <div class="my">
               <table class="table table-hover table-striped" id="list-table">
                    <thead>
@@ -281,10 +290,10 @@ float:right;
           
           
           <!-- 검색 -->
-          <div>
+<!--           <div>
               <form action="search" method="GET" class="text-center" id="searchForm">
                   <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-                      <!-- <option value="title" selected>글제목</option> -->
+                      <option value="title" selected>글제목</option>
                       <option value="title">글제목</option>
                       <option value="content">내용</option>
                       <option value="titcont">제목+내용</option>
@@ -293,7 +302,7 @@ float:right;
                   <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
               </form>
               
-          </div>
+          </div> -->
       </div>
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

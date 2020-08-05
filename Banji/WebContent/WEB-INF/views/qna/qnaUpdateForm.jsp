@@ -59,12 +59,12 @@
 
         <hr>
 
-        <div class="form-inline mb-2">
+<!--         <div class="form-inline mb-2">
           <label class="input-group-addon mr-3 insert-label">썸네일</label>
           <div class="boardImg" id="titleImgArea">
             <img id="titleImg" width="200" height="200">
           </div>
-        </div>
+        </div> -->
 
         <div class="form-inline mb-2">
           <label class="input-group-addon mr-3 insert-label">업로드<br>이미지</label>
