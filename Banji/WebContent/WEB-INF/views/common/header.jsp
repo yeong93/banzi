@@ -207,12 +207,20 @@ color: white;
             </div>
           </li>
           <li class="nav-item dropdown">
+          	 <% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
+          	 
+          		<a class="nav-link" href="<%=request.getContextPath()%>/masterPage/userAuthList.do" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>
+            
+						<% }else { %>
+						
             <a class="nav-link" href="<%=request.getContextPath()%>/myPage/changeUserForm.do" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/changeUserForm.do">회원정보 수정</a>
               <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/changePwdForm.do">비밀번호 수정</a>
               <a class="dropdown-item" href="<%=request.getContextPath()%>/myPage/secessionForm.do">회원 탈퇴</a>
             </div>
+            
+            <% } %>
           </li>
         </ul>
       </div>
