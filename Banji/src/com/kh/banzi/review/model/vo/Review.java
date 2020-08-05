@@ -88,10 +88,11 @@ public class Review {
 
 	
 	// index용 생성자
-	public Review(String reviewTitle, String reviewContent) {
+	public Review(String reviewTitle, String reviewContent, int reviewBoardNo) {
 		super();
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
+		this.reviewBoardNo = reviewBoardNo;
 	}
 
 	public int getReviewBoardNo() {

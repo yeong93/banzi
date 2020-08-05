@@ -79,7 +79,8 @@ public class indexDAO {
 			
 			while(rset.next()) {
 				Community community = new Community(rset.getString("TITLE"), 
-																	rset.getString("CONTENT"));
+																	rset.getString("CONTENT"),
+																	rset.getInt("BOARD_NO"));
 				
 				cList.add(community);
 			}
@@ -113,7 +114,8 @@ public class indexDAO {
 			
 			while(rset.next()) {
 				Qna qna = new Qna(rset.getString("TITLE"), 
-										rset.getString("CONTENT"));
+										rset.getString("CONTENT"),
+										rset.getInt("BOARD_NO"));
 				
 				qList.add(qna);
 			}
@@ -141,7 +143,9 @@ public class indexDAO {
 			
 			while(rset.next()) {
 				Review review = new Review(rset.getString("REVIEW_TITLE"), 
-										rset.getString("REVIEW_CONTENT"));
+										rset.getString("REVIEW_CONTENT"),
+										rset.getInt("REVIEW_BOARD_NO")
+						);
 				
 				rList.add(review);
 			}

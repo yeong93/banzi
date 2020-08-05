@@ -70,6 +70,16 @@ public class Qna {
 		this.title = title;
 		this.content = content;
 	}
+    
+    
+
+    // main위한 생성자
+	public Qna(String title, String content, int boardNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.boardNo = boardNo;
+	}
 
 
 

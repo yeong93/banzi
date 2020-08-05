@@ -140,7 +140,6 @@ public class reviewServlet extends HttpServlet {
 				// 1. 게시글 조회
 				Review review = reviewService.detailReview(boardNo);
 				
-				System.out.println("게시글 상세조회 review"+review);
 				if(review!= null) {
 					List<Attachment> fList = reviewService.selectFiles(boardNo);
 	  
@@ -194,7 +193,6 @@ public class reviewServlet extends HttpServlet {
 						
 						path="/WEB-INF/views/review/reviewUpdateForm.jsp";
 						request.setAttribute("review", review);
-						System.out.println("확인"+review);
 						view = request.getRequestDispatcher(path);
 						view.forward(request, response);
 					}
@@ -221,6 +219,7 @@ public class reviewServlet extends HttpServlet {
 					
 					Review review = new Review(reviewNo, reviewTitle, reviewContent, rating, reviewCategory);
 					
+					System.out.println("review 수정!!" + review);
 					List<Attachment> fList = new ArrayList<Attachment>();
 					
 					Enumeration<String> files = mRequest.getFileNames();
@@ -247,8 +246,9 @@ public class reviewServlet extends HttpServlet {
 						}
 					}
 					// 여기까지
-					System.out.println(review);
+					//System.out.println(review);
 					int result = reviewService.updateReview(review, fList);
+					System.out.println("몇번인데"+result);
 					
 					if(result>0) {
 						status = "success";

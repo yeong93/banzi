@@ -91,6 +91,12 @@
             background-color: rgb(250, 156, 88);
             cursor: pointer;
         }
+        
+        .review-button:hover>a {
+            cursor: pointer;
+            text-decoration:none;
+            color: white;
+        }
 
         .review-button>a {
             position: absolute;
@@ -125,7 +131,7 @@
         }
 
         .review-box:hover {
-            background-color: rgba(165, 165, 161, 0.1)
+            background-color: rgba(149, 149, 149, 0.1);
         }
 
         .review-box-top {
@@ -187,7 +193,7 @@
             width: 64px;
             height: 64px;
             margin: 7px 4px 3px 4px;
-            border: 0.5px solid rgb(150, 150, 150);
+            
             border-radius: 2px;
             display: inline-flex;
             

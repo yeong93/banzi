@@ -8,7 +8,20 @@
   <meta charset="UTF-8">
   <title>07.시맨틱태그</title>
   <style>
-      body { margin: 0; padding: 0;}
+  		@font-face { 
+            font-family: 'GmarketSansMedium'; 
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal; 
+            font-style: normal; 
+        }
+        
+        @font-face { 
+        	font-family: 'InfinitySans-RegularA1'; 
+	        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+	        font-weight: normal; font-style: normal; 
+	    }
+        
+    	body { margin: 0; padding: 0;}
         .empty { width: 100%; height: 200px;}
         
         .container {
@@ -24,7 +37,7 @@
             width: 33%;
             height: 90%;
             box-sizing: border-box;
-            border: 1px solid black;
+            
             margin: 15px;
             display: inline-block;
             position: relative;
@@ -46,15 +59,17 @@
         }
 
         .category{
-            height: 30px;
-            margin-left: 550px;
-            font-size: 20px;
+            height: 18px;
+            margin-left: 520px;
+            font-size: 18px;
             margin-top: 20px;
-
+			font-family: "InfinitySans-RegularA1";
+			color: #5d5d5d;
           }
           
           .title-text{
-          	font-size: 30px;
+         	font-family: 'GmarketSansMedium'; 
+          	font-size: 20px;
           	text-align:center;
           	position: absolute;
           	margin:auto;
@@ -67,6 +82,10 @@
           .title-text> img{
           	 width: 100%;
             height: 100%;
+          }
+          
+          .title-text > img{
+          	opacity: 0.7;
           }
   </style>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
@@ -157,7 +176,7 @@
                 
             </div>
             <div class="img-box">
-            <p class="qna-title2 title-text"></p>]
+            <p class="qna-title2 title-text"></p>
             </div>
         </div>
         
@@ -198,18 +217,26 @@ $(function(){
 	      dataType : "JSON",
 	      success : function(map){
 	    	  for(var i=0; i<map.iList.length ; i++){
-	    		 $p = $("<p style='right: 0; left: 0; position: absolute; line-height: 150px;'>").text(map.iList[i].infoBoardTitle);
 	    		  
+	    		 // 하이퍼링크
+	    		 var hrefNo = map.iList[i].infoBoardNo;
+	    	 	 $a = $("<a>");
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&no=" + hrefNo);
+	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 $(".info-title"+i).append($a);
+	    	 	
+	    	 	 // 텍스트용
+	    		 $p = $("<p>");
+	    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+	    		 $p.text(map.iList[i].infoBoardTitle);
 	    	 	 $(".info-title"+i).append($p);
 	    	 	 
-	    	 	 console.log(map.iList[i]);
-	    	 	 console.log(map.fList[i]);
-	    	 	 
+	    	 	 // 이미지
 	    	 	 if(map.iList[i].infoBoardNo == map.fList[i].parentBoardNo){
 		    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
 		             $(".info-title"+i).append("<img src="+src+">");
+		             
 	    	 	 }  
-	    	 	 
 	    	  }
 	      },error : function(){
 	         console.log("ajax 통신 실패");
@@ -225,14 +252,25 @@ $(function(){
 	      dataType : "JSON",
 	      success : function(map){
 	    	  for(var i=0; i<map.cList.length ; i++){
-	    		  $p = $("<p style='right: 0; left: 0; position: absolute; line-height: 150px;'>").text(map.cList[i].title); 
-	    		  $(".community-title"+i).append($p);
-	    	 	// $(".community-title"+i).text(map.cList[i].title);
-	    	 	
-	    		  console.log("확인" + map.cList);
-	    	 	 
-	    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-	             $(".community-title"+i).append("<img src="+src+">");
+		    		 // 하이퍼링크
+		    		 var hrefNo = map.cList[i].boardNo;
+		    	 	 $a = $("<a>");
+		    	 	 $a.attr("href", "<%=request.getContextPath()%>/community/view.do?type=3&no=" + hrefNo);
+		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+		    	 	 $(".community-title"+i).append($a);
+		    	 	
+		    	 	 // 텍스트용
+		    		 $p = $("<p>");
+		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+		    		 $p.text(map.cList[i].title);
+		    	 	 $(".community-title"+i).append($p);
+		    	 	 
+		    	 	 // 이미지
+		    	 	 if(map.cList[i].boardNo == map.fList[i].parentBoardNo){
+			    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
+			             $(".community-title"+i).append("<img src="+src+">");
+			             
+		    	 	 }  
 	    	  }
 	      },error : function(){
 	         console.log("ajax 통신 실패");
@@ -248,13 +286,25 @@ $(function(){
 	      dataType : "JSON",
 	      success : function(map){
 	    	  for(var i=0; i<map.qList.length ; i++){
-	    		  $p = $("<p style='right: 0; left: 0; position: absolute; line-height: 150px;'>").text(map.qList[i].title); 
-	    		  $(".qna-title"+i).append($p);
-	    	 	  // $(".qna-title"+i).text(map.qList[i].title);
-	    	 	 
-	    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-	             $(".qna-title"+i).append("<img src="+src+">");
-	    	 	 
+		    		 // 하이퍼링크
+		    		 var hrefNo = map.qList[i].boardNo;
+		    	 	 $a = $("<a>");
+		    	 	 $a.attr("href", "<%=request.getContextPath()%>/qna/list.do?type=5&no=" + hrefNo);
+		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+		    	 	 $(".qna-title"+i).append($a);
+		    	 	
+		    	 	 // 텍스트용
+		    		 $p = $("<p>");
+		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+		    		 $p.text(map.qList[i].title);
+		    	 	 $(".qna-title"+i).append($p);
+		    	 	 
+		    	 	 // 이미지
+		    	 	 if(map.qList[i].boardNo == map.fList[i].parentBoardNo){
+		    	 		 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
+			             $(".qna-title"+i).append("<img src="+src+">");
+	    		  
+		    	 	 }
 	    	  }
 	      },error : function(){
 	         console.log("ajax 통신 실패");
@@ -270,13 +320,27 @@ $(function(){
 	      dataType : "JSON",
 	      success : function(map){
 	    	  for(var i=0; i<map.rList.length ; i++){
-	    		 $p = $("<p style='right: 0; left: 0; position: absolute; line-height: 150px;'>").text(map.rList[i].title); 
-	    		 $(".review-title"+i).append($p);
-	    	 	 //$(".review-title"+i).text(map.rList[i].reviewTitle);
-	    	 	 
-	    	 	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
-	             $(".review-title"+i).append("<img src="+src+">");
-	    	 	 
+		    		 // 하이퍼링크
+		    		 console.log(map.rList[0]);
+		    		 console.log(map.fList[0]);
+		    		 var hrefNo = map.rList[i].reviewBoardNo;
+		    	 	 $a = $("<a>");
+		    	 	 $a.attr("href", "<%=request.getContextPath()%>/review/detailReview.do?type=6&no=" + hrefNo);
+		    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+		    	 	 $(".review-title"+i).append($a);
+		    	 	
+		    	 	 // 텍스트용
+		    		 $p = $("<p>");
+		    		 $p.css({"right" : "0", "left" : "0" , "position" : "absolute", "line-height" : "150px",  "z-index":"1"});
+		    		 $p.text(map.rList[i].reviewTitle);
+		    	 	 $(".review-title"+i).append($p);
+		    	 	 
+		    	 	 // 이미지
+		    	 	 if(map.rList[i].reviewBoardNo == map.fList[i].parentBoardNo){
+		    	 		src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
+			             $(".review-title"+i).append("<img src="+src+">");
+	    		  
+		    	 	 }
 	    	  }
 	      },error : function(){
 	         console.log("ajax 통신 실패");

@@ -59,6 +59,9 @@
 	
 	h3 {font-family: 'GmarketSansMedium';}
 	
+	.make_star .rating {
+      		color: #bababa;
+      	}
 	
 	/* 이미지 업로드 부분*/
 	.boardImg { cursor: pointer; }
@@ -225,12 +228,15 @@
 	    }
 		
 	    
+	    
+	    
+	    
 	    // 별점용
 	    $(function(){
 		    $('.make_star svg').click(function(){
 		        var targetNum = $(this).index()+1;
-		        $('.make_star svg').css({color:'#000'});
-		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#F05522'});
+		        $('.make_star svg').css({color:'#bababa'});
+		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'rgb(255, 214, 0)'});
 		        // console.log(targetNum);
 		        
 		      	$("#rating").val(targetNum);

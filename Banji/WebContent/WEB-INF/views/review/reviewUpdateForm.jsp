@@ -4,7 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	Review review = (Review)request.getAttribute("review");
-	System.out.println("jsppppp"+review);
 	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type"); 
 	String cp = request.getParameter("cp");
@@ -119,6 +118,7 @@
 		            </div>
 		        </div>
 		        
+		        <!-- 숨긴 star -->
 		        <input type="hidden" id="rating-hidden" name="rating" data-rate="<%=review.getReviewRating() %>">
 		        <input type="hidden" id="forwardRating" name="forwardRating">
 				

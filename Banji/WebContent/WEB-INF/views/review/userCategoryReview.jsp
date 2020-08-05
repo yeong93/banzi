@@ -107,6 +107,12 @@
             text-decoration:none;
             color: white;
         }
+        
+        .review-button:hover>a {
+            cursor: pointer;
+            text-decoration:none;
+            color: white;
+        }
 
         /* review-box */
         .container {
@@ -130,7 +136,7 @@
         }
 
         .review-box:hover {
-            background-color: rgba(165, 165, 161, 0.1);
+            background-color: rgba(149, 149, 149, 0.1);
             cursor: pointer;
         }
 
