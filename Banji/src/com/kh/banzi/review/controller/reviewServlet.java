@@ -197,10 +197,9 @@ public class reviewServlet extends HttpServlet {
 						view.forward(request, response);
 					}
 					
-				// --- 여기까지 완성
-				// 리뷰 수정 ing -> 평가 가져온게 잘못된듯.
+				
+				
 				}else if(command.equals("/updateReviewForm.do")) {
-					 System.out.println("OK");
 					
 					 int maxSize = 1024 * 1024 *10; 
 					String root = request.getSession().getServletContext().getRealPath("/");
@@ -219,7 +218,6 @@ public class reviewServlet extends HttpServlet {
 					
 					Review review = new Review(reviewNo, reviewTitle, reviewContent, rating, reviewCategory);
 					
-					System.out.println("review 수정!!" + review);
 					List<Attachment> fList = new ArrayList<Attachment>();
 					
 					Enumeration<String> files = mRequest.getFileNames();

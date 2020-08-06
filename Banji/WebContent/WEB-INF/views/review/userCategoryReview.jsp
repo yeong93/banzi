@@ -133,6 +133,7 @@
             border: 4px solid rgba(250, 156, 88, 0.3);
             margin: 25px;
             display: inline-block;
+            overflow: hidden;
         }
 
         .review-box:hover {

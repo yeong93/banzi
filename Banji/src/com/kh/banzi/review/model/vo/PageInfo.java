@@ -86,6 +86,7 @@ public class PageInfo {
 
 	public void setBoardType(int boardType) {
 		this.boardType = boardType;
+		
 	}
 
 	@Override
@@ -116,10 +117,9 @@ public class PageInfo {
 		// endPage = startPage + pagingBarSize -1;
 
 		// endPage가 maxPage보다 클 경우
-		if(endPage>maxPage) {
+		endPage = startPage + pagingBarSize -1;
+		if(endPage>=maxPage) {
 			endPage = maxPage;
-		}else {
-			endPage = startPage + pagingBarSize -1;
 		}
 	}
 }

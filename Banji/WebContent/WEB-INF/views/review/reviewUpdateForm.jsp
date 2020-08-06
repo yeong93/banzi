@@ -118,9 +118,10 @@
 		            </div>
 		        </div>
 		        
-		        <!-- 숨긴 star -->
+		        <!-- 숨긴 star 위:받은별/ 아래:보내는별-->
 		        <input type="hidden" id="rating-hidden" name="rating" data-rate="<%=review.getReviewRating() %>">
-		        <input type="hidden" id="forwardRating" name="forwardRating">
+		       
+		        <input type="hidden" id="forwardRating" name="forwardRating" value="<%=review.getReviewRating() %>">
 				
 			</div>
 
@@ -301,19 +302,7 @@
 		    })
 		});
 	
-	    // 별점용 -> 체크시 값 이동
-	    $(function(){
-		    $('.make_star svg').click(function(){
-		        var targetNum = $(this).index()+1;
-		        $('.make_star svg').css({color:'#000'});
-		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#FFD600'});
-		        console.log(targetNum);
-		        
-		      	$("#forwardRating").val(targetNum);
-		    })
-		});
     
-
 	</script>
 </body>
 
