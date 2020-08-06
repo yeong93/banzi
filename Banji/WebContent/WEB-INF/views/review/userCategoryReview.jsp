@@ -9,6 +9,10 @@
  	List<Review> rList = (List<Review>)request.getAttribute("rList");
  	ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
 	String type = request.getParameter("type");
+	int category = Integer.parseInt(request.getParameter("category"));
+	
+	String url = request.getContextPath()+"/review/reviewCategory.do?type=6&category=";
+	
 	
 	
 	int currentPage = pInfo.getCurrentPage();
@@ -285,10 +289,15 @@
 
     <!-- 버튼부분 -->
     <div class="review-button-area">
-        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=1">병 원</a></div>
+     <%--    <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=1">병 원</a></div>
         <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=2">사 료</a></div>
         <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=3">간 식</a></div>
-        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=4">용 품</a></div>
+        <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=4">용 품</a></div> --%>
+        
+        <div class="review-button"><a href="<%=url%>1">병 원</a></div>
+        <div class="review-button"><a href="<%=url%>2">사 료</a></div>
+        <div class="review-button"><a href="<%=url%>3">간 식</a></div>
+        <div class="review-button"><a href="<%=url%>4">용 품</a></div>
     </div>
 
 	<%if(rList.isEmpty()){ %>
@@ -384,10 +393,10 @@
 	        	<ul class="pagination">
 	        		<%if(currentPage>10){ %>
 	        			<li>
-	        				<a class="page-link"  href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=1">&lt;&lt;</a>
+	        				<a class="page-link"  href="<%=url + category%>&cp=1">&lt;&lt;</a>
 	        			</li>
 	        			<li>
-	        			<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=prev%>">&lt;</a>
+	        			<a class="page-link" href="<%=url + category%>&cp=<%=prev%>">&lt;</a>
 	        			</li>
 	        			<%} %>
 
@@ -396,7 +405,7 @@
 	        					<li><a class="page-link"><%=p%></a></li>
 	        				<%}else{ %>
 	        					<li>
-	        						<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=p%>"><%=p %></a>
+	        						<a class="page-link" href="<%=url + category%>&cp=<%=p%>"><%=p %></a>
 	        					</li>
 	        					
 	        				<%} %>
@@ -404,10 +413,10 @@
 	        			
 	        			<%if(next <maxPage){ %>
 	        				<li>
-	        					<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=next%>">&gt;</a>
+	        					<a class="page-link" href="<%=url + category%>&cp=<%=next%>">&gt;</a>
 	        				</li>
 	        				<li>
-	        					<a class="page-link" href="<%=request.getContextPath()%>/review/review.do?type=<%=type%>&cp=<%=maxPage%>">&gt;&gt;</a>
+	        					<a class="page-link" href="<%=url + category%>&cp=<%=maxPage%>">&gt;&gt;</a>
 	        				</li>
 	        			<%} %>
 	        	</ul>

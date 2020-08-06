@@ -25,12 +25,18 @@ public class ReviewService {
 	 * @return PageInfo
 	 * @throws Exception
 	 */
-	public PageInfo getPageInfo(String currentPage, int boardType) throws Exception{
+	public PageInfo getPageInfo(String currentPage, int boardType, int category) throws Exception{
 		Connection conn = getConnection();
 		
 		int cp = (currentPage == null) ? 1 : Integer.parseInt(currentPage);
 		
-		int listCount = dao.getListCount(conn, boardType);
+		int listCount = 0;
+		if(category == 0) {
+			listCount = dao.getListCount(conn, boardType);
+		}else {
+			listCount = dao.getListCount(conn, boardType, category);
+		}
+		
 		
 		conn.close();
 		

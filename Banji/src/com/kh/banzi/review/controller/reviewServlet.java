@@ -48,7 +48,7 @@ public class reviewServlet extends HttpServlet {
 			if(command.equals("/review.do")) {
 				errorMsg = "리뷰 목록 조회";
 				
-				PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
+				PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType, 0);
 				List<Review> rList = reviewService.selectList(pInfo);
 				
 				
@@ -266,9 +266,10 @@ public class reviewServlet extends HttpServlet {
 				}else if(command.equals("/reviewCategory.do")) {
 					errorMsg = "리뷰 목록 조회";
 					
-					PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
-					
 					int category = Integer.parseInt(request.getParameter("category"));
+					
+					PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType, category);
+					
 					
 					List<Review> rList = reviewService.selectCategotyList(pInfo,category);
 					
@@ -278,6 +279,7 @@ public class reviewServlet extends HttpServlet {
 					request.setAttribute("pInfo", pInfo);
 					request.setAttribute("rList", rList);
 					request.setAttribute("fList", fList);
+					request.setAttribute("category", category);
 					
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);

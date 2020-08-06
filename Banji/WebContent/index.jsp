@@ -90,6 +90,7 @@
           	opacity: 0.7;
           }*/
           
+	      body #content {width: 100%;}
           table *{
         		font-family: "yg-jalnan !important";
         		font-size: 20px;
@@ -100,7 +101,9 @@
           table td:last-child{ width:90%; height: 200px; vertical-align: super;}
           
           .img-box, .title-text {width: 100%; height: 100%;}
-          
+          body #content {width: 100%;}
+        
+		          
   </style>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
   
