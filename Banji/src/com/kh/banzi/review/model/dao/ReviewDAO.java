@@ -430,7 +430,7 @@ public class ReviewDAO {
 		ResultSet rset = null;
 		List<Review> list = null;
 		String query = prop.getProperty("selectCategoryList");
-		
+
 		try {
 			int startRow = (pInfo.getCurrentPage()-1)*pInfo.getLimit()+1;
 			int endRow = startRow + pInfo.getLimit()-1;

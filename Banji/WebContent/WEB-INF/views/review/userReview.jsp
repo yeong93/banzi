@@ -129,6 +129,7 @@
             border: 4px solid rgba(250, 156, 88, 0.3);
             margin: 25px;
             display: inline-block;
+            overflow: hidden;
         }
 
         .review-box:hover {
@@ -184,7 +185,7 @@
         }
 
         .review-box-center {
-            height: 26%;
+            height: 23%;
             width: 100%;
             text-align: center;
             padding-top: 5px;
@@ -193,7 +194,7 @@
         .review-box-inside {
             width: 64px;
             height: 64px;
-            margin: 7px 4px 3px 4px;
+            margin: 5px 4px 3px 4px;
             
             border-radius: 2px;
             display: inline-flex;
@@ -203,7 +204,7 @@
         .review-box-inside  img{
         	width: 100%;
         	height: 100%;
-        	 display: inline-flex;
+        	display: inline-flex;
         } 
 
         .review-box-bottom {
@@ -214,7 +215,7 @@
 
         .review-box-bottom>p {
             font-family: "IBMPlexSansKR-Light";
-            margin: 0px 14px 14px 14px;
+            margin: 7px 14px 14px 14px;
             font-size: 14px;
         }
 
@@ -293,6 +294,7 @@
 	    <div class="container">
 	    	<%for(int j=0; j<3; j++){ %>
    		
+   		<%if(num < rList.size()) {%>
         <!--review box 1-1-->
         <div class="review-box">
 	    <p class="for-hidden" id="<%=rList.get(num).getReviewBoardNo() %>">
@@ -327,7 +329,6 @@
            			String[] img = new String[3];
            			for(Attachment at : fList ) {
            				
-           				
            			if(at.getParentBoardNo() == rList.get(num).getReviewBoardNo()){
            				switch(at.getFileLevel()){
            				case 0 : img[0] = path + at.getFileChangeName(); break;
@@ -360,6 +361,7 @@
     	</p> <!-- 연결위한 div end -->
         </div> <!-- review-box end -->
 		<%num++; } %>
+		<%} %>
     	</div> <!-- container end -->
        <%} %>
       <%} %>
@@ -412,7 +414,7 @@
 	    var rating = $('.reviewStar .rating');
 	    rating.each(function(){
 	        var targetScore = $(this).attr('data-rate');
-	        console.log(targetScore);
+	        
 	        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
 	    });
 	});
@@ -427,10 +429,12 @@
    	  $(this).parent().css("cursor", "pointer");
      });
 	
+	// 이미지없을때 텍스트박스 none처리
     $(function(){
     	$(".review-box .review-box-center").each(function(index, item){
     		if($(item).find("img").length == 0){
     			$(item).css("display", "none");  
+    		
     		}  
     	});
     });

@@ -17,6 +17,11 @@
 	font-weight: normal;
 	font-style: normal;
 }
+   @font-face { 
+   	font-family: 'InfinitySans-RegularA1'; 
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-RegularA1.woff') format('woff');
+    font-weight: normal; font-style: normal; 
+}
 
 body {
 	margin: 0;
@@ -154,6 +159,9 @@ body {
 	font-size: 13px;
 	color: rgb(100, 100, 100);
 }
+ .intro-text{
+	 font-family: "InfinitySans-RegularA1";
+}
 </style>
 </head>
 <body>
@@ -161,7 +169,7 @@ body {
 	<p class="empty"></p>
 	<p class="intro">수의사</p>
 	<p class="line-height"></p>
-	<p align="center">
+	<p align="center" class="intro-text">
 		반지는 까다로운 인증 절차를 통해 검증받은 수의사와 훈련가의 전문적인 Q&A와 이벤트를 통해 다양한 전문적인 지식을 제공합니다. <br>
 		차별화된 반지 사이트를 통하여 특별한 경험을 느껴보세요.
 	</p>

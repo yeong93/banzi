@@ -197,10 +197,9 @@ public class reviewServlet extends HttpServlet {
 						view.forward(request, response);
 					}
 					
-				// --- 여기까지 완성
-				// 리뷰 수정 ing -> 평가 가져온게 잘못된듯.
+				
+				
 				}else if(command.equals("/updateReviewForm.do")) {
-					 System.out.println("OK");
 					
 					 int maxSize = 1024 * 1024 *10; 
 					String root = request.getSession().getServletContext().getRealPath("/");
@@ -216,10 +215,10 @@ public class reviewServlet extends HttpServlet {
 					int reviewCategory = Integer.parseInt(mRequest.getParameter("category"));
 					int rating = Integer.parseInt(mRequest.getParameter("forwardRating"));
 					
+					//System.out.println(reviewCategory);
 					
 					Review review = new Review(reviewNo, reviewTitle, reviewContent, rating, reviewCategory);
 					
-					System.out.println("review 수정!!" + review);
 					List<Attachment> fList = new ArrayList<Attachment>();
 					
 					Enumeration<String> files = mRequest.getFileNames();
@@ -245,10 +244,8 @@ public class reviewServlet extends HttpServlet {
 			                 fList.add(temp);
 						}
 					}
-					// 여기까지
 					//System.out.println(review);
 					int result = reviewService.updateReview(review, fList);
-					System.out.println("몇번인데"+result);
 					
 					if(result>0) {
 						status = "success";
@@ -272,6 +269,7 @@ public class reviewServlet extends HttpServlet {
 					PageInfo pInfo = reviewService.getPageInfo(currentPage,boardType);
 					
 					int category = Integer.parseInt(request.getParameter("category"));
+					
 					List<Review> rList = reviewService.selectCategotyList(pInfo,category);
 					
 					List<Attachment> fList = reviewService.selectFileList(pInfo);
