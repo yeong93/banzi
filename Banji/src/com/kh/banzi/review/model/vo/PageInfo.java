@@ -117,7 +117,7 @@ public class PageInfo {
 		// endPage = startPage + pagingBarSize -1;
 
 		// endPage가 maxPage보다 클 경우
-		endPage = startPage + pagingBarSize -1;
+		endPage = startPage + pagingBarSize;
 		if(endPage>=maxPage) {
 			endPage = maxPage;
 		}

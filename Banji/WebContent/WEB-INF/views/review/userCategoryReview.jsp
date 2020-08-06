@@ -437,6 +437,7 @@
      }).on("mouseenter", function(){
      });
 	
+	
     $(function(){
     	$(".review-box .review-box-center").each(function(index, item){
     		if($(item).find("img").length == 0){
@@ -445,6 +446,5 @@
     		}  
     	});
     });
-
 </script>
 </html>
