@@ -55,8 +55,7 @@ public class NoticeController extends HttpServlet {
             NoticeService service = new NoticeService();
             String currentPage = request.getParameter("cp");
             if (command.equals("/list.do")) {
-                PageInfo pInfo = new QnaService().getPageInfo(currentPage);
-                pInfo.setBoardType(4);
+                PageInfo pInfo = service.getPageInfo(currentPage);
 
                 List<Notice> nList = service.selectList(pInfo);
                 path = "/WEB-INF/views/notice/noticeList.jsp";

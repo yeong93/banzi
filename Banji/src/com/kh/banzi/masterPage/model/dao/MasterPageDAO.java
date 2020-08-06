@@ -126,4 +126,32 @@ public class MasterPageDAO {
 		return sList;
 	}
 
+
+	/** 당첨자 글 삽입
+	 * @param conn
+	 * @param no
+	 * @param content
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertWinner(Connection conn, int no, String content) throws Exception{
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertWinner");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, content);
+			pstmt.setInt(2, no);
+			
+			result = pstmt.executeUpdate();
+		} finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
 }

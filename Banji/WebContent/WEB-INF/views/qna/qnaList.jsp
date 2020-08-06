@@ -18,9 +18,9 @@
  int endPage = pInfo.getEndPage();
  int boardType = pInfo.getBoardType();
  
- int prev = (currentPage-1)/10*10;   // < 버튼 
+ int prev = 5 * ( (currentPage - 1) / 5 );   // < 버튼 
  
- int next = (currentPage+9)/10*10+1; // > 버튼 
+ int next = 1 + ( (currentPage + 4) / 5 * 5); // > 버튼 
  String pattern = "yy-MM-dd HH:mm";
  String pattern2 = "HH:mm";
  Calendar today = Calendar.getInstance();
@@ -119,8 +119,8 @@
         }
         .reply_content{
          font-weight:300;
-         font-family: '돋움',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-         margin:7px 0px;
+         font-family: "나눔고딕";
+         margin:13px 0px;
         }
         .p1{
          font-size:1.3em;
@@ -251,7 +251,7 @@ background-color: #81F7D8;
           <!-- 페이징바 -->
             <div style="clear:both">
               <ul class ="pagination">
-               <% if(currentPage > 10) { %>
+               <% if(currentPage > 5) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?&cp=1">&lt;&lt;</a>
@@ -280,7 +280,7 @@ background-color: #81F7D8;
                     <%} %>
                     
                     
-                    <% if((next < maxPage)) {%>
+                    <% if((next <= maxPage)) {%>
                        <!-- 다음 페이지[>] -->
                     
                     <li>

@@ -18,9 +18,9 @@
  int endPage = pInfo.getEndPage();
  int boardType = pInfo.getBoardType();
  
- int prev = (currentPage-1)/10*10;   // < 버튼 
+ int prev = 5 * ( (currentPage - 1) / 5 );   // < 버튼 
  
- int next = (currentPage+9)/10*10+1; // > 버튼 
+ int next = 1 + ( (currentPage + 4) / 5 * 5); // > 버튼 
  String pattern = "yy-MM-dd HH:mm";
  String pattern2 = "HH:mm";
  Calendar today = Calendar.getInstance();
@@ -241,7 +241,7 @@ background-color: #81F7D8;
           <!-- 페이징바 -->
             <div style="clear:both">
               <ul class ="pagination">
-               <% if(currentPage > 10) { %>
+               <% if(currentPage > 5) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?&cp=1">&lt;&lt;</a>
@@ -263,22 +263,14 @@ background-color: #81F7D8;
                     <%} else{%>
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=p%>"><%=p %></a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=p%>"><%=p%></a>
                     
                     <%} %>
-                    
                     <%} %>
-                    
-                    
-                    <% if((next < maxPage)) {%>
-                       <!-- 다음 페이지[>] -->
-                    
+                    <% if((next <= maxPage)) {%>
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=next%>">&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=next%>">&gt;</a>
                     </li>
-                    
-                    <!--  마지막 페이지로 이동[>>] -->
-                    
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
                     </li>
@@ -287,25 +279,6 @@ background-color: #81F7D8;
                     
               </ul>
            </div>
-          
-          <!-- 페이징바 -->
-          
-          
-          
-          <!-- 검색 -->
-<!--           <div>
-              <form action="search" method="GET" class="text-center" id="searchForm">
-                  <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-                      <option value="title" selected>글제목</option>
-                      <option value="title">글제목</option>
-                      <option value="content">내용</option>
-                      <option value="titcont">제목+내용</option>
-                  </select>
-                  <input type="text" name="searchValue" class="form-control" style="width:25%; display: inline-block;">
-                  <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
-              </form>
-              
-          </div> -->
       </div>
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

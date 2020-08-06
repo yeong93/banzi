@@ -312,7 +312,7 @@ public class EventService {
 	 * @return event
 	 * @throws Exception
 	 */
-	public static Event winnerView(int no) throws Exception{
+	public Event winnerView(int no) throws Exception{
 		Connection conn = getConnection();
 		
 		Event event = dao.winnerView(conn, no);
@@ -327,7 +327,7 @@ public class EventService {
 	 * @return result
 	 * @throws Exception
 	 */
-	public static int changeWinner(int no, String content) throws Exception{
+	public int changeWinner(int no, String content) throws Exception{
 		Connection conn = getConnection();
 		
 		int result = dao.changeWinner(conn, no, content);

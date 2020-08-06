@@ -65,4 +65,23 @@ public class MasterPageService {
 		return sList;
 	}
 
+	/** 당첨자 글 삽입
+	 * @param no
+	 * @param content
+	 * @return result 
+	 * @throws Exception
+	 */
+	public int insertWinner(int no, String content) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		int result = dao.insertWinner(conn, no, content);
+		
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		conn.close();
+		return result;
+	}
+
 }

@@ -24,7 +24,7 @@
 	        font-weight: normal; font-style: normal; 
 	    }
         
-    	body { margin: 0; padding: 0;}
+    /* 	body { margin: 0; padding: 0;}
         .empty { width: 100%; height: 100px;}
           
         .container {
@@ -64,8 +64,8 @@
             margin-left: 390px;
             font-size: 18px;
             margin-top: 20px;
-			font-family: 'GmarketSansMedium'; 
-			color: #5d5d5d;
+						font-family: 'GmarketSansMedium'; 
+						color: #5d5d5d;
 			
           }
           
@@ -88,21 +88,33 @@
           
           .title-text > img{
           	opacity: 0.7;
-          }
-          table{
-          border: 1px solid black;
-          }
+          }*/
+          
+          table *{
+        		font-family: "yg-jalnan !important";
+        		font-size: 20px;
+          } 
+          table tr{margin-bottom: 10px !important;}
+          
+          table td:first-child{ width:10%; height: 200px; vertical-align: top; text-align: center;}
+          table td:last-child{ width:90%; height: 200px; vertical-align: super;}
+          
+          .img-box, .title-text {width: 100%; height: 100%;}
+          
   </style>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/event.css">
 
 </head>
 <body>
   <%@ include file="WEB-INF/views/common/header.jsp" %>
   
   <section id="content">
+  
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -138,68 +150,53 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-  </section>
-      <div class="empty"></div>
-      
-       <table>
-       <tr>
-	    	<td>
-	       		<div class="category">-음식 정보</div>
-	       	</td>
-	        <td>
-	       		<div class="container">
+ 
+     
+     	<div id="container" class="event mt-5 container-fluid">
+     		<div class="eventList mx-auto ">
+     			<table class="eventList mx-auto">
+     			
+     				 <tr>
+				    	<td>음식</td>
+			        <td>
 		            <div class="img-box">
 		            	<p class="info-title title-text"></p>
 		            </div>
-	       		 </div>
-	       	</td>
-        </tr>
-        
-        
-        <tr>
-	    	<td>
-	       		<div class="category">-견종백과 정보</div>
-	       	</td>
-	        <td>
-	       		<div class="container">
+			       	</td>
+		        </tr>
+		        
+		         <tr>
+				    	<td>견종백과</td>
+			        <td>
 		            <div class="img-box">
 		            	<p class="info-title2 title-text"></p>
 		            </div>
-	       		 </div>
-	       	</td>
-        </tr>
-        
-       <tr>
-	    	<td>
-	       		<div class="category">-건강상식 정보</div>
-	       	</td>
-	        <td>
-	       		<div class="container">
+			       	</td>
+		        </tr>
+		        
+		        <tr>
+				    	<td>건강/상식</td>
+			        <td>
 		            <div class="img-box">
 		            	<p class="info-title3 title-text"></p>
 		            </div>
-	       		 </div>
-	       	</td>
-        </tr>
-        
-        
-        <tr>
-	    	<td>
-	       		<div class="category">-교육/훈련 정보</div>
-	       	</td>
-	        <td>
-	       		<div class="container">
+			       	</td>
+		        </tr>
+		        
+		        <tr>
+				    	<td>교육/훈련</td>
+			        <td>
 		            <div class="img-box">
 		            	<p class="info-title4 title-text"></p>
 		            </div>
-	       		 </div>
-	       	</td>
-        </tr>
-        
-       
-	</table>
+			       	</td>
+		        </tr>
+			        
+     			</table>
+     		</div>
+     	</div>
      
-     
+  </section>    
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
@@ -226,7 +223,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 // $a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -239,7 +236,7 @@ $(function(){
 	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
 		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
 		    	 $img = $("<img>");
-		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 $img.attr("src" , src).css({"width":"90%", "height":"90%"});
 		    	 
 		    	 $a.append($img);
 		         $(".info-title").append($a);
@@ -266,7 +263,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 //$a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -279,7 +276,7 @@ $(function(){
 	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
 		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
 		    	 $img = $("<img>");
-		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 $img.attr("src" , src).css({"width":"90%", "height":"90%"});
 		    	 
 		    	 $a.append($img);
 		         $(".info-title2").append($a);
@@ -306,7 +303,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 //$a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -319,7 +316,7 @@ $(function(){
 	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
 		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
 		    	 $img = $("<img>");
-		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 $img.attr("src" , src).css({"width":"90%", "height":"90%"});
 		    	 
 		    	 $a.append($img);
 		         $(".info-title3").append($a);
@@ -344,7 +341,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	// $a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -357,7 +354,7 @@ $(function(){
 	    	 	 if(map.iList[0].infoBoardNo == map.fList[0].parentBoardNo){
 		    	 src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[0].fileChangeName;
 		    	 $img = $("<img>");
-		    	 $img.attr("src" , src).css({"width":"100%", "height":"100%"});
+		    	 $img.attr("src" , src).css({"width":"90%", "height":"90%"});
 		    	 
 		    	 $a.append($img);
 		         $(".info-title4").append($a);
