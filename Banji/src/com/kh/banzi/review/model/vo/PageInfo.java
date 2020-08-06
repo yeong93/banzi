@@ -98,7 +98,7 @@ public class PageInfo {
 
 	// 페이징 처리에 필요한 값을 계산하는 메소드
 	private void makePageInfo() {
-
+ 
 		// maxPage : 가장 마지막 == 총 페이지 수
 		// limit가 10일때
 		// 게시글이 100개일 경우 필요한 페이지의 수 ? 10p
@@ -117,7 +117,7 @@ public class PageInfo {
 		// endPage = startPage + pagingBarSize -1;
 
 		// endPage가 maxPage보다 클 경우
-		endPage = startPage + pagingBarSize -1;
+		endPage = startPage + pagingBarSize;
 		if(endPage>=maxPage) {
 			endPage = maxPage;
 		}
