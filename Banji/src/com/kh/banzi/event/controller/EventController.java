@@ -170,7 +170,7 @@ public class EventController extends HttpServlet {
 				int eventNo = Integer.parseInt(request.getParameter("no"));
 				
 				Event event = eService.selectEvent(eventNo);
-				System.err.println(event);
+			
 				if(event != null) {
 					List<Attachment> fList = eService.selectFiles(eventNo);
 					

@@ -86,7 +86,7 @@
 	   										} 
      									}
    											%>
-   												<img src="<%=src%>">
+   												<img src="<%=src%>" width="374px" height="308px">
    											<% 
      								%>
 										</p>

@@ -71,7 +71,7 @@
 									<% if(e.getEventWin() == null){ %>
 										<td>
 											<button type="button" class="btn btn-outline-secondary" 
-											onclick="location.href='insertWinnerForm.do?no=<%=e.getEventNo()%>';">작성</button>
+											onclick="location.href='insertWinnerForm.do?no=<%=e.getEventNo()%>';"><%=e.getEventNo()%>번 이벤트 당첨자 작성</button>
 										</td> 
 										
 									<% }else{ %>

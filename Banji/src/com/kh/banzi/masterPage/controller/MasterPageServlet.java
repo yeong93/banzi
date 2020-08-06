@@ -88,7 +88,6 @@ public class MasterPageServlet extends HttpServlet {
 					errorMsg = "이벤트 당첨자 글 삽입";
 					
 					int no = Integer.parseInt(request.getParameter("no"));
-					System.out.println(no);
 					
 					String content = request.getParameter("content");
 					
