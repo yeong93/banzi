@@ -97,6 +97,9 @@
 	.reply_content{
 	 margin:20px 0px 25px;
 	}
+	#writer, #date{
+	 font-weight: bold;
+	}
 </style>
 </head>
 <body>
@@ -108,17 +111,17 @@
 			<div id="board-area">
 
 				<!-- Title -->
-				<h3 class="mt-4"><%= community.getTitle() %></h3>
-
+				<h3 class="mt-4" id="title">제목 : <%= community.getTitle() %></h3>
+        <hr>
 				<!-- Writer -->
-				<p class="lead">
+				<p class="lead" id="writer">
 					작성자 : <%= community.getRegName() %>
 				</p>
 
 				<hr>
 
 				<!-- Date -->
-				<p>
+				<p id="date">작성일 : 
 					<%= sdf1.format(community.getRegDate()) %>
 			 		<span class="float-right">조회수 <%= community.getViews() %></span>
 				</p>
@@ -261,7 +264,7 @@
  			   }else{
  				   var url = "<%=request.getContextPath()%>/community/insertReply.do";
  				   var boardNo = "<%=community.getBoardNo()%>";
- 				   var regName = "<%=community.getRegName()%>";
+ 				   var regName = userNick;
 			     $.ajax({
 			        url : url,
 			        type : "POST",
@@ -270,9 +273,7 @@
 			        success : function(result){
 			          alert(result);
 			          $("#replyContent").val("");
-			          // 삽입된 내용을 화면에서 지움
-			          
-			          // 갱신된 DB 내용을 다시 조회하여 화면 댓글 목록을 갱신함.
+			          console.log(boardNo);
 			          selectReplyList(boardNo);
 			        }, error : function(){
 			          console.log("ajax 통신 실패");
@@ -294,7 +295,6 @@
  		        }, error :  function(){
  		          console.log("ajax 통신 실패");
  		        }
- 		         
  		       });
  		      }else{
  		    	  return;

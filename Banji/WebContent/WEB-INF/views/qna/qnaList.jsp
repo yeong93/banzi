@@ -413,7 +413,7 @@ userNick = "";
     			   }
      			  }
     		  }
-     		  if(map.userGrade != "user" && map.userGrade != ""){
+     		  if(map.userGrade.trim() == "veterinarian" && map.userGrade.trim() == "veterinarian"){
      			  $div = $("<div>").addClass("replyWrite");
      			  $table = $("<table align='center'>");
      			  $tr =$("<tr>");

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.banzi.notice.model.vo.Notice"%>
 <%@page import="com.kh.banzi.common.Attachment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,7 +8,7 @@
   ArrayList<Attachment> fList = (ArrayList<Attachment>)request.getAttribute("fList");
   Notice notice= (Notice)request.getAttribute("notice");
   String cp = request.getParameter("cp");
-  
+  SimpleDateFormat sdf1 = new SimpleDateFormat("yy:MM:dd HH:mm");
 %>
 <!DOCTYPE html>
 <html>
@@ -73,6 +74,13 @@
   .container{
     padding-top:157px;
   }
+  #date{
+    font-weight:500;
+    font-size:1.1em;
+  }
+  #title{
+    font-weight:500;
+  }
 </style>
 </head>
 <body>
@@ -84,8 +92,8 @@
       <div id="board-area">
 
         <!-- Title -->
-        <h3 class="mt-4"><%= notice.getTitle() %></h3>
-
+        <h3 class="mt-4" id="title">제목 : <%= notice.getTitle() %></h3>
+        <hr>
         <!-- Writer -->
         <p class="lead">
           작성자 : <%= notice.getRegWriter() %>
@@ -94,8 +102,9 @@
         <hr>
 
         <!-- Date -->
-        <p>
-          <%= notice.getRegDate() %>
+        <p id="date">
+          작성일 : 
+          <%= sdf1.format(notice.getRegDate()) %>
           <span class="float-right">조회수 <%= notice.getViews() %></span>
         </p>
 

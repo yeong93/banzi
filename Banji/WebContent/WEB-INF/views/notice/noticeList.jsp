@@ -244,13 +244,13 @@ background-color: #81F7D8;
                <% if(currentPage > 10) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?&cp=1">&lt;&lt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?&cp=1">&lt;&lt;</a>
                     </li>
                  
                     <!--  이전 순번의 페이징 바로 이동[<] -->
                     <li>
                        <a class = "page-link"
-                       href = "<%=request.getContextPath()%>/qna/list.do?cp=<%=prev%>">&lt;</a>
+                       href = "<%=request.getContextPath()%>/notice/list.do?cp=<%=prev%>">&lt;</a>
                     </li>
                     <%}%>
                     <!--  10개의 페이지 목록 -->
@@ -263,7 +263,7 @@ background-color: #81F7D8;
                     <%} else{%>
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=p%>"><%=p %></a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=p%>"><%=p %></a>
                     
                     <%} %>
                     
@@ -280,7 +280,7 @@ background-color: #81F7D8;
                     <!--  마지막 페이지로 이동[>>] -->
                     
                     <li>
-                       <a class="page-link" href="<%=request.getContextPath()%>/qna/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
+                       <a class="page-link" href="<%=request.getContextPath()%>/notice/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
                     </li>
                     
                     <%} %>
