@@ -60,7 +60,7 @@
 									<td><%=u.getUserId()%></td>
 									<td><%=u.getUserGrade()%></td>
 									<td>
-										<button type="button" class="btn btn-outline-secondary" id="insertBtn" onclick="location.href='changeAuth.do?&no=<%=u.getUserNo()%>';"><%=u.getUserId()%> 회원 등급 부여</button>
+										<button type="button" class="btn btn-outline-secondary" id="insertBtn" onclick="location.href='changeAuth.do?no=<%=u.getUserNo()%>';"><%=u.getUserId()%> 회원 등급 부여</button>
 									</td>
 								</tr>
 							<% } %>

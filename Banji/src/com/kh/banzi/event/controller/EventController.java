@@ -323,7 +323,7 @@ public class EventController extends HttpServlet {
 				
 				int no = Integer.parseInt(request.getParameter("no"));
 				Event event = eService.winnerView(no);
-				
+
 				Gson gson = new Gson();
 				gson.toJson(event, response.getWriter());
 				
@@ -342,7 +342,6 @@ public class EventController extends HttpServlet {
 				
 				int no = Integer.parseInt(request.getParameter("no"));
 				String content = request.getParameter("content");
-				System.out.println(content);
 						
 				int result = eService.changeWinner(no, content);
 				

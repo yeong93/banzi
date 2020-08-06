@@ -80,8 +80,8 @@
 						
 							<% for(Event e: wList){ %>
 								<tr>
-									<td id="td1"><strong><%=e.getEventNo()%></strong></td>
-									<td id="td2"><%=e.getEventWinNo()%></td>
+									<td id="td1"><%=e.getEventWinNo()%></td>
+									<td id="td2"><strong><%=e.getEventNo()%></strong></td>
 									<td id="td3"><%=e.getEventTitle()%></td>
 										<% 
 											String start = new SimpleDateFormat("yyyy-MM-dd").format(e.getStartDay());
@@ -147,9 +147,10 @@
 			
 				if(event != null){
 					Swal.fire({
-						  title: '<strong>'+event.eventTitle+' 당첨자 발표</strong><br><br>',
+						  title: '<strong>'+event.eventTitle+'</strong>',
 						  html:
-							  '<h5>' + event.eventWin + '</h5>',
+							  '<h4>당첨자 발표</h4><hr>'+
+							  '<br><h5>' + event.eventWin + '</h5><br>',
 						  showCloseButton: true
 						})
 				}else{
