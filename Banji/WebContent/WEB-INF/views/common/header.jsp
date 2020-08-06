@@ -211,7 +211,10 @@ color: white;
           	 <% if(loginUser != null && loginUser.getUserId().equals("master")){ %>
           	 
           		<a class="nav-link" href="<%=request.getContextPath()%>/masterPage/userAuthList.do" role="button" aria-haspopup="true" aria-expanded="false">관리자 페이지</a>
-            
+            	<div class="dropdown-menu">
+	              <a class="dropdown-item" href="<%=request.getContextPath()%>/masterPage/userAuthList.do">회원 등급 부여</a>
+	              <a class="dropdown-item" href="<%=request.getContextPath()%>/masterPage/stillList.do">당첨자 미발표 이벤트</a>
+            	</div>
 						<% }else { %>
 						
             <a class="nav-link" href="<%=request.getContextPath()%>/myPage/changeUserForm.do" role="button" aria-haspopup="true" aria-expanded="false">마이페이지</a>

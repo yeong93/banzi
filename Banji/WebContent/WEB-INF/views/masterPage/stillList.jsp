@@ -40,7 +40,6 @@
 				<table class="table mx-auto text-center" id="list-table">
 					<thead class="thead-light">
 						<tr>
-							<th>글 번호</th>
 							<th>해당 이벤트 번호</th>
 							<th>해당 이벤트 제목</th>
 							<th>해당 이벤트 기간</th>
@@ -60,15 +59,26 @@
 						
 							<% for(Event e: sList){ %>
 								<tr>
-									<td id="td1"><strong><%=e.getEventNo()%></strong></td>
-									<td id="td2"><%=e.getEventWinNo()%></td>
-									<td id="td3"><%=e.getEventTitle()%></td>
+									<td><strong><%=e.getEventNo()%></strong></td>
+									<td><%=e.getEventTitle()%></td>
+									
 										<% 
 											String start = new SimpleDateFormat("yyyy-MM-dd").format(e.getStartDay());
 											String end = new SimpleDateFormat("yyyy-MM-dd").format(e.getEndDay());
 										%>
-									<td id="td4"><%=start%> ~ <%=end%></td>
-									<td><button type="button" class="btn btn-outline-secondary" onclick="<%=request.getContextPath()%>/masterPage/insertWinner.do?no=<%=e.getEventNo()%>';">수정</button></td> 
+									<td><%=start%> ~ <%=end%></td>
+									
+									<% if(e.getEventWin() == null){ %>
+										<td>
+											<button type="button" class="btn btn-outline-secondary" 
+											onclick="location.href='insertWinnerForm.do?no=<%=e.getEventNo()%>';">작성</button>
+										</td> 
+										
+									<% }else{ %>
+										
+										<td>작성완료</td>
+									<% } %>
+									
 								</tr>
 							<% } %>
 							

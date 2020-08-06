@@ -77,6 +77,35 @@ public class MasterPageServlet extends HttpServlet {
 					request.setAttribute("sList", sList);
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
+					
+				}else if(command.equals("/insertWinnerForm.do")) {
+					
+					path = "/WEB-INF/views/masterPage/insertWinner.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+					
+				}else if(command.equals("/insertWinner.do")) {
+					errorMsg = "이벤트 당첨자 글 삽입";
+					
+					int no = Integer.parseInt(request.getParameter("no"));
+					System.out.println(no);
+					
+					String content = request.getParameter("content");
+					
+					int result = service.insertWinner(no, content);
+					
+					if(result > 0) {
+						status = "success";
+						msg = "당첨자 발표 글 삽입 성공";
+					}else {
+						status = "error";
+						msg = "당첨자 발표 글 삽입 실패";
+					}
+					request.setAttribute("no", no);
+					request.getSession().setAttribute("status", status);
+					request.getSession().setAttribute("msg", msg);
+					
+					response.sendRedirect("stillList.do");
 			}
 			
 		} catch (Exception e) {
