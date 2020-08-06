@@ -48,7 +48,6 @@ public class UserDAO {
 			pstmt.setString(8, user.getUserGrade());
 			
 			result = pstmt.executeUpdate();
-			System.out.println(user);
 		}finally {
 			pstmt.close();
 		}
