@@ -200,7 +200,6 @@
             width: 64px;
             height: 64px;
             margin: 7px 4px 3px 4px;
-            border: 0.5px solid rgb(150, 150, 150);
             border-radius: 2px;
             display: inline-flex;
             
@@ -221,7 +220,7 @@
 
         .review-box-bottom>p {
             font-family: "IBMPlexSansKR-Light";
-            margin: 0px 14px 14px 14px;
+            margin: 7px 14px 14px 14px;
             font-size: 14px;
         }
 
@@ -301,7 +300,8 @@
 	   	<%for(int i=0; i<3; i++){ %>
 	    <div class="container">
 	    	<%for(int j=0; j<3; j++){ %>
-   		
+	    	
+   		<%if(num < rList.size()) {%>
         <!--review box 1-1-->
         <div class="review-box">
 	    <p class="for-hidden" id="<%=rList.get(num).getReviewBoardNo() %>">
@@ -367,6 +367,7 @@
     	</p> <!-- 연결위한 div end -->
         </div> <!-- review-box end -->
 		<%num++; } %>
+		<%} %>
     	</div> <!-- container end -->
        <%} %>
       <%} %>
@@ -422,7 +423,7 @@
 	    var rating = $('.reviewStar .rating');
 	    rating.each(function(){
 	        var targetScore = $(this).attr('data-rate');
-	        console.log(targetScore);
+	        //console.log(targetScore);
 	        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
 	    });
 	});
@@ -435,6 +436,15 @@
         location.href = "<%=request.getContextPath()%>/review/detailReview.do?type=<%=boardType%>&no=" + boardNo;
      }).on("mouseenter", function(){
      });
+	
+    $(function(){
+    	$(".review-box .review-box-center").each(function(index, item){
+    		if($(item).find("img").length == 0){
+    			$(item).css("display", "none");  
+    		
+    		}  
+    	});
+    });
 
 </script>
 </html>

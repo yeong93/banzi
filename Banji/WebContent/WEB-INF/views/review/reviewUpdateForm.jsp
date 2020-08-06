@@ -120,7 +120,6 @@
 		        
 		        <!-- 숨긴 star 위:받은별/ 아래:보내는별-->
 		        <input type="hidden" id="rating-hidden" name="rating" data-rate="<%=review.getReviewRating() %>">
-		       
 		        <input type="hidden" id="forwardRating" name="forwardRating" value="<%=review.getReviewRating() %>">
 				
 			</div>
@@ -239,7 +238,7 @@
 			
 			  $(".boardImg").on("click",function(){
 		    	  var index =  $(this).children("img").prop("id") + 1;
-		        console.log(index);
+		        // console.log(index);
 		        $("#img" + index).click();
 		      });
 		});
@@ -296,7 +295,7 @@
 		        var targetNum = $(this).index()+1;
 		        $('.make_star svg').css({color:'#000'});
 		        $('.make_star svg:nth-child(-n+' + targetNum +')').css({color:'#FFD600'});
-		        console.log(targetNum);
+		        // console.log(targetNum);
 		        
 		      	$("#forwardRating").val(targetNum);
 		    })

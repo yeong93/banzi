@@ -414,7 +414,7 @@
 	    var rating = $('.reviewStar .rating');
 	    rating.each(function(){
 	        var targetScore = $(this).attr('data-rate');
-	        console.log(targetScore);
+	        
 	        $(this).find('svg:nth-child(-n+' + targetScore +')').css({color:'#FFD600'})
 	    });
 	});
@@ -429,6 +429,7 @@
    	  $(this).parent().css("cursor", "pointer");
      });
 	
+	// 이미지없을때 텍스트박스 none처리
     $(function(){
     	$(".review-box .review-box-center").each(function(index, item){
     		if($(item).find("img").length == 0){
