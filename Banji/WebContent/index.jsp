@@ -64,8 +64,9 @@
             margin-left: 390px;
             font-size: 18px;
             margin-top: 20px;
-			font-family: "InfinitySans-RegularA1";
+			font-family: 'GmarketSansMedium'; 
 			color: #5d5d5d;
+			
           }
           
           .title-text{
@@ -87,6 +88,9 @@
           
           .title-text > img{
           	opacity: 0.7;
+          }
+          table{
+          border: 1px solid black;
           }
   </style>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" type="text/css">
@@ -135,40 +139,65 @@
       </a>
     </div>
   </section>
-  
       <div class="empty"></div>
-        <div class="category">-음식 정보</div>
-        <div class="container">
+      
+       <table>
+       <tr>
+	    	<td>
+	       		<div class="category">-음식 정보</div>
+	       	</td>
+	        <td>
+	       		<div class="container">
+		            <div class="img-box">
+		            	<p class="info-title title-text"></p>
+		            </div>
+	       		 </div>
+	       	</td>
+        </tr>
         
-            <div class="img-box">
-            	<p class="info-title title-text"></p>
-            </div>
-        </div>
         
-        <div class="category">-견종백과 정보</div>
-        <div class="container">
+        <tr>
+	    	<td>
+	       		<div class="category">-견종백과 정보</div>
+	       	</td>
+	        <td>
+	       		<div class="container">
+		            <div class="img-box">
+		            	<p class="info-title2 title-text"></p>
+		            </div>
+	       		 </div>
+	       	</td>
+        </tr>
         
-            <div class="img-box">
-            	<p class="info-title2 title-text"></p>
-            </div>
-        </div>
+       <tr>
+	    	<td>
+	       		<div class="category">-건강상식 정보</div>
+	       	</td>
+	        <td>
+	       		<div class="container">
+		            <div class="img-box">
+		            	<p class="info-title3 title-text"></p>
+		            </div>
+	       		 </div>
+	       	</td>
+        </tr>
         
-        <div class="category">-건강상식 정보</div>
-        <div class="container">
         
-            <div class="img-box">
-            	<p class="info-title3 title-text"></p>
-            </div>
-        </div>
+        <tr>
+	    	<td>
+	       		<div class="category">-교육/훈련 정보</div>
+	       	</td>
+	        <td>
+	       		<div class="container">
+		            <div class="img-box">
+		            	<p class="info-title4 title-text"></p>
+		            </div>
+	       		 </div>
+	       	</td>
+        </tr>
         
-        <div class="category">-교육/훈련 정보</div>
-        <div class="container">
-        
-            <div class="img-box">
-            	<p class="info-title4 title-text"></p>
-            </div>
-        </div>
-
+       
+	</table>
      
      
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -197,7 +226,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -237,7 +266,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -277,7 +306,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
@@ -315,7 +344,7 @@ $(function(){
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
 	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
-	    	 	 $a.css({"width" : "100%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
+	    	 	 $a.css({"width" : "65%", "height" : "100%" , "position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
 	    	 	 // 텍스트용
