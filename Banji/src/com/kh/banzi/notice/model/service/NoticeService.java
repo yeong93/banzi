@@ -201,5 +201,15 @@ public class NoticeService {
         conn.close();
         return notice;
     }
+
+    public PageInfo getPageInfo(String currentPage) throws Exception{
+        Connection conn = getConnection();
+        
+        int cp = (currentPage == null) ? 1: Integer.parseInt(currentPage);
+        
+        int listCount = dao.getListCount(conn);
+        conn.close();
+        return new PageInfo(cp, listCount, 4);
+    }
 }
 

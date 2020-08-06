@@ -18,9 +18,9 @@
  int endPage = pInfo.getEndPage();
  int boardType = pInfo.getBoardType();
  
- int prev = (currentPage-1)/10*10;   // < 버튼 
+ int prev = 5 * ( (currentPage - 1) / 5 );   // < 버튼 
  
- int next = (currentPage+9)/10*10+1; // > 버튼 
+ int next = 1 + ( (currentPage + 4) / 5 * 5); // > 버튼 
  String pattern = "yy-MM-dd HH:mm";
  String pattern2 = "HH:mm";
  Calendar today = Calendar.getInstance();
@@ -155,7 +155,7 @@
 	        <!-- 페이징바 -->
 	          <div style="clear:both">
               <ul class ="pagination">
-               <% if(currentPage > 10) { %>
+               <% if(currentPage > 5) { %>
                     <!--  맨 처음 페이지로 이동[<<] -->
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?&cp=1">&lt;&lt;</a>
@@ -180,19 +180,13 @@
                        <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=p%>"><%=p %></a>
                     
                     <%} %>
-                    
                     <%} %>
                     
-                    
-                    <% if((next < maxPage)) {%>
-                       <!-- 다음 페이지[>] -->
+                    <% if((next <= maxPage)) {%>
                     
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=next%>">&gt;</a>
                     </li>
-                    
-                    <!--  마지막 페이지로 이동[>>] -->
-                    
                     <li>
                        <a class="page-link" href="<%=request.getContextPath()%>/community/list.do?cp=<%=maxPage%>">&gt;&gt;</a>
                     </li>

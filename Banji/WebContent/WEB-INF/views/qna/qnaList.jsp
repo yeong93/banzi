@@ -119,8 +119,8 @@
         }
         .reply_content{
          font-weight:300;
-         font-family: '돋움',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-         margin:7px 0px;
+         font-family: "나눔고딕";
+         margin:13px 0px;
         }
         .p1{
          font-size:1.3em;
