@@ -1,5 +1,9 @@
 package com.kh.banzi.review.model.vo;
 
+import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
+
 public class Attachment {
 	private int fileNo;
 	private String fileOriginName;
@@ -104,9 +108,29 @@ public class Attachment {
 
 	@Override
 	public String toString() {
-		return "Attachment [fileNo=" + fileNo + ", parentBoardNo=" + parentBoardNo + ", fileOriginName="
-				+ fileOriginName + ", fileChangeName=" + fileChangeName + ", filePath=" + filePath + ", fileLevel="
-				+ fileLevel + ", fileStatus=" + fileStatus + ", parentBoardType=" + parentBoardType + "]";
+		/*
+	private int fileNo;
+	private String fileOriginName;
+	private String fileChangeName;
+	private String filePath;
+	private int fileLevel;
+	private String fileStatus;
+	private int parentBoardNo;
+	private int parentBoardType;
+		 */
+		
+		JSONObject obj = new JSONObject();
+		
+		obj.put("fileNo", fileNo);
+		obj.put("fileOriginName", fileOriginName);
+		obj.put("fileChangeName", fileChangeName);
+		obj.put("filePath", filePath);
+		obj.put("fileLevel", fileLevel);
+		obj.put("fileStatus", fileStatus);
+		obj.put("parentBoardNo", parentBoardNo);
+		obj.put("parentBoardType", parentBoardType);
+	
+		return obj.toJSONString(); 
 	}
 
 

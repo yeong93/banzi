@@ -85,6 +85,7 @@
             background-color: #ffce54;
             color: white;
             margin: 20px 16px 20px 16px;
+            overflow: hidden;
         }
 
         .review-button:hover {
@@ -271,11 +272,9 @@
 
 <body>
 	<%@ include file="../common/header.jsp"%>
-
 	<p class="empty"></p>
     <div class="review-1">사용후기</div>
     <p class="line-height"></p>
-
     <!-- 버튼부분 -->
     <div class="review-button-area">
         <div class="review-button"><a href="<%=request.getContextPath()%>/review/reviewCategory.do?type=<%=type%>&category=1">병 원</a></div>
@@ -327,6 +326,8 @@
            			String path = request.getContextPath() + "/resources/uploadImages/";
            			String[] img = new String[3];
            			for(Attachment at : fList ) {
+           				
+           				
            			if(at.getParentBoardNo() == rList.get(num).getReviewBoardNo()){
            				switch(at.getFileLevel()){
            				case 0 : img[0] = path + at.getFileChangeName(); break;
@@ -405,9 +406,7 @@
 	        </div> <!-- 페이징바 end -->
 
 	<%@ include file="../common/footer.jsp"%>
-</body>
-
-<script>
+	<script>
 	// 평가 등급 (+targetScore값이 변경값)
 	$(function(){
 	    var rating = $('.reviewStar .rating');
@@ -427,6 +426,15 @@
      }).on("mouseenter", function(){
    	  $(this).parent().css("cursor", "pointer");
      });
+	
+    $(function(){
+    	$(".review-box .review-box-center").each(function(index, item){
+    		if($(item).find("img").length == 0){
+    			$(item).css("display", "none");  
+    		}  
+    	});
+    });
 
 </script>
+</body>
 </html>

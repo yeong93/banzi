@@ -34,8 +34,7 @@ public class indexDAO {
 		Statement stmt =null;
 		ResultSet rset = null;
 		List<Information> iList = null;
-		String query = prop.getProperty("selectInfo"); 
-		
+		String query = prop.getProperty("selectInfoNameOne"); 
 		
 		try {
 			stmt = conn.createStatement();
@@ -59,105 +58,6 @@ public class indexDAO {
 		return iList;
 	}
 
-	/** 자유게시판 조회용 dao
-	 * @param conn
-	 * @return cList
-	 * @throws Exception
-	 */
-	public List<Community> selectCommunityList(Connection conn) throws Exception{
-		Statement stmt =null;
-		ResultSet rset = null;
-		List<Community> cList = null;
-		String query = prop.getProperty("selectCommunity"); 
-		
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			cList = new ArrayList<Community>();
-			
-			while(rset.next()) {
-				Community community = new Community(rset.getString("TITLE"), 
-																	rset.getString("CONTENT"),
-																	rset.getInt("BOARD_NO"));
-				
-				cList.add(community);
-			}
-				
-		}finally {
-			rset.close();
-			stmt.close();
-		}
-		
-		return cList;
-	}
-
-	
-	/** QNA용
-	 * @param conn
-	 * @return qList
-	 * @throws Exception
-	 */
-	public List<Qna> selectQNAList(Connection conn) throws Exception{
-		Statement stmt =null;
-		ResultSet rset = null;
-		List<Qna> qList = null;
-		String query = prop.getProperty("selectQNA"); 
-		
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			qList = new ArrayList<Qna>();
-			
-			while(rset.next()) {
-				Qna qna = new Qna(rset.getString("TITLE"), 
-										rset.getString("CONTENT"),
-										rset.getInt("BOARD_NO"));
-				
-				qList.add(qna);
-			}
-				
-		}finally {
-			rset.close();
-			stmt.close();
-		}
-		
-		return qList;
-	}
-
-	public List<Review> selectReviewList(Connection conn) throws Exception{
-		Statement stmt =null;
-		ResultSet rset = null;
-		List<Review> rList = null;
-		String query = prop.getProperty("selectReview"); 
-		
-		
-		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			rList = new ArrayList<Review>();
-			
-			while(rset.next()) {
-				Review review = new Review(rset.getString("REVIEW_TITLE"), 
-										rset.getString("REVIEW_CONTENT"),
-										rset.getInt("REVIEW_BOARD_NO")
-						);
-				
-				rList.add(review);
-			}
-				// System.out.println(rList);
-		}finally {
-			rset.close();
-			stmt.close();
-		}
-		
-		return rList;
-	}
-
 	/** 정보 이미지 조회용
 	 * @param conn
 	 * @return fList
@@ -167,7 +67,7 @@ public class indexDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Attachment> fList = null;
-		String query = prop.getProperty("selectInfoFileList");
+		String query = prop.getProperty("selectInfoOne");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -193,16 +93,51 @@ public class indexDAO {
 		return fList;
 	}
 
-	/** 자유게시판 이미지 조회용
-	 * @param conn
-	 * @return rList
+	// ------
+	
+	/** info 제목 조회 DAO
+	 * @param conn 
+	 * @return iList
 	 * @throws Exception
 	 */
-	public List<Attachment> selectCommunityFileList(Connection conn) throws Exception{
+	public List<Information> selectInfoListTwo(Connection conn) throws Exception{
+		Statement stmt =null;
+		ResultSet rset = null;
+		List<Information> iList = null;
+		String query = prop.getProperty("selectInfoNameTwo"); 
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			iList = new ArrayList<Information>();
+			
+			while(rset.next()) {
+				Information information = new Information( rset.getInt("INFORMATION_BOARD_NO"),
+																	rset.getString("INFORMATION_BOARD_TITLE"), 
+																	rset.getString("INFORMATION_BOARD_CONTENT"));
+				
+				iList.add(information);
+			}
+				
+		}finally {
+			rset.close();
+			stmt.close();
+		}
+		
+		return iList;
+	}
+
+	/** 정보 이미지 조회용
+	 * @param conn
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectInfoFileListTwo(Connection conn) throws Exception{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Attachment> fList = null;
-		String query = prop.getProperty("selectCommunityFileList");
+		String query = prop.getProperty("selectInfoTwo");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -228,11 +163,50 @@ public class indexDAO {
 		return fList;
 	}
 
-	public List<Attachment> selectQNAFileList(Connection conn) throws Exception{
+	//--
+	/** info 제목 조회 DAO
+	 * @param conn 
+	 * @return iList
+	 * @throws Exception
+	 */
+	public List<Information> selectInfoListThree(Connection conn) throws Exception{
+		Statement stmt =null;
+		ResultSet rset = null;
+		List<Information> iList = null;
+		String query = prop.getProperty("selectInfoNameThree"); 
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			iList = new ArrayList<Information>();
+			
+			while(rset.next()) {
+				Information information = new Information( rset.getInt("INFORMATION_BOARD_NO"),
+																	rset.getString("INFORMATION_BOARD_TITLE"), 
+																	rset.getString("INFORMATION_BOARD_CONTENT"));
+				
+				iList.add(information);
+			}
+				
+		}finally {
+			rset.close();
+			stmt.close();
+		}
+		
+		return iList;
+	}
+
+	/** 정보 이미지 조회용
+	 * @param conn
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectInfoFileListThree(Connection conn) throws Exception{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Attachment> fList = null;
-		String query = prop.getProperty("selectQNAFileList");
+		String query = prop.getProperty("selectInfoThree");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -257,12 +231,52 @@ public class indexDAO {
 				
 		return fList;
 	}
+	
+	// -------------
+	
+	/** info 제목 조회 DAO
+	 * @param conn 
+	 * @return iList
+	 * @throws Exception
+	 */
+	public List<Information> selectInfoListFour(Connection conn) throws Exception{
+		Statement stmt =null;
+		ResultSet rset = null;
+		List<Information> iList = null;
+		String query = prop.getProperty("selectInfoNameFour"); 
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			iList = new ArrayList<Information>();
+			
+			while(rset.next()) {
+				Information information = new Information( rset.getInt("INFORMATION_BOARD_NO"),
+																	rset.getString("INFORMATION_BOARD_TITLE"), 
+																	rset.getString("INFORMATION_BOARD_CONTENT"));
+				
+				iList.add(information);
+			}
+				
+		}finally {
+			rset.close();
+			stmt.close();
+		}
+		
+		return iList;
+	}
 
-	public List<Attachment> selectReviewFileList(Connection conn) throws Exception{
+	/** 정보 이미지 조회용
+	 * @param conn
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectInfoFileListFour(Connection conn) throws Exception{
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Attachment> fList = null;
-		String query = prop.getProperty("selectReviewFileList");
+		String query = prop.getProperty("selectInfoFour");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -287,5 +301,4 @@ public class indexDAO {
 				
 		return fList;
 	}
-
 }

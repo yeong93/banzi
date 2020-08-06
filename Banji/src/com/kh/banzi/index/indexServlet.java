@@ -59,46 +59,55 @@ public class indexServlet extends HttpServlet {
 				gson.toJson(map, response.getWriter());
 			}
 			
-			// 자유게시판 
-			else if(command.equals("/selectCommunity.do")) {
-				List<Community> cList = indexService.selectCommunityList();
+			else if(command.equals("/selectInfo2.do")) {
+				// 제목,내용 얻어옴
+				List<Information> iList = indexService.selectInfoListTwo();
 				
-				List<Attachment> fList = indexService.selectCommunityFileList();
+				// info 이미지 얻어오기 
+				List<Attachment> fList = indexService.selectInfoFileListTwo();
 				
 				Map<String, Object> map = new HashMap<>();
-				map.put("cList", cList);
+				map.put("iList", iList);
 				map.put("fList", fList);
 				
 				Gson gson = new Gson();
 				gson.toJson(map, response.getWriter());
+				
 			}
 			
-			// Q&A
-			else if(command.equals("/selectQNA.do")) {
-				List<Qna> qList = indexService.selectQNAList();
+			else if(command.equals("/selectInfo3.do")) {
+				// 제목,내용 얻어옴
+				List<Information> iList = indexService.selectInfoListThree();
 				
-				List<Attachment> fList = indexService.selectQNAFileList();
+				// info 이미지 얻어오기 
+				List<Attachment> fList = indexService.selectInfoFileListThree();
 				
 				Map<String, Object> map = new HashMap<>();
-				map.put("qList", qList);
+				map.put("iList", iList);
 				map.put("fList", fList);
 				
 				Gson gson = new Gson();
 				gson.toJson(map, response.getWriter());
+				
 			}
 			
-			// 사용후기
-			else if(command.equals("/selectReview.do")) {
-				List<Review> rList = indexService.selectReviewList();
-				List<Attachment> fList = indexService.selectReviewFileList();
+			else if(command.equals("/selectInfo4.do")) {
+				// 제목,내용 얻어옴
+				List<Information> iList = indexService.selectInfoListFour();
+				
+				// info 이미지 얻어오기 
+				List<Attachment> fList = indexService.selectInfoFileListFour();
 				
 				Map<String, Object> map = new HashMap<>();
-				map.put("rList", rList);
+				map.put("iList", iList);
 				map.put("fList", fList);
 				
 				Gson gson = new Gson();
 				gson.toJson(map, response.getWriter());
+				
 			}
+			
+			
 			
 		
 			
