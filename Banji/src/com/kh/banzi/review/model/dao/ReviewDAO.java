@@ -55,6 +55,30 @@ public class ReviewDAO {
 	}
 	
 	
+	
+	public int getListCount(Connection conn, int boardType, int category) throws Exception {
+		PreparedStatement pstmt =null;
+		ResultSet rset = null;
+		int listCount = 0;
+		String query = prop.getProperty("getListCount2"); 
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1, boardType);
+			pstmt.setInt(2, category);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) listCount = rset.getInt(1);
+			
+		}finally {
+			rset.close();
+			pstmt.close();
+		}
+		
+		return listCount;
+	}
+	
+	
 	/** 리뷰 게시판 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo 
@@ -467,5 +491,7 @@ public class ReviewDAO {
 		}
 		return list;
 	}
+
+
 
 }
