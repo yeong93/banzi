@@ -19,8 +19,8 @@
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType();
 
-	int prev = (currentPage - 1)/6 * 6;
-	int next = (currentPage + 5)/6 * 6 + 1;
+	int prev = (currentPage - 1)/5 * 5;
+	int next = (currentPage + 4)/5 * 5 + 1;
 	
 %>
 <!DOCTYPE html>

@@ -18,8 +18,8 @@
 	int endPage = pInfo.getEndPage();
 	int boardType = pInfo.getBoardType();
 
-	int prev = (currentPage - 1)/6 * 6;
-	int next = (currentPage + 5)/6 * 6 + 1;
+	int prev = (currentPage - 1)/5 * 5;
+	int next = (currentPage + 4)/5 * 5 + 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -150,7 +150,8 @@
 						  title: '<strong>'+event.eventTitle+'</strong>',
 						  html:
 							  '<h4>당첨자 발표</h4><hr>'+
-							  '<br><h5>' + event.eventWin + '</h5><br>',
+							  '<br><h5>' + event.eventWin + '</h5><br>' +
+							  '<h5> 자세한 사항은 이메일로 발송드렸습니다.</h5><br>',
 						  showCloseButton: true
 						})
 				}else{
