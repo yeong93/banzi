@@ -33,7 +33,8 @@
 				<form class="eventList mx-auto" method="POST" action="<%=request.getContextPath()%>/event/changeWinner.do?type=<%=type%>&cp=<%=cp%>&no=<%=event.getEventNo() %>" onsubmit="return validate();">
 				  
 				  <table class="mx-auto table">
-					
+				  <tr><td colspan="3" class="text-center">'삭제'하려면 모든 글을 지워주세요!!!</td></tr>
+					<tr><td colspan="3">이벤트 번호 : <%=event.getEventNo() %></td></tr>
 				  	<tr>
 				  		<td><p>내용</p></td>
 				  		<td colspan="2">
@@ -48,7 +49,7 @@
 
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary btn-warning" id="insertBtn">글 수정</button>
-					<button type="button" class="btn btn-primary btn-warning" id="listBtn">목록으로</button>
+					<a href="winnerList.do?&type=<%=type%>&cp=<%=cp%>" class="btn btn-primary btn-warning" id="listBtn">목록으로</a>
 				</div>
 
 			</form>

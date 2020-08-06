@@ -4,6 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
+	String type = request.getParameter("type"); 
+	String cp = request.getParameter("cp");
 	int no = Integer.parseInt(request.getParameter("no"));
 %>   
 <!DOCTYPE html>
@@ -26,7 +28,7 @@
 		<!-- -------------------------------- 메인 -------------------------------- -->
 		<div id="container" class="event">
 			<h1 class="type1">이벤트 당첨자 발표</h1>
-				<form class="eventList mx-auto" method="POST" action="<%=request.getContextPath()%>/masterPage/insertWinner.do?no=<%=no%>" onsubmit="return validate();">
+				<form class="eventList mx-auto" method="POST" action="<%=request.getContextPath()%>/masterPage/insertWinner.do?type=<%=type%>&cp=<%=cp%>&no=<%=no%>" onsubmit="return validate();">
 
 				  <table class="mx-auto table">
 				  	<tr><td colspan="3">이벤트 번호 : <%=no%></td></tr>
