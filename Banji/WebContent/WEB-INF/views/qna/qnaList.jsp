@@ -429,7 +429,7 @@ userGrade ="";
               }
             }
           }
-          if(userGrade == "veterinarian" || userGrade == "animaltrainer"){
+          if(userGrade == "veterinarian" || userGrade == "animaltrainer" ){
             $div = $("<div>").addClass("replyWrite");
             $table = $("<table align='center'>");
             $tr =$("<tr>");
