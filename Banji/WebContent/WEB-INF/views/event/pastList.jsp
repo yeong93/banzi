@@ -84,9 +84,9 @@
      													+ at.getFileChangeName();
      										}
      									}
-     											%>
-     												<img src="<%=src%>" width="374px" height="308px">
-     											<% 
+     										%>
+	   											<img src="<%=src%>" width="374 !important" height="308 !important">
+   											<% 
      								%>
      									<div class="end">
 												<p class="text">이벤트가<br>종료되었습니다.</p>
