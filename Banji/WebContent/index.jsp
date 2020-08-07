@@ -225,7 +225,7 @@ $(function(){
 	    		 // 하이퍼링크
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
-	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&cp=1&no=" + hrefNo);
 	    	 	 // $a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
@@ -265,7 +265,7 @@ $(function(){
 	    		 // 하이퍼링크
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
-	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&cp=1&no=" + hrefNo);
 	    	 	 //$a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
@@ -305,7 +305,7 @@ $(function(){
 	    		 // 하이퍼링크
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
-	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&cp=1&no=" + hrefNo);
 	    	 	 //$a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
@@ -343,7 +343,7 @@ $(function(){
 	    		 // 하이퍼링크
 	    		 var hrefNo = map.iList[0].infoBoardNo;
 	    	 	 $a = $("<a>");
-	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&no=" + hrefNo);
+	    	 	 $a.attr("href", "<%=request.getContextPath()%>/information/view.do?type=2&category=1&cp=1&no=" + hrefNo);
 	    	 	// $a.css({"position" : "absolute", "margin" : "auto", "top" : "0", "bottom":"0", "right":"0", "left":"0", "z-index":"2"});
 	    	 	// $(".info-title").append($a);
 	    	 	
