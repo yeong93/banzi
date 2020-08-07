@@ -92,7 +92,6 @@ public class NoticeController extends HttpServlet {
                 view = request.getRequestDispatcher(path);
                 view.forward(request, response);
             } else if (command.equals("/insert.do")) {
-                System.out.println("hello");
                 int maxSize = 1024 * 1024 * 10; // 10MB   
 
                 String root = request.getSession().getServletContext().getRealPath("/");

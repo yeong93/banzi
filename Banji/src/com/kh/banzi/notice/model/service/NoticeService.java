@@ -56,14 +56,12 @@ public class NoticeService {
         int boardNo = new QnaDAO().selecNextNo(conn);
         if (boardNo > 0) {
             notice.setBoardNo(boardNo);
-            System.out.println(boardNo);
 
             notice.setContent(replaceParameter(notice.getContent()));
             notice.setContent(notice.getContent().replaceAll("\r\n", "<br>"));
 
 
             result = dao.inserNotice(conn, notice);
-            System.out.println(result);
 
             if(result > 0 && !fList.isEmpty()) {
                 result = 0;
