@@ -124,7 +124,7 @@
             $("#title").focus();
             return false;
          }
-         if($("#title").val().trim().length >= 20){
+         if($("#title").val().trim().length > 30){
              alert("제목은 20글자를 초과할 수 없습니다.");
              return false;
            }

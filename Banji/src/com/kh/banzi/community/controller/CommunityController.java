@@ -116,7 +116,7 @@ public class CommunityController extends HttpServlet {
                 String boardContent = mRequest.getParameter("content");
                 String categoryName = mRequest.getParameter("category");
 
-                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserName();
+                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
                 int boardType = Integer.parseInt(request.getParameter("type"));
 
                 Community community = new Community(userId, boardTitle, boardContent, boardType);

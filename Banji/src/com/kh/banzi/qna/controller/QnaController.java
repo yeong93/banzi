@@ -102,7 +102,7 @@ public class QnaController extends HttpServlet {
                 String title = mRequest.getParameter("title");
                 String content = mRequest.getParameter("content");
 
-                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserName();
+                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
                 int boardType = Integer.parseInt(request.getParameter("type"));
                 Qna qna = new Qna(userId, title, content, boardType);
 
@@ -269,6 +269,8 @@ public class QnaController extends HttpServlet {
                 gson.toJson(rList, response.getWriter());
             } else if (command.equals("/delete.do")) {
                 int boardNo = Integer.parseInt(request.getParameter("no"));
+                System.out.println(boardNo);
+
                 
                 int result = service.deleteQna(boardNo);
                 

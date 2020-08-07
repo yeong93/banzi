@@ -7,6 +7,7 @@ import javafx.scene.chart.PieChart.Data;
 
 public class Qna {
     private int boardNo;
+    private String regId;
     private String regWriter;
     private String title;
     private String content;
@@ -20,6 +21,14 @@ public class Qna {
     
     
     
+    public Qna(String regId,String regWriter, String title, String content, Timestamp regDate) {
+        super();
+        this.regId = regId;
+        this.regWriter = regWriter;
+        this.title = title;
+        this.content = content;
+        this.regDate = regDate;
+    }
     public Qna(String regWriter, String title, String content, Timestamp regDate) {
         super();
         this.regWriter = regWriter;
@@ -37,8 +46,6 @@ public class Qna {
         this.content = content;
         this.boardType = boardType;
     }
-    
-    
 
 
     public Qna(int boardNo, String title, String content, int boardType) {
@@ -47,6 +54,18 @@ public class Qna {
         this.title = title;
         this.content = content;
         this.boardType = boardType;
+    }
+    
+    public Qna(int boardNo,String regId, String regWriter, String title, String content, Timestamp regDate, int boardType, int replyCount) {
+        super();
+        this.boardNo = boardNo;
+        this.regId = regId;
+        this.regWriter = regWriter;
+        this.title = title;
+        this.content = content;
+        this.regDate = regDate;
+        this.boardType = boardType;
+        this.replyCount = replyCount;
     }
 
 
@@ -148,6 +167,20 @@ public class Qna {
     public void setBoardType(int boardType) {
         this.boardType = boardType;
     }
+
+
+
+    public String getRegId() {
+        return regId;
+    }
+
+
+
+    public void setRegId(String regId) {
+        this.regId = regId;
+    }
+    
+    
     
     
 

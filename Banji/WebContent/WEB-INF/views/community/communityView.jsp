@@ -80,7 +80,9 @@
 	  padding-top:157px;
 	}
 	.reply_content{
+	 font-family: 'Nanum Gothic', sans-serif;
 	 width:80%;
+	 font-weight:600;
 	}
 	.p1{
 	 font-size:1.2em;
@@ -99,6 +101,10 @@
 	}
 	#writer, #date{
 	 font-weight: bold;
+	 font-size:0.9em;
+	}
+	#board-content{
+	 padding-bottom:50px;
 	}
 </style>
 </head>
@@ -111,7 +117,7 @@
 			<div id="board-area">
 
 				<!-- Title -->
-				<h3 class="mt-4" id="title">제목 : <%= community.getTitle() %></h3>
+				<h3 class="mt-4" id="title"><%= community.getTitle() %></h3>
         <hr>
 				<!-- Writer -->
 				<p class="lead" id="writer">
@@ -215,6 +221,7 @@
 	userNick = "<%=tempUser.getUserName()%>";
 	<%} else {%>
 	userNick = "";
+	userId="";
 	<%}%>
  	    $(function(){
  		     selectReplyList(<%=community.getBoardNo()%>);
@@ -241,7 +248,7 @@
 	               $div = $("<div>").addClass("rWriter").html("작성자 : " + rList[i].regWriter +"<br>"+"작성일 : " + rList[i].regDate);
 	               $p2 = $("<p>").addClass("reply_content").html(rList[i].content);
 	               $(".relply-list").append($div, $p2);
-	               if(userNick == rList[i].regWriter){
+	               if(userId == rList[i].regId){
 	            	   var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+rList[i].replyNo+")");
 	            	   $(".relply-list").append( $deleteReply);  
 	               }
@@ -273,7 +280,6 @@
 			        success : function(result){
 			          alert(result);
 			          $("#replyContent").val("");
-			          console.log(boardNo);
 			          selectReplyList(boardNo);
 			        }, error : function(){
 			          console.log("ajax 통신 실패");
@@ -291,7 +297,7 @@
  		        data : {"replyNo" : replyNo},
  		        success : function(result){
  		          alert(result);
-              selectReplyList(boardNo);
+ 		          location.reload();
  		        }, error :  function(){
  		          console.log("ajax 통신 실패");
  		        }

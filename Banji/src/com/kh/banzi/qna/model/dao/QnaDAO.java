@@ -77,6 +77,7 @@ public class QnaDAO {
             while(rset.next()) {
                 qList.add(
                         new Qna(rset.getInt("BOARD_NO"),
+                                rset.getString("USER_ID"),
                                 rset.getString("USER_NAME"),
                                 rset.getString("TITLE"),
                                 rset.getString("CONTENT"),
@@ -103,7 +104,9 @@ public class QnaDAO {
             pstmt.setInt(1, boardNo);
             rset = pstmt.executeQuery();
             if(rset.next()) {
-                qna = new Qna(rset.getString("USER_NAME"),
+                qna = new Qna(
+                              rset.getString("USER_ID"),
+                              rset.getString("USER_NAME"),
                               rset.getString("TITLE"),
                               rset.getString("CONTENT"),
                               rset.getTimestamp("REG_DATE"));
@@ -127,6 +130,7 @@ public class QnaDAO {
             while(rset.next()) {
                 reply = new Reply(
                         rset.getInt("REPLY_NO"),
+                        rset.getString("USER_ID"),
                         rset.getString("USER_NAME"),
                         rset.getString("CONTENT"),
                         rset.getTimestamp("REG_DATE"));

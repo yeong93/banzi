@@ -34,6 +34,7 @@
 <html>
 <head>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>게시판</title>
    <style>
@@ -118,8 +119,9 @@
         margin-bottom:20px;
         }
         .reply_content{
-         font-weight:300;
-         font-family: "나눔고딕";
+         font-weight:550;
+         font-family: 'Nanum Gothic', sans-serif;
+         font-size:0.95em;
          margin:13px 0px;
         }
         .p1{
@@ -219,7 +221,7 @@ background-color: #81F7D8;
                   <tbody>
                   <%for(Qna q : qList){ %>
                     <tr id="<%=q.getBoardNo() %>" class="mouse">
-                      <td><%=q.getRegWriter() %></td>
+                      <td id="<%=q.getRegId()%>"><%=q.getRegWriter() %></td>
                       <td class="boardTitle">
                       <%=q.getTitle() %>
                       </td>
@@ -298,24 +300,6 @@ background-color: #81F7D8;
               </ul>
            </div>
           
-          <!-- 페이징바 -->
-          
-          
-          
-          <!-- 검색 -->
-<!--           <div>
-              <form action="search" method="GET" class="text-center" id="searchForm">
-                  <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-                      <option value="title" selected>글제목</option>
-                      <option value="title">글제목</option>
-                      <option value="content">내용</option>
-                      <option value="titcont">제목+내용</option>
-                  </select>
-                  <input type="text" name="searchValue" class="form-control" style="width:25%; display: inline-block;">
-                  <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
-              </form>
-              
-          </div> -->
       </div>
       <!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -347,12 +331,6 @@ background-color: #81F7D8;
 	  </div>
     
   <script>
-    //------------------------------------------------------------------------------------------------------------
-    // 게시글 상세보기 기능 (jquery를 통해 작업)
-        // 게시글 상세보기 기능 (jquery를 통해 작업)
-    
-    //------------------------------------------------------------------------------------------------------------
-    // 검색
 <%
     User tempUser = (User)session.getAttribute("loginUser");
 %>
@@ -360,81 +338,13 @@ var loginMemberId;
 <% if(tempUser != null){%>
 userId = "<%=tempUser.getUserId()%>";
 userNick = "<%=tempUser.getUserName()%>";
+userGrade = "<%=tempUser.getUserGrade()%>".trim();
 <%} else {%>
 userNick = "";
+userId = "";
+userGrade ="";
 <%}%>
-    // -- QNA글 보기
-    $(document).on("click","#list-table td",function(e){
-        var boardNo = $(this).parent().attr("id");
-    	$.ajax({
-    		url : "<%=request.getContextPath()%>/qna/view.do?cp=<%=currentPage%>&no="+boardNo,
-    	  type : "GET",
-    	  dataType : "JSON",
-    	  success : function(map){
-    		  $("#reply").text("");
-    		  $("#exampleModalLabel").text(map.qna.title);
-    		  $("#info").attr("class",map.qna.regWriter).text("작성자 : " + map.qna.regWriter);
-    		  $("#info").append("<span class='date'> 작성일 :" + map.qna.regDate);
-    		  $("#content").html(map.qna.content);
-    		  $("[type='hidden']").attr('class', boardNo);
-    		  if(map.qna.regWriter == userNick){
-    			  $(".bt").remove();
-    			  $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='deleteQna();'>삭제");
-    			  $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='updateQna();'>수정");
-    		  }
-    		  if(map.fList.length != 0){
-    			  var src;
-    			  var flag = true;
-    			  for(var i = 0; i < map.fList.length; i++){
- 						  src ="<%=request.getContextPath()%>/resources/uploadImages/"+map.fList[i].fileChangeName;
- 						  $("#content").append("<img src="+src+">");
- 						  src = "";
-    			  }
-    			  
-    		  }
-     		  if(map.rList.length != 0){
- 	           $hr = $("<hr>");
-             $p1 = $("<p>").addClass("p1").text("댓글");
-             $("#content").append($hr,$p1);
-     			  for(var i = 0; i < map.rList.length; i++){
-     				  if(i > 0){
-     					  $hr2 = $("<hr>");     					  
-  		          $("#content").append($hr2);
-     				  }
-    			   $p1 = $("<p>").text("댓글");
-    			   $div = $("<div>").addClass("nick_box").text("작성자 : " + map.rList[i].regWriter);
-    			   $div2 = $("<div>").addClass("nick_box").attr("id","date").text("작성일 : " + map.rList[i].regDate);
-    			   $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
-             $("#content").append($div,$div2, $p2);
-    			   if(userNick != "" && userNick == map.rList[i].regWriter){
- 			         /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
- 			         var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
- 			         $("#content").append($deleteReply);
-    			   }
-     			  }
-    		  }
-     		  if(map.userGrade.trim() == "veterinarian" && map.userGrade.trim() == "veterinarian"){
-     			  $div = $("<div>").addClass("replyWrite");
-     			  $table = $("<table align='center'>");
-     			  $tr =$("<tr>");
-     			  $td = $("<td id=replyContentArea>")
-     			  $textArea = $("<textArea rows='4' id='replyContent'>");
-     			  $td2 = $("<td id='replyBtnArea'>");
-     			  $btn = $("<button class='btn btn-primary' id='addReply'>").attr("onclick", "insert();").html("답변<br>등록");
-     			  $div.append($table.append($tr.append($td.append($textArea), $td2.append($btn))));
-     			  $("#content").append($div);
-     		  }
-    	  }, error : function(){
-    		  console.log("ajax 통신 실패");
-    	  }
-    		
-    	});
-    });
     
-    $("#list-table td").on("click",function(e){
-        e.preventDefault();
-        $('#exampleModal').modal("show");
-    });
     
     function insert(){
     	var replyContent = $("#replyContent").val();
@@ -453,13 +363,22 @@ userNick = "";
     			success : function(result){
     				alert(result);
 		        $("#replyContent").val("");
-		        reload(boardNo);
+		         reload(boardNo);
     			}, error : function(){
     				console.log("ajax 통신 실패");
     			}
     		}); 		
     	}
     };
+    
+    $("#list-table td").on("click",function(e){
+        e.preventDefault();
+        $('#exampleModal').modal("show");
+    });
+    $("#list-table td").click(function(){
+      var boardNo = $(this).parent().attr("id");
+      reload(boardNo);
+    });
     
     function reload(boardNo){
       $.ajax({
@@ -469,8 +388,14 @@ userNick = "";
         success : function(map){
           $("#reply").text("");
           $("#exampleModalLabel").text(map.qna.title);
+          $("#info").attr("class",map.qna.regId).text("작성자 : " + map.qna.regWriter);
           $("#content").html(map.qna.content);
           $("[type='hidden']").attr('class', boardNo);
+          if(map.qna.regId == userId){
+              $(".bt").remove();
+              $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='deleteQna();'>삭제");
+              $(".modal-footer").prepend("<div class ='btn btn-primary bt' data-dismiss='modal' onclick='updateQna();'>수정");
+            }
           if(map.fList.length != 0){
             var src;
             var flag = true;
@@ -493,8 +418,10 @@ userNick = "";
              $div = $("<div>").addClass("nick_box").text("작성자 : " + map.rList[i].regWriter);
              $div2 = $("<div>").addClass("nick_box").attr("id","date").text("작성일 : " + map.rList[i].regDate);
              $p2 = $("<p>").addClass("reply_content").html(map.rList[i].content);
-             if(userNick == map.rList[i].regWriter){
-                 /* var $showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick","showUpdateReply(this, "+map.rList[i].replyNo+");"); */
+             console.log("접속" + userId);
+             console.log("접속" + map.rList[i].regId);
+             
+             if(userId == map.rList[i].regId){
                  var $deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick","showDeleteReply("+map.rList[i].replyNo+");");
                  $("#content").append($div,$div2, $p2, $deleteReply);
               }else{
@@ -502,7 +429,7 @@ userNick = "";
               }
             }
           }
-          if(map.userGrade != "user" && map.userGrade != ""){
+          if(userGrade == "veterinarian" || userGrade == "animaltrainer"){
             $div = $("<div>").addClass("replyWrite");
             $table = $("<table align='center'>");
             $tr =$("<tr>");
@@ -510,6 +437,7 @@ userNick = "";
             $textArea = $("<textArea rows='4' id='replyContent'>");
             $td2 = $("<td id='replyBtnArea'>");
             $btn = $("<button class='btn btn-primary' id='addReply'>").attr("onclick", "insert();").html("답변<br>등록");
+            
             $div.append($table.append($tr.append($td.append($textArea), $td2.append($btn))));
             $("#content").append($div);
           }
@@ -521,17 +449,13 @@ userNick = "";
     };
     function updateQna(){
     	var boardNo = $("[type='hidden']").attr("class");
-     	if(userNick == $("#info").attr("class")){
-     		  location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
-     	}else{
-     		alert("작성자만 수정 가능합니다.");
-     		return;
-     	}
+   		  location.href="<%=request.getContextPath()%>/qna/updateForm.do?no="+boardNo;
+
     };
     function deleteQna(){
     	if(confirm("해당 글을 삭제 하시겠습니까?")){
     	 var boardNo = $("[type='hidden']").attr("class");
-    	 location.href="delete.do?no="+boardNo;
+    	 location.href="<%=request.getContextPath()%>/qna/delete.do?no="+boardNo;
     	}
     }; 
     function ok(){

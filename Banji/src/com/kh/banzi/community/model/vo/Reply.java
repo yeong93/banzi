@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class Reply {
     private int replyNo;
+    private String regId;
     private String regWriter;
     private String content;
     private Timestamp regDate;
@@ -34,6 +35,14 @@ public class Reply {
     public Reply(int replyNo,String regWriter, String content, Timestamp regDate) {
         super();
         this.replyNo = replyNo;
+        this.regWriter = regWriter;
+        this.content = content;
+        this.regDate = regDate;
+    }
+    public Reply(int replyNo,String regId,String regWriter, String content, Timestamp regDate) {
+        super();
+        this.replyNo = replyNo;
+        this.regId = regId;
         this.regWriter = regWriter;
         this.content = content;
         this.regDate = regDate;
@@ -86,6 +95,18 @@ public class Reply {
     }
 
     public void setBoardNo(int boardNo) {
+        this.boardNo = boardNo;
+    }
+
+
+
+    public Reply(int replyNo, String regId, String regWriter, String content, Timestamp regDate, int boardNo) {
+        super();
+        this.replyNo = replyNo;
+        this.regId = regId;
+        this.regWriter = regWriter;
+        this.content = content;
+        this.regDate = regDate;
         this.boardNo = boardNo;
     }
     

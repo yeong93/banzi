@@ -107,7 +107,7 @@ public class NoticeController extends HttpServlet {
                 String title = mRequest.getParameter("title");
                 String content = mRequest.getParameter("content");
 
-                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserName();
+                String userId = ((User)request.getSession().getAttribute("loginUser")).getUserId();
                 int boardType = Integer.parseInt(request.getParameter("type"));
                 Notice notice = new Notice(userId, title, content, boardType);
 

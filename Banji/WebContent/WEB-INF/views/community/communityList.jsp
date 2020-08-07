@@ -199,21 +199,6 @@
            </div>
 	        
 	        
-	        
-	        <!-- 검색 -->
-<!-- 	        <div>
-	            <form action="search" method="GET" class="text-center" id="searchForm">
-	                <select name="searchKey" class="form-control" style="width:100px; display: inline-block;">
-	                    <option value="title" selected>글제목</option>
-	                    <option value="title">글제목</option>
-	                    <option value="content">내용</option>
-	                    <option value="titcont">제목+내용</option>
-	                </select>
-	                <input type="text" name="searchValue" class="form-control" style="width:25%; display: inline-block;">
-	                <button class="form-control btn btn-primary" style="width:100px; display: inline-block;">검색</button>
-	            </form>
-	            
-	        </div> -->
     	</div>
 		<%@ include file="../common/footer.jsp"%>
 	</div>
