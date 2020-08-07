@@ -97,12 +97,13 @@
                     <label for="inputName" class="col-lg-2 control-label">닉네임</label>
                     <span id="checkName">&nbsp;</span>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="한글 두글자 이상으로 입력해주세요." maxlength="15">
+                        <input type="text" class="form-control onlyHangul" id="name" name="name" data-rule-required="true" placeholder="한글 세글자 이상으로 입력해주세요." maxlength="15">
                     </div>
                 </div>
 
                 <div class="form-group" id="divEmail">
                     <label for="inputEmail" class="col-lg-2 control-label">이메일</label>
+                    <span id="checkEmail">&nbsp;</span>
                     <div class="col-lg-10">
                         <input type="email" class="form-control" id="email" name="email" data-rule-required="true" placeholder="이메일" maxlength="40">
                     </div>
@@ -159,6 +160,7 @@
 		var $password = $("#password");
 		var $password2 = $("#password2");
 		var $name = $("#name");
+		var $email = $("#email");
 		
         // id를 입력하는 경우 발생하는 이벤트
         $("#id").on("input", function(){
@@ -229,10 +231,10 @@
 
 		// 이름 유효성 검사
 		$name.on("input", function(){
-			var regExp =  /^[가-힣]{2,}$/; // 한글 두 글자 이상
+			var regExp =  /^[가-힣]{3,}$/; // 한글 세 글자 이상
 			
 			if(!regExp.test($(this).val())){ // 입력한 이름이 유효하지 않은 경우
-				$("#checkName").text("한글 두 글자 이상을 입력하세요.").css("color","red");
+				$("#checkName").text("한글 세글자 이상을 입력하세요.").css("color","red");
 				signUpCheck.name = false;
 				if($name.val().length == 0)   $("#checkName").text("");
 			}else{
@@ -242,6 +244,18 @@
 			
 		});
 		
+
+		// 이메일 유효성 검사
+		$email.on("input", function(){
+			var regExp =  /^[\w]{4,}@[\w]+(\.[\w]+){1,3}$/; // 4글자 아무단어 @ 아무단어 . * 3
+			if(!regExp.test($email.val())){
+				$("#checkEmail").text("이메일 형식이 유효하지 않습니다.").css("color","red");
+				signUpCheck.email = false;
+			}else{
+				$("#checkEmail").text("정상 입력").css("color","green");
+				signUpCheck.email = true;
+			}
+		});
 		
     
 	// submit 동작
@@ -255,6 +269,7 @@
 				case "id" : msg="아이디가 ";  break;
 				case "password" : case "password2": msg="비밀번호가 ";  break;
 				case "name" : msg="이름이 ";  break;
+				case "email" : msg="이메일이 ";  break;
 				}
 				
 				alert(msg + "유효하지 않습니다.");
