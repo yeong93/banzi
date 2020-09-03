@@ -226,8 +226,7 @@
 	        reader.readAsDataURL(value.files[0]);
 	      }
 	    }
-		
-	    
+
 	    
 	    
 	    
